@@ -6,25 +6,25 @@ const products = [
   {
     id: 1,
     name: "XH self-drilling anchor bolt",
-    image: "/products1.jpg",
+    image: "/product1.jpg",
     slug: "self-drilling-bolt",
   },
   {
     id: 2,
     name: "XH hollow grouted anchor bolt",
-    image: "/products2.jpg",
+    image: "/product2.jpg",
     slug: "hollow-grouted-bolt",
   },
   {
     id: 3,
     name: "Expansion-shell hollow anchor bolt",
-    image: "products3.jpg",
+    image: "product3.jpg",
     slug: "expansion-shell-bolt",
   },
   {
     id: 4,
     name: "Fiberglass anchor bolt",
-    image: "products4.jpg",
+    image: "product4.jpg",
     slug: "fiberglass-anchor-bolt",
   },
 ]
