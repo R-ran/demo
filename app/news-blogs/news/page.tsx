@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { Calendar, ArrowLeft, PenLine } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 
@@ -15,6 +15,14 @@ import { getArticlesByType } from "@/lib/news-blogs-data"
 const newsArticles = getArticlesByType("news")
 
 export default function NewsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <NewsPageContent />
+    </Suspense>
+  )
+}
+
+function NewsPageContent() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])

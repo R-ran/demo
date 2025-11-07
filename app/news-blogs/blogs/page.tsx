@@ -19,6 +19,14 @@ const blogArticles = getArticlesByType("blog")
 
 
 export default function BlogsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <BlogsPageContent />
+    </Suspense>
+  )
+}
+
+function BlogsPageContent() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
