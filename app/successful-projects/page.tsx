@@ -3,8 +3,9 @@
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
@@ -78,12 +79,42 @@ const allProjects = [
 ]
 
 export default function SuccessfulProjectsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <SuccessfulProjectsPageContent />
+    </Suspense>
+  )
+}
+
+function SuccessfulProjectsPageContent() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedProject, setSelectedProject] = useState<typeof allProjects[0] | null>(null)
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  useEffect(() => {
+    const categoryParam = searchParams.get("category")
+    const normalized = categoryParam?.toLowerCase()
+    const categoryMap: Record<string, string> = {
+      china: "China Projects",
+      overseas: "Overseas Projects",
+    }
+    if (normalized && categoryMap[normalized]) {
+      setSelectedCategory(categoryMap[normalized])
+      setSelectedProject(null)
+      setTimeout(() => {
+        const navElement = document.querySelector('[data-nav-section]')
+        if (navElement) {
+          navElement.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+      }, 100)
+      router.replace("/successful-projects", { scroll: false })
+    }
+  }, [searchParams, router])
 
   // 根据选中的分类过滤项目
   const filteredProjects = selectedCategory

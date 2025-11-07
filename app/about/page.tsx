@@ -3,8 +3,9 @@
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -88,12 +89,42 @@ const aboutItems = [
 ]
 
 export default function AboutPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <AboutPageContent />
+    </Suspense>
+  )
+}
+
+function AboutPageContent() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  useEffect(() => {
+    const sectionParam = searchParams.get("section")
+    if (sectionParam) {
+      const normalized = sectionParam.toLowerCase()
+      const matchingCategory = aboutCategories.find(
+        (category) => category.id.toLowerCase() === normalized,
+      )
+      if (matchingCategory) {
+        setSelectedCategory(matchingCategory.id)
+        setTimeout(() => {
+          const navElement = document.querySelector('[data-nav-section]')
+          if (navElement) {
+            navElement.scrollIntoView({ behavior: "smooth", block: "start" })
+          }
+        }, 100)
+        router.replace("/about", { scroll: false })
+      }
+    }
+  }, [searchParams, router])
 
   // 获取选中的项目详情
   const selectedItem = selectedCategory

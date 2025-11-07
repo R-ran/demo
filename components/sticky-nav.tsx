@@ -29,8 +29,8 @@ const categories = [
     label: "Successful Projects",
     href: "/successful-projects",
     dropdown: [
-      { label: "China Projects", href: "/successful-projects" },
-      { label: "Overseas Projects", href: "/successful-projects" },
+          { label: "China Projects", href: "/successful-projects?category=china" },
+          { label: "Overseas Projects", href: "/successful-projects?category=overseas" },
     ],
   },
   {
@@ -38,10 +38,10 @@ const categories = [
     label: "About Us",
     href: "/about",
     dropdown: [
-      { label: "Why choose us", href: "/about" },
-      { label: "Factory Overview", href: "/about" },
-      { label: "History", href: "/about" },
-      { label: "Certificate", href: "/about" },
+      { label: "Why choose us", href: "/about?section=why-choose-us" },
+      { label: "Factory Overview", href: "/about?section=factory" },
+      { label: "History", href: "/about?section=history" },
+      { label: "Certificate", href: "/about?section=certificate" },
     ],
   },
   {
@@ -93,7 +93,7 @@ export function StickyNav() {
               <Link href={category.href}>
                 <button
                   className={cn(
-                    "px-8 py-4 text-base font-medium transition-colors flex items-center gap-2",
+                    "px-8 py-4 text-base font-medium transition-colors flex items-center gap-2 cursor-pointer",
                     pathname === category.href || pathname.startsWith(category.href + "/")
                       ? "bg-primary text-primary-foreground"
                       : "text-secondary-foreground hover:bg-primary/20",
@@ -108,7 +108,7 @@ export function StickyNav() {
                 <div className="absolute top-full left-0 min-w-[280px] bg-primary shadow-lg py-2 animate-in fade-in slide-in-from-top-2 duration-200">
                   {category.dropdown.map((item, index) => (
                     <Link key={index} href={item.href}>
-                      <div className="px-6 py-3 text-primary-foreground hover:bg-primary-foreground/10 transition-colors text-sm">
+                    <div className="px-6 py-3 text-primary-foreground hover:bg-primary-foreground/10 transition-colors text-sm cursor-pointer">
                         {item.label}
                       </div>
                     </Link>
