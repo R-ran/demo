@@ -1,6 +1,12 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Building2, Factory, Award } from "lucide-react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "About Us",
+}
 
 const aboutItems = [
   {
@@ -10,6 +16,7 @@ const aboutItems = [
       "Discover what sets us apart in the geotechnical anchoring industry with our commitment to quality and innovation.",
     icon: Award,
     image: "/why.jpg",
+    imageAlt: "Engineering team collaborating on SINOROCK geotechnical solutions",
     href: "/about/why-choose-us",
   },
   {
@@ -19,6 +26,7 @@ const aboutItems = [
       "Explore our state-of-the-art manufacturing facilities equipped with advanced technology and quality control systems.",
     icon: Factory,
     image: "/industrial-factory-production-floor.jpg",
+    imageAlt: "Interior of SINOROCK's advanced anchor bolt manufacturing facility",
     href: "/about/factory",
   },
   {
@@ -28,6 +36,7 @@ const aboutItems = [
       "Learn about our journey from inception to becoming a leading provider of geotechnical anchoring solutions.",
     icon: Building2,
     image: "/history.jpg",
+    imageAlt: "Historical display of SINOROCK project milestones",
     href: "/about/history",
   },
   {
@@ -37,6 +46,7 @@ const aboutItems = [
       "View our certifications and quality standards that demonstrate our commitment to excellence and safety.",
     icon: Award,
     image: "/zhengshu.jpg",
+    imageAlt: "Certificates highlighting SINOROCK quality and safety achievements",
     href: "/about/certificate",
   },
 ]
@@ -63,7 +73,7 @@ export function AboutSection() {
                   <div className="relative h-64 overflow-hidden">
                     <img
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.imageAlt || item.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent" />

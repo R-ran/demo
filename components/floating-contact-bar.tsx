@@ -77,7 +77,7 @@ export function FloatingContactBar() {
             }`}
             aria-label="WhatsApp"
           >
-            <Image src="/WhatsApp.png" alt="WhatsApp" width={24} height={24} className="w-6 h-6" />
+            <Image src="/WhatsApp.png" alt="WhatsApp icon for SINOROCK support" width={24} height={24} className="w-6 h-6" />
           </button>
           {hoveredItem === "whatsapp" && (
             <div className="absolute right-full top-0 mr-2 bg-[#1e3a5f] text-white px-4 py-3 rounded-lg whitespace-nowrap shadow-xl z-[10000]">
@@ -101,14 +101,14 @@ export function FloatingContactBar() {
             }`}
             aria-label="WeChat"
           >
-            <Image src="/WeChat.png" alt="WeChat" width={24} height={24} className="w-6 h-6" />
+            <Image src="/WeChat.png" alt="WeChat icon for SINOROCK service" width={24} height={24} className="w-6 h-6" />
           </button>
           {hoveredItem === "wechat" && (
             <div className="absolute right-full top-0 mr-2 bg-white p-4 rounded-lg shadow-xl z-[10000]">
               <div className="w-36 h-36 bg-gray-50 rounded border-2 border-gray-200 flex items-center justify-center overflow-hidden">
                 <img
                   src={wechatQRCode}
-                  alt="WeChat QR Code"
+                  alt="Scan to connect with SINOROCK support on WeChat"
                   className="w-full h-full object-contain"
                   onError={(e) => {
                     // 如果图片加载失败，显示占位符

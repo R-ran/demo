@@ -10,18 +10,21 @@ const slides = [
     subtitle: "GREAT REPUTATION IN THE INDUSTRY",
     description: "ESCORT YOUR PROJECT",
     image: "/industrial-construction-site-with-rock-bolts.jpg",
+    imageAlt: "SINOROCK self-drilling anchor bolts reinforcing an industrial construction site",
   },
   {
     title: "INNOVATIVE SOLUTIONS",
     subtitle: "LEADING TECHNOLOGY",
     description: "SAFER SPACE, BETTER LIFE",
     image: "/modern-factory-production-line.png",
+    imageAlt: "Modern SINOROCK factory production line manufacturing anchor bolts",
   },
   {
     title: "QUALITY ASSURANCE",
     subtitle: "TRUSTED WORLDWIDE",
     description: "EXCELLENCE IN EVERY DETAIL",
     image: "/quality-control-inspection-equipment.jpg",
+    imageAlt: "Quality control inspection of SINOROCK anchor bolt components",
   },
 ]
 
@@ -53,7 +56,11 @@ export function HeroCarousel() {
           }`}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 to-secondary/50" />
-          <img src={slide.image || "/placeholder.svg"} alt={slide.title} className="w-full h-full object-cover" />
+          <img
+            src={slide.image || "/placeholder.svg"}
+            alt={slide.imageAlt || slide.title}
+            className="w-full h-full object-cover"
+          />
           <div className="absolute inset-0 flex items-center">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl">

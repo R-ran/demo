@@ -7,6 +7,7 @@ export type Article = {
   excerpt: string
   date: string
   image: string
+  imageAlt: string
   category: string
   author?: string
   content: string
@@ -21,6 +22,7 @@ export const articles: Article[] = [
       "We are excited to announce the launch of our latest rock bolt technology, featuring enhanced corrosion resistance and improved load capacity.",
     date: "2024-03-15",
     image: "/industrial-construction-site-with-rock-bolts.jpg",
+    imageAlt: "Industrial construction site showcasing SINOROCK galvanized rock bolts",
     category: "Product News",
     content: `
       <p>We are thrilled to announce the launch of our latest innovation in rock bolt technology. This new generation of anchor bolts represents a significant leap forward in geotechnical anchoring solutions.</p>
@@ -47,6 +49,7 @@ export const articles: Article[] = [
       "Our team showcased innovative anchoring solutions at the 2024 International Mining and Tunneling Conference in Singapore.",
     date: "2024-03-10",
     image: "/industrial-factory-production-floor.jpg",
+    imageAlt: "SINOROCK team presenting anchoring solutions at an international mining conference",
     category: "Company News",
     content: `
       <p>SINOROCK was proud to participate in the 2024 International Mining and Tunneling Conference held in Singapore. This prestigious event brought together industry leaders, engineers, and innovators from around the world.</p>
@@ -68,6 +71,7 @@ export const articles: Article[] = [
       "Learn how our T Thread self-drilling anchor bolts contributed to the successful completion of a major tunnel project in Switzerland.",
     date: "2024-03-05",
     image: "/galvanized-rock-bolt-system.jpg",
+    imageAlt: "Close-up of a SINOROCK galvanized rock bolt system inside a tunnel",
     category: "Case Study",
     content: `
       <p>We are pleased to share the success story of a major tunnel construction project in Switzerland, where our T Thread self-drilling anchor bolts played a crucial role in ensuring project safety and efficiency.</p>
@@ -96,6 +100,7 @@ export const articles: Article[] = [
       "Common failures in hollow anchor bar tunnel construction: causes, solutions, and Sinorock's self-drilling anchor technology advantages.",
     date: "2024-10-28",
     image: "/anchor-bolt-drilling-equipment.jpg",
+    imageAlt: "Self-drilling anchor bolt drilling equipment set up for tunnel construction",
     category: "Technical Blog",
     author: "Engineering Team",
     content: `
@@ -122,6 +127,7 @@ export const articles: Article[] = [
       "Master the 6 critical steps for self-drilling anchor installation! Boost construction safety and efficiency with expert guidance.",
     date: "2024-10-23",
     image: "/anchor-accessories-and-tools.jpg",
+    imageAlt: "SINOROCK anchor bolt accessories and installation tools on a jobsite table",
     category: "How-To Guide",
     author: "Project Support Team",
     content: `
@@ -148,6 +154,7 @@ export const articles: Article[] = [
       "Learn about the latest techniques and materials for preventing corrosion in harsh underground environments.",
     date: "2024-10-12",
     image: "/corrosion-resistant-anchor.jpg",
+    imageAlt: "Corrosion-resistant SINOROCK anchor bolt components prepared for underground use",
     category: "Industry Insights",
     author: "Technical Department",
     content: `

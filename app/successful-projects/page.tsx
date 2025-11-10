@@ -34,6 +34,7 @@ const allProjects = [
     description: "The Tala hydroelectric project is located in Chukha Dzongkhag in western Bhutan. The dam s...",
     fullDescription: "The Tala hydroelectric project is located in Chukha Dzongkhag in western Bhutan. The dam structure required extensive tunneling through challenging rock mass conditions. Our self-drilling anchor bolts provided reliable support during the excavation process, ensuring the safety and stability of the tunnel construction. The project successfully navigated through poor rock mass conditions, demonstrating the effectiveness of our anchoring solutions in challenging geological environments.",
     image: "/beijing.jpg",
+    imageAlt: "Installation of SINOROCK self-drilling anchor bolts at the Tala Hydro Project tunnel",
     category: "underground",
     slug: "tala-hydro-project",
     projectType: "china", // 国内项目
@@ -46,6 +47,7 @@ const allProjects = [
     description: "The success of the Gaojiaping Tunnel's construction demonstrates the ingenuity of Sinoroc...",
     fullDescription: "The success of the Gaojiaping Tunnel's construction demonstrates the ingenuity of Sinorock's pipe umbrella system. This innovative approach ensured safe and efficient tunnel excavation through complex geological formations. The pipe umbrella pre-support system provided excellent ground stabilization, allowing for smooth tunnel advancement while maintaining structural integrity throughout the construction process.",
     image: "/sichuan.jpg",
+    imageAlt: "Gaojiaping Tunnel excavation supported by SINOROCK pipe umbrella system",
     category: "underground",
     slug: "gaojiaping-tunnel",
     projectType: "china", // 国内项目
@@ -58,6 +60,7 @@ const allProjects = [
     description: "Applied advanced anchor bolt systems for foundation reinforcement in challenging soil conditions...",
     fullDescription: "Applied advanced anchor bolt systems for foundation reinforcement in challenging soil conditions, ensuring the stability of a 50-story high-rise building in Shanghai. The project involved extensive foundation work to support the massive structure, utilizing our high-performance anchor bolts to provide reliable load-bearing capacity in soft soil conditions.",
     image: "/overseas1.jpg",
+    imageAlt: "High-rise building foundation reinforced with SINOROCK hollow anchor bolts",
     category: "foundation",
     slug: "high-rise-foundation",
     projectType: "overseas", // 海外项目
@@ -70,6 +73,7 @@ const allProjects = [
     description: "Successfully stabilized unstable slopes using self-drilling anchor bolts along critical highway sections...",
     fullDescription: "Successfully stabilized unstable slopes using self-drilling anchor bolts along critical highway sections, preventing landslides and ensuring road safety. The project involved extensive slope reinforcement work along a mountainous highway, where unstable rock formations posed significant risks to traffic safety. Our self-drilling anchor bolt system provided reliable slope stabilization, ensuring long-term road safety and preventing potential geological hazards.",
     image: "/overseas2.jpg",
+    imageAlt: "Mountain highway slope secured with SINOROCK self-drilling anchor bolts",
     category: "slope-stabilization",
     slug: "mountain-highway-slope",
     projectType: "overseas", // 海外项目
@@ -213,8 +217,8 @@ function SuccessfulProjectsPageContent() {
                 {/* Image Section */}
                 <div className="relative w-full h-96 md:h-[500px] overflow-hidden rounded-lg">
                   <img
-                    src={selectedProject.image || "/placeholder.svg"}
-                    alt={selectedProject.title}
+                      src={selectedProject.image || "/placeholder.svg"}
+                      alt={selectedProject.imageAlt || selectedProject.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -268,8 +272,8 @@ function SuccessfulProjectsPageContent() {
                       {/* Image Section */}
                       <div className="relative w-full h-64 overflow-hidden bg-muted">
                         <img
-                          src={project.image || "/placeholder.svg"}
-                          alt={project.title}
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.imageAlt || project.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>

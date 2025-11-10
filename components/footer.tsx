@@ -95,7 +95,7 @@ export function Footer() {
           <div className="flex flex-col items-center justify-center">
             <div className="mb-4">
               <Image src="/xinhong logo.png" 
-              alt="XinHong"
+              alt="XinHong company logo"
               width={512} 
               height={512} 
               className="mx-auto"

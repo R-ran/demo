@@ -8,6 +8,12 @@ import { PartnersSection } from "@/components/partners-section"
 import { Footer } from "@/components/footer"
 import { StickyNav } from "@/components/sticky-nav"
 import { TopHeader } from "@/components/top-header"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Home",
+}
 
 export default function Home() {
   return (

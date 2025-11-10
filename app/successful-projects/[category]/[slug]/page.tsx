@@ -14,6 +14,7 @@ const projectDetails: Record<string, Record<string, {
   description: string
   fullDescription: string
   image: string
+  imageAlt: string
   location: string
   year: string
   category: string
@@ -24,6 +25,7 @@ const projectDetails: Record<string, Record<string, {
       description: "The Tala hydroelectric project is located in Chukha Dzongkhag in western Bhutan.",
       fullDescription: "The Tala hydroelectric project is located in Chukha Dzongkhag in western Bhutan. The dam structure required extensive tunneling through challenging rock mass conditions. Our self-drilling anchor bolts provided reliable support during the excavation process, ensuring the safety and stability of the tunnel construction. The project successfully navigated through poor rock mass conditions, demonstrating the effectiveness of our anchoring solutions in challenging geological environments.",
       image: "/beijing.jpg",
+      imageAlt: "Workers installing SINOROCK anchor bolts at the Tala Hydro Project tunnel entrance",
       location: "Chukha Dzongkhag, Bhutan",
       year: "2023",
       category: "underground",
@@ -33,6 +35,7 @@ const projectDetails: Record<string, Record<string, {
       description: "The success of the Gaojiaping Tunnel's construction demonstrates the ingenuity of Sinorock's pipe umbrella system.",
       fullDescription: "The success of the Gaojiaping Tunnel's construction demonstrates the ingenuity of Sinorock's pipe umbrella system. This innovative approach ensured safe and efficient tunnel excavation through complex geological formations. The pipe umbrella pre-support system provided excellent ground stabilization, allowing for smooth tunnel advancement while maintaining structural integrity throughout the construction process.",
       image: "/sichuan.jpg",
+      imageAlt: "Gaojiaping Tunnel heading reinforced by SINOROCK pipe umbrella pre-support",
       location: "China",
       year: "2022",
       category: "underground",
@@ -42,6 +45,7 @@ const projectDetails: Record<string, Record<string, {
       description: "Successfully provided rock bolt solutions for the construction of Beijing Subway Line 16.",
       fullDescription: "Successfully provided rock bolt solutions for the construction of Beijing Subway Line 16, ensuring structural stability in complex geological conditions. The project required precise anchoring techniques to support the subway tunnel excavation in urban areas with varying soil conditions.",
       image: "/beijing.jpg",
+      imageAlt: "Construction crew securing Beijing Subway Line 16 tunnel with SINOROCK bolts",
       location: "Beijing, China",
       year: "2023",
       category: "underground",
@@ -53,6 +57,7 @@ const projectDetails: Record<string, Record<string, {
       description: "Applied advanced anchor bolt systems for foundation reinforcement in challenging soil conditions.",
       fullDescription: "Applied advanced anchor bolt systems for foundation reinforcement in challenging soil conditions, ensuring the stability of a 50-story high-rise building in Shanghai. The project involved extensive foundation work to support the massive structure, utilizing our high-performance anchor bolts to provide reliable load-bearing capacity in soft soil conditions.",
       image: "/overseas1.jpg",
+      imageAlt: "High-rise development site with SINOROCK hollow anchor bolts reinforcing the foundation",
       location: "Shanghai, China",
       year: "2023",
       category: "foundation",
@@ -62,6 +67,7 @@ const projectDetails: Record<string, Record<string, {
       description: "Delivered high-performance anchor systems for the underground powerhouse excavation.",
       fullDescription: "Delivered high-performance anchor systems for the underground powerhouse excavation of a major hydropower project in mountainous terrain. The foundation work required specialized anchoring solutions to support the massive power generation infrastructure in challenging geological conditions.",
       image: "/sichuan.jpg",
+      imageAlt: "Hydropower powerhouse excavation stabilized by SINOROCK anchoring systems",
       location: "Sichuan, China",
       year: "2022",
       category: "foundation",
@@ -73,6 +79,7 @@ const projectDetails: Record<string, Record<string, {
       description: "Successfully stabilized unstable slopes using self-drilling anchor bolts along critical highway sections.",
       fullDescription: "Successfully stabilized unstable slopes using self-drilling anchor bolts along critical highway sections, preventing landslides and ensuring road safety. The project involved extensive slope reinforcement work along a mountainous highway, where unstable rock formations posed significant risks to traffic safety. Our self-drilling anchor bolt system provided reliable slope stabilization, ensuring long-term road safety and preventing potential geological hazards.",
       image: "/overseas2.jpg",
+      imageAlt: "Mountain highway cliff reinforced with SINOROCK self-drilling anchors",
       location: "Mountain Region, China",
       year: "2023",
       category: "slope-stabilization",
@@ -82,6 +89,7 @@ const projectDetails: Record<string, Record<string, {
       description: "Implemented comprehensive slope stabilization solutions using corrosion-resistant anchor bolts.",
       fullDescription: "Implemented comprehensive slope stabilization solutions using corrosion-resistant anchor bolts in a mining operation, ensuring long-term stability. The project addressed slope stability concerns in an active mining area, where rock formations required reinforcement to prevent potential collapses and ensure worker safety.",
       image: "/overseas1.jpg",
+      imageAlt: "Mining pit slope secured with SINOROCK corrosion-resistant anchor bolts",
       location: "Mining Area, China",
       year: "2022",
       category: "slope-stabilization",
@@ -160,7 +168,7 @@ export default function ProjectDetailPage({ params }: { params: { category: stri
             <div className="mb-8 rounded-lg overflow-hidden">
               <img
                 src={project.image || "/placeholder.svg"}
-                alt={project.title}
+                alt={project.imageAlt || project.title}
                 className="w-full h-96 object-cover"
               />
             </div>

@@ -45,6 +45,7 @@ const allProducts = [
     name: "R Thread Self Drilling Anchor Bolt System",
     description: "R thread self drilling anchor bolt system performs drilling, grouting and anchoring in one operation, providing efficient installation.",
     image: "/product1.jpg",
+    imageAlt: "R thread self-drilling anchor bolt system components arranged on workbench",
     slug: "r-thread-self-drilling-anchor-bolt",
   },
   {
@@ -52,6 +53,7 @@ const allProducts = [
     name: "T thread self drilling hollow rock bolt",
     description: "T thread self-drilling rock bolts, a wide range of diameter, length and thread options available for various applications.",
     image: "/product2.jpg",
+    imageAlt: "T thread self-drilling hollow rock bolt set with drill bits",
     slug: "t-thread-self-drilling-anchor-bolt",
   },
   {
@@ -59,6 +61,7 @@ const allProducts = [
     name: "Hot-dip Galvanizing Rock Bolts System",
     description: "Hot-dip galvanizing rock bolt is a sda rock bolt with good anti-corrosion performance and long service life.",
     image: "/product3.jpg",
+    imageAlt: "Hot-dip galvanized rock bolts offering corrosion protection",
     slug: "hot-dip-galvanizing-rock-bolts",
   },
   {
@@ -66,6 +69,7 @@ const allProducts = [
     name: "XH self-drilling anchor bolt",
     description: "High-quality self-drilling anchor bolt designed for demanding geotechnical applications with superior strength.",
     image: "/product1.jpg",
+    imageAlt: "XH self-drilling anchor bolt showing thread profile",
     slug: "self-drilling-bolt",
   },
   {
@@ -73,6 +77,7 @@ const allProducts = [
     name: "XH hollow grouted anchor bolt",
     description: "Hollow grouted anchor bolt system for reliable anchoring in various ground conditions.",
     image: "/product2.jpg",
+    imageAlt: "XH hollow grouted anchor bolt with grout ports",
     slug: "hollow-grouted-bolt",
   },
   {
@@ -80,6 +85,7 @@ const allProducts = [
     name: "Expansion-shell hollow anchor bolt",
     description: "Expansion-shell hollow anchor bolt provides excellent load-bearing capacity and installation flexibility.",
     image: "/product4.jpg",
+    imageAlt: "Expansion-shell hollow anchor bolt highlighting expansion mechanism",
     slug: "expansion-shell-bolt",
   },
 ]
@@ -195,7 +201,7 @@ export default function ProductsPage() {
                         <div className="relative w-full h-48 overflow-hidden bg-muted">
                           <img
                             src={product.image || "/placeholder.svg"}
-                            alt={product.name}
+                            alt={product.imageAlt || product.name}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>

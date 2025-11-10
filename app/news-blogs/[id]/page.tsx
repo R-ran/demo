@@ -7,6 +7,12 @@ import { Footer } from "@/components/footer"
 import { notFound } from "next/navigation"
 
 import { articles, getArticleById } from "@/lib/news-blogs-data"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "News & Blogs",
+  description: "News & Blogs",
+}
 
 export function generateStaticParams() {
   return articles.map((article) => ({ id: article.id }))
@@ -38,7 +44,7 @@ export default function NewsArticlePage({ params }: { params: { id: string } }) 
               <div className="relative w-full overflow-hidden rounded-xl bg-muted aspect-[4/5] lg:aspect-[3/4]">
                 <img
                   src={article.image || "/placeholder.svg"}
-                  alt={article.title}
+                  alt={article.imageAlt || article.title}
                   className="h-full w-full object-cover"
                 />
               </div>

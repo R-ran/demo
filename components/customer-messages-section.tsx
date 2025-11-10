@@ -1,5 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { MessageSquare, Star } from "lucide-react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Customer Messages",
+  description: "Customer Messages",
+}
+
 
 const customerMessages = [
   {
@@ -48,7 +55,7 @@ export function CustomerMessagesSection() {
           <div className="relative h-[500px] rounded-lg overflow-hidden">
             <img
               src="/customer.png"
-              alt="Customer testimonials"
+              alt="Satisfied SINOROCK clients discussing anchor bolt performance"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 to-transparent" />

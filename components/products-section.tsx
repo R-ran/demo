@@ -1,30 +1,40 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { ChevronDown } from "lucide-react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Products",
+  description: "Products",
+}
 
 const products = [
   {
     id: 1,
     name: "XH self-drilling anchor bolt",
     image: "/product1.jpg",
+    imageAlt: "Close-up of XH self-drilling anchor bolt components",
     slug: "self-drilling-bolt",
   },
   {
     id: 2,
     name: "XH hollow grouted anchor bolt",
     image: "/product2.jpg",
+    imageAlt: "XH hollow grouted anchor bolt with grout fittings",
     slug: "hollow-grouted-bolt",
   },
   {
     id: 3,
     name: "Expansion-shell hollow anchor bolt",
     image: "/product3.jpg",
+    imageAlt: "Expansion-shell hollow anchor bolt ready for installation",
     slug: "expansion-shell-bolt",
   },
   {
     id: 4,
     name: "Fiberglass anchor bolt",
     image: "/product4.jpg",
+    imageAlt: "Lightweight fiberglass anchor bolt for corrosion-sensitive projects",
     slug: "fiberglass-anchor-bolt",
   },
 ]
@@ -58,7 +68,7 @@ export function ProductsSection() {
                             <div className="relative h-full w-full overflow-hidden bg-white">
                               <img
                                 src={product.image || "/placeholder.svg"}
-                                alt={product.name}
+                                alt={product.imageAlt || product.name}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               />
                             </div>
@@ -101,7 +111,7 @@ export function ProductsSection() {
                             <div className="relative h-full w-full overflow-hidden bg-white">
                               <img
                                 src={product.image || "/placeholder.svg"}
-                                alt={product.name}
+                                alt={product.imageAlt || product.name}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               />
                             </div>

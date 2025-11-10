@@ -1,5 +1,12 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Testimonials",
+  description: "Testimonials",
+}
+
 
 const chinaProjects = [
   {
@@ -9,6 +16,7 @@ const chinaProjects = [
     description:
       "Successfully provided rock bolt solutions for the construction of Beijing Subway Line 16, ensuring structural stability in complex geological conditions.",
     image: "/beijing.jpg",
+    imageAlt: "Beijing Subway Line 16 tunnel reinforced with SINOROCK anchor bolts",
     year: "2023",
     slug: "beijing-subway-line-16",
     category: "China Projects",
@@ -20,6 +28,7 @@ const chinaProjects = [
     description:
       "Delivered high-performance anchor systems for the underground powerhouse excavation of a major hydropower project in mountainous terrain.",
     image: "/sichuan.jpg",
+    imageAlt: "Sichuan hydropower excavation supported by SINOROCK anchoring systems",
     year: "2022",
     slug: "sichuan-hydropower-foundation",
     category: "China Projects",
@@ -34,6 +43,7 @@ const overseasProjects = [
     description:
       "Provided T Thread self-drilling anchor bolts for a major alpine tunnel project, meeting stringent European safety standards.",
     image: "/overseas1.jpg",
+    imageAlt: "Swiss alpine tunnel construction featuring SINOROCK self-drilling anchors",
     year: "2023",
     slug: "high-rise-foundation",
     category: "Overseas Projects",
@@ -45,6 +55,7 @@ const overseasProjects = [
     description:
       "Supplied corrosion-resistant rock bolts for underground mining operations in harsh environmental conditions.",
     image: "/overseas2.jpg",
+    imageAlt: "Australian mining operation reinforced with SINOROCK corrosion-resistant bolts",
     year: "2022",
     slug: "mountain-highway-slope",
     category: "Overseas Projects",
@@ -78,7 +89,7 @@ export function TestimonialsSection() {
                   <div className="relative h-64 overflow-hidden">
                     <img
                       src={project.image || "/placeholder.svg"}
-                      alt={project.name}
+                      alt={project.imageAlt || project.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent" />

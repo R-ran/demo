@@ -28,6 +28,7 @@ const projectsByCategory: Record<string, Array<{
   title: string
   description: string
   image: string
+  imageAlt: string
   slug: string
 }>> = {
   ChinaProjects: [
@@ -36,6 +37,7 @@ const projectsByCategory: Record<string, Array<{
       title: "The Application of Self Drilling Anchor Bolt at the Tala Hydro Project for Tunneling in Poor Rock Mass Conditions",
       description: "The Tala hydroelectric project is located in Chukha Dzongkhag in western Bhutan. The dam structure required extensive tunneling through challenging rock mass conditions. Our self-drilling anchor bolts provided reliable support during the excavation process.",
       image: "/beijing.jpg",
+      imageAlt: "Tala Hydro Project tunnel supported by SINOROCK self-drilling anchor bolts",
       slug: "tala-hydro-project",
     },
     {
@@ -43,6 +45,7 @@ const projectsByCategory: Record<string, Array<{
       title: "Pre-support with Pipe Umbrella System for Gaojiaping Tunnel",
       description: "The success of the Gaojiaping Tunnel's construction demonstrates the ingenuity of Sinorock's pipe umbrella system. This innovative approach ensured safe and efficient tunnel excavation through complex geological formations.",
       image: "/sichuan.jpg",
+      imageAlt: "Gaojiaping Tunnel excavation reinforced with SINOROCK pipe umbrella system",
       slug: "gaojiaping-tunnel",
     },
     {
@@ -50,6 +53,7 @@ const projectsByCategory: Record<string, Array<{
       title: "Beijing Subway Line 16 Underground Construction",
       description: "Successfully provided rock bolt solutions for the construction of Beijing Subway Line 16, ensuring structural stability in complex geological conditions.",
       image: "/beijing.jpg",
+      imageAlt: "Beijing Subway Line 16 tunnel under construction with SINOROCK bolts",
       slug: "beijing-subway-line-16",
     },
   ],
@@ -59,6 +63,7 @@ const projectsByCategory: Record<string, Array<{
       title: "Foundation Reinforcement Project for High-Rise Building",
       description: "Applied advanced anchor bolt systems for foundation reinforcement in challenging soil conditions, ensuring the stability of a 50-story high-rise building in Shanghai.",
       image: "/overseas1.jpg",
+      imageAlt: "Construction crew reinforcing high-rise foundation with SINOROCK anchor systems",
       slug: "high-rise-foundation",
     },
     {
@@ -66,6 +71,7 @@ const projectsByCategory: Record<string, Array<{
       title: "Sichuan Hydropower Station Foundation",
       description: "Delivered high-performance anchor systems for the underground powerhouse excavation of a major hydropower project in mountainous terrain.",
       image: "/sichuan.jpg",
+      imageAlt: "Sichuan hydropower excavation stabilized by SINOROCK anchoring solutions",
       slug: "sichuan-hydropower-foundation",
     },
   ],
@@ -152,7 +158,7 @@ export default function CategoryProjectsPage({ params }: { params: { category: s
                     <div className="relative w-full h-64 overflow-hidden bg-muted">
                       <img
                         src={project.image || "/placeholder.svg"}
-                        alt={project.title}
+                        alt={project.imageAlt || project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>

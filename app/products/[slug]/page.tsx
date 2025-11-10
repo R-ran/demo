@@ -16,6 +16,7 @@ const productData: Record<string, {
   title: string
   description: string
   image: string
+  imageAlt: string
   introduction: string
   functions: string
   conditions: string[]
@@ -24,6 +25,7 @@ const productData: Record<string, {
     title: "R Thread Self Drilling Anchor Bolt System",
     description: "R thread self drilling anchor bolt system performs drilling, grouting & anchoring in one step. Easy to process and no risks of drill have collagen. Suitable for unstable conditions.",
     image: "/product1.jpg",
+    imageAlt: "R thread self-drilling anchor bolt system components laid out for installation",
     introduction: "R thread self drilling anchor bolt system is composed by hollow rock bolt, anchor nut, anchor plate, anchor coupler, drill bit, centralizer, and the hollow anchor bars can be cut and lengthened by coupling on request.",
     functions: "R thread self drilling anchor bolt system is an advanced system which can ensure the anchoring effect for complex ground conditions. It can be integrated with the functions of drilling, grouting and anchoring.",
     conditions: ["Tunneling", "Mining", "Slope Stabilization", "Foundation Support"],
@@ -42,21 +44,37 @@ const productCategories = [
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const slug = params?.slug || ""
   // 根据slug映射到对应的图片
-  const getImageBySlug = (slug: string) => {
-    const imageMap: Record<string, string> = {
-      "self-drilling-bolt": "/product1.jpg",
-      "hollow-grouted-bolt": "/product2.jpg",
-      "expansion-shell-bolt": "/product4.jpg",
-      "fiberglass-bolt": "/product3.jpg",
-      "accessories": "/product1.jpg",
-    }
-    return imageMap[slug] || "/product1.jpg"
+  const defaultProductImages: Record<string, { src: string; alt: string }> = {
+    "self-drilling-bolt": {
+      src: "/product1.jpg",
+      alt: "XH self-drilling anchor bolt assembly on display",
+    },
+    "hollow-grouted-bolt": {
+      src: "/product2.jpg",
+      alt: "XH hollow grouted anchor bolt with couplers and plates",
+    },
+    "expansion-shell-bolt": {
+      src: "/product4.jpg",
+      alt: "Expansion-shell hollow anchor bolt demonstrating shell mechanism",
+    },
+    "fiberglass-bolt": {
+      src: "/product3.jpg",
+      alt: "Fiberglass anchor bolt solution for corrosion-sensitive environments",
+    },
+    accessories: {
+      src: "/product1.jpg",
+      alt: "Selection of SINOROCK self-drilling anchor bolt accessories",
+    },
   }
+
+  const getImageBySlug = (slug: string) => defaultProductImages[slug]?.src || "/product1.jpg"
+  const getImageAltBySlug = (slug: string) => defaultProductImages[slug]?.alt || "SINOROCK anchor bolt system"
 
   const product = productData[slug] || {
     title: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
     description: "High-quality anchoring solution designed for demanding geotechnical applications.",
     image: getImageBySlug(slug),
+    imageAlt: getImageAltBySlug(slug),
     introduction: "This product is designed for various geotechnical applications.",
     functions: "Provides reliable anchoring solutions for complex ground conditions.",
     conditions: ["Tunneling", "Mining", "Slope Stabilization"],
@@ -172,7 +190,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                   <div className="bg-muted rounded-lg overflow-hidden h-96 md:h-[500px] relative">
                     <img
                       src={product.image || "/product1.jpg"}
-                      alt={product.title}
+                      alt={product.imageAlt || product.title}
                       className="w-full h-full object-cover"
                       style={{ minHeight: "100%" }}
                       onError={(e) => {
@@ -268,7 +286,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                             <div key={i} className="aspect-video bg-muted rounded-lg overflow-hidden">
                               <img
                                 src={`/placeholder.svg?height=200&width=300&query=case${i}`}
-                                alt={`Case ${i}`}
+                                alt={`Illustrative case study ${i} featuring ${product.title}`}
                                 className="w-full h-full object-cover"
                               />
                             </div>

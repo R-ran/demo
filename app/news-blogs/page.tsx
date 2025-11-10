@@ -78,7 +78,7 @@ export default function NewsBlogPage() {
                   <div className="relative w-full overflow-hidden rounded-xl bg-muted aspect-[4/5] lg:aspect-[3/4]">
                     <img
                       src={selectedArticle.image || "/placeholder.svg"}
-                      alt={selectedArticle.title}
+                      alt={selectedArticle.imageAlt || selectedArticle.title}
                       className="h-full w-full object-cover"
                     />
                   </div>
@@ -132,7 +132,7 @@ export default function NewsBlogPage() {
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.imageAlt || item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-sm font-medium rounded">
