@@ -836,7 +836,8 @@ export async function getAllNewsBlogPaths(): Promise<Array<{ id: string; slug: s
   const wpApiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
   if (!wpApiUrl) {
-    throw new Error('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    console.warn('⚠️ NEXT_PUBLIC_WORDPRESS_API_URL is not defined, returning empty paths')
+    return []
   }
 
   try {
@@ -851,21 +852,29 @@ export async function getAllNewsBlogPaths(): Promise<Array<{ id: string; slug: s
     )
 
     if (!res.ok) {
-      throw new Error(`News & Blogs paths API error: ${res.status}`)
+      // 如果是 404 或其他错误，记录警告但不抛出错误，返回空数组
+      console.warn(`⚠️ News & Blogs paths API returned ${res.status}, returning empty paths`)
+      return []
     }
 
     const posts = await res.json()
 
+    if (!Array.isArray(posts)) {
+      console.warn('⚠️ News & Blogs paths API returned invalid data, returning empty paths')
+      return []
+    }
+
     console.log(`✅ 共获取 ${posts.length} 条 News & Blogs 路径`)
 
     return posts.map((post: any) => ({
-      id: post.id.toString(),
-      slug: post.slug
-    }))
+      id: post.id?.toString() || '',
+      slug: post.slug || ''
+    })).filter((item: { id: string; slug: string }) => item.id && item.slug)
 
   } catch (error) {
-    console.error('❌ Failed to fetch News & Blogs paths:', error)
-    // 返回空数组避免构建失败
+    // 捕获所有错误，记录但不抛出，返回空数组以避免构建失败
+    console.warn('⚠️ Failed to fetch News & Blogs paths:', error instanceof Error ? error.message : 'Unknown error')
+    console.warn('⚠️ Returning empty paths to allow build to continue')
     return []
   }
 }

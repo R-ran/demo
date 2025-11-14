@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from "react"
+import { Suspense, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
@@ -11,7 +11,7 @@ import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { getNewsBlogs } from "@/lib/wordpress"
+import { getNewsBlogs, truncateExcerpt } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
 type BlogItem = {
@@ -27,6 +27,26 @@ type BlogItem = {
 }
 
 export default function BlogPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background">
+        <TopHeader />
+        <StickyNav />
+        <main className="pt-12">
+          <div className="container mx-auto px-4 py-20 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-muted-foreground">Loading...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    }>
+      <BlogPageContent />
+    </Suspense>
+  )
+}
+
+function BlogPageContent() {
   const [posts, setPosts] = useState<BlogItem[]>([])
   const [selectedPost, setSelectedPost] = useState<BlogItem | null>(null)
   const [loading, setLoading] = useState(false)
@@ -56,7 +76,7 @@ export default function BlogPage() {
           title: post.title,
           date: post.publish_date,
           // 清理 HTML 标签
-          excerpt: post.excerpt.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
+          excerpt: truncateExcerpt(post.excerpt, 150),
           image: post.featured_image || '',
           author: post.author_name,
           content: post.content,
@@ -198,8 +218,8 @@ export default function BlogPage() {
                     <h2 className="text-2xl font-semibold mb-3 text-balance">
                       {post.title}
                     </h2>
-                    <p className="text-muted-foreground mb-4 text-pretty flex-1">
-                      {post.excerpt}
+                    <p className="text-muted-foreground mb-4 text-pretty flex-1 line-clamp-3">
+                      {truncateExcerpt(post.excerpt, 150)}
                     </p>
                     <Button
                       variant="link"

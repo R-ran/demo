@@ -10,7 +10,7 @@ import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { getNewsBlogs } from "@/lib/wordpress"
+import { getNewsBlogs, truncateExcerpt } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
 type NewsItem = {
@@ -63,7 +63,7 @@ function NewsPageContent() {
           title: post.title,
           date: post.publish_date,
           // 清理 HTML 标签
-          excerpt: post.excerpt.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
+          excerpt: truncateExcerpt(post.excerpt, 150),
           image: post.featured_image || '',
           author: post.author_name,
           content: post.content,
@@ -202,7 +202,9 @@ function NewsPageContent() {
                       </span>
                     </div>
                     <h2 className="text-2xl font-semibold mb-3 text-balance">{item.title}</h2>
-                    <p className="text-muted-foreground mb-4 text-pretty">{item.excerpt}</p>
+                    <p className="text-muted-foreground mb-4 text-pretty line-clamp-3">
+                      {truncateExcerpt(item.excerpt, 150)}
+                    </p>
                     <Button
                       variant="link"
                       className="p-0 h-auto text-primary"
