@@ -1,3 +1,5 @@
+
+
 import { Calendar, ArrowLeft, PenLine } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -16,17 +18,19 @@ export const metadata: Metadata = {
 }
 
 // 修改：从WordPress获取所有文章路径
-export async function generateStaticParams() {
-  try {
-    const paths = await getAllNewsBlogPaths()
-    // 只返回有效的路径
-    return paths.filter(path => path.id && path.slug).map(({ id }) => ({ id }))
-  } catch (error) {
-    console.warn('⚠️ Failed to generate static params for news-blogs:', error)
-    // 返回空数组，避免构建失败
-    return []
-  }
-}
+// export async function generateStaticParams() {
+//   try {
+//     const paths = await getAllNewsBlogPaths()
+//     // 只返回有效的路径
+//     return paths.filter(path => path.id && path.slug).map(({ id }) => ({ id }))
+//   } catch (error) {
+//     console.warn('⚠️ Failed to generate static params for news-blogs:', error)
+//     // 返回空数组，避免构建失败
+//     return []
+//   }
+// }
+
+export const dynamic = "force-dynamic";
 
 // 修改：改为异步组件，从WordPress获取数据
 export default async function NewsArticlePage({ params }: { params: { id: string } }) {

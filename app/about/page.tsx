@@ -1,6 +1,11 @@
+export const dynamic = 'force-static'
+
 import { Metadata } from "next"
 import AboutPageClient from "./about-page-content"
 import { getAboutSections, type AboutSection } from "@/lib/wordpress"
+
+
+
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -8,7 +13,7 @@ export const metadata: Metadata = {
 }
 
 // 允许静态生成
-export const dynamic = 'force-static'
+
 export const revalidate = 3600 // 1小时重新验证
 
 export default async function AboutPage() {
