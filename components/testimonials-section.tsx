@@ -35,15 +35,7 @@ export function TestimonialsSection({ projects = [] }: TestimonialsSectionProps)
                 : 'china-projects'
               const detailUrl = `/successful-projects/${category}/${project.slug}`
               
-              // 调试信息
-              console.log('项目链接信息:', {
-                title: project.title,
-                slug: project.slug,
-                categories: project.categories,
-                category: category,
-                detailUrl: detailUrl
-              })
-              
+                
               return (
                 <Link
                   key={project.id}

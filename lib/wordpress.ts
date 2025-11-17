@@ -149,23 +149,22 @@ export async function getProjects(): Promise<Project[]> {
     return []
   }
 
-  // 在客户端使用 API 路由避免 CORS 问题
-  const isClient = typeof window !== 'undefined'
-  const apiUrl = isClient
-    ? `/api/projects?per_page=100`
-    : `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&_=${Date.now()}`
+  // 统一直接调用WordPress API，但确保服务器端和客户端使用相同的参数
+  const apiUrl = `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&_=${Date.now()}`
 
   try {
     const res = await fetch(apiUrl, {
-      next: isClient ? undefined : { revalidate: 60 },
-      cache: isClient ? 'no-store' : undefined,
+      next: { revalidate: 60 }, // 缓存60秒
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Next.js-SSR-WordPress-Client'
       }
     })
 
     if (!res.ok) {
       console.error(`Projects API error: ${res.status} ${res.statusText}`)
+      console.error(`API URL: ${apiUrl}`)
       return []
     }
 
@@ -180,27 +179,28 @@ export async function getProjects(): Promise<Project[]> {
     return transformProjects(wpPosts, wpApiUrl)
   } catch (error) {
     console.error('获取项目数据失败:', error)
+    console.error(`WordPress API URL: ${apiUrl}`)
     return []
   }
 }
 
 export async function getProjectsByCategory(categorySlug: string): Promise<Project[]> {
   const wpApiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
-  
+
   if (!wpApiUrl) {
     console.warn('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
     return []
   }
 
-  // 在客户端使用 API 路由避免 CORS 问题
-  const isClient = typeof window !== 'undefined'
-  const apiUrl = isClient
-    ? `/api/projects?category=${encodeURIComponent(categorySlug)}&per_page=100`
-    : `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&project_category=${categorySlug}`
+  // 统一直接调用WordPress API
+  const apiUrl = `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&project_category=${encodeURIComponent(categorySlug)}&_=${Date.now()}`
 
   try {
     const res = await fetch(apiUrl, {
-      cache: 'no-store',
+      next: { revalidate: 60 },
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+      }
     })
 
     if (!res.ok) {
@@ -225,16 +225,14 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
     return null
   }
 
-  // 在客户端使用 API 路由避免 CORS 问题
-  const isClient = typeof window !== 'undefined'
-  const apiUrl = isClient 
-    ? `/api/projects?slug=${encodeURIComponent(slug)}`
-    : `${wpApiUrl}/wp-json/wp/v2/successful_project?slug=${encodeURIComponent(slug)}&_embed&status=publish&_=${Date.now()}`
+  // 统一直接调用WordPress API
+  const apiUrl = `${wpApiUrl}/wp-json/wp/v2/successful_project?slug=${encodeURIComponent(slug)}&_embed&status=publish&_=${Date.now()}`
 
   try {
     const res = await fetch(apiUrl, {
-      cache: 'no-store',
+      next: { revalidate: 60 },
       headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Content-Type': 'application/json',
       }
     })
@@ -273,15 +271,12 @@ export async function getProjectCategories(): Promise<ProjectCategory[]> {
     return []
   }
 
-  // 在客户端使用 API 路由避免 CORS 问题
-  const isClient = typeof window !== 'undefined'
-  const apiUrl = isClient
-    ? `/api/project-categories?per_page=100`
-    : `${wpApiUrl}/wp-json/wp/v2/project_category?per_page=100&_=${Date.now()}`
+  // 统一直接调用WordPress API
+  const apiUrl = `${wpApiUrl}/wp-json/wp/v2/project_category?per_page=100&_=${Date.now()}`
 
   try {
     const res = await fetch(apiUrl, {
-      cache: 'no-store',
+      next: { revalidate: 60 },
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
       }
