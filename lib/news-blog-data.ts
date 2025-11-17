@@ -17,14 +17,23 @@ export type StaticArticle = {
 export const staticArticles: StaticArticle[] = [
   {
     id: "1",
-    title: "New Generation Rock Bolt Technology Launched",
-    excerpt: "We are excited to announce the launch of our latest rock bolt technology, featuring enhanced corrosion resistance and improved load capacity.",
-    publish_date: "2024-03-15",
+    title: "Wuxi Oriental Xinhong Shines at Mining Indonesia 2024: Superior Quality Wins Global Mining Trust",
+    excerpt: "Oriental Xinhong showcased its high-performance anchoring portfolio at Mining Indonesia 2024, securing major deals and international acclaim.",
+    publish_date: "2024-11-14",
     featured_image: "/anchor-accessories-and-tools.jpg",
-    content: "<p>We are excited to announce the launch of our latest rock bolt technology, featuring enhanced corrosion resistance and improved load capacity.</p>",
+    content: `
+      <h2>Abstract</h2>
+      <p>From September 11–14, 2024, Mining Indonesia convened at Jakarta International Expo. Wuxi Oriental Xinhong Environmental Protection Technology Co., Ltd. ("Oriental Xinhong"), a premier Chinese mine support solutions provider, showcased its high-performance anchoring portfolio including self-drilling anchor bolts, hollow anchor rockbolts, and expansion shell anchor bolts. With robust quality, competitive pricing, and technical expertise, the company secured major deals and unanimous praise from international clients, reinforcing Chinese mine support equipment's growing influence in Southeast Asia.</p>
+
+      <h3>1. Mining Indonesia 2024: Asia's Mining Hub</h3>
+      <p>Mining Indonesia 2024, Asia's premier mining equipment exhibition, ran September 11–14 at Jakarta International Expo, alongside four concurrent trade shows. The event drew 1,200+ exhibitors from 40+ countries and 30,000+ professionals. With Southeast Asia's mining sector increasingly focused on deep excavation safety, the demand for advanced support systems was paramount. Indonesia's position as a top coal, nickel, and copper producer created ideal conditions for Oriental Xinhong to demonstrate its solutions.</p>
+
+      <h3>2. Oriental Xinhong: China's Mine Support Leader</h3>
+      <p>Based in Wuxi, Jiangsu, Oriental Xinhong is a high-tech enterprise specializing in R&D, production, and sales of mine/tunnel/slope support systems. With ISO 9001, ISO 14001, and EU CE certifications, the company exports to 50+ countries. Its modern production base features automated lines, CNC centers, and CNAS-accredited labs, producing 10 million+ meters annually of self-drilling anchor bolts, hollow anchor rockbolts, expansion shell anchor bolts, resin bolts, and anchor cables.</p>
+    `,
     categories: ["News"],
     type: "news",
-    author_name: "SINOROCK Team"
+    author_name: "XinHong Team"
   },
   {
     id: "2",
