@@ -62,8 +62,37 @@ export default function ProjectDetailPage() {
   }
 
   // ============= 未找到处理 =============
-  if (!project) {
-    return notFound()
+  if (!project && !loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <TopHeader />
+        <StickyNav />
+        <main className="pt-12">
+          <div className="container mx-auto px-4 py-20">
+            <div className="max-w-2xl mx-auto text-center">
+              <h1 className="text-4xl font-bold mb-4">项目未找到</h1>
+              <p className="text-muted-foreground mb-8">
+                抱歉，找不到您要查看的项目。可能该项目已被删除或链接不正确。
+              </p>
+              <div className="flex gap-4 justify-center">
+                <Link href="/successful-projects">
+                  <Button>
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    返回项目列表
+                  </Button>
+                </Link>
+                <Link href="/">
+                  <Button variant="outline">
+                    返回首页
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
   }
 
   // ============= 你的原有JSX，100%不变 =============

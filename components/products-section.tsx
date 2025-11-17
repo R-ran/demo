@@ -3,12 +3,6 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { ChevronDown } from "lucide-react"
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Hot Sales Products",
-  description: "Hot Sales Products",
-}
 
 export function ProductsSection() {
 

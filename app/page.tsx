@@ -9,20 +9,30 @@ import { Footer } from "@/components/footer"
 import { StickyNav } from "@/components/sticky-nav"
 import { TopHeader } from "@/components/top-header"
 import { Metadata } from "next"
+import { getProjects } from "@/lib/wordpress"
 
 export const metadata: Metadata = {
   title: "Home",
   description: "Home",
 }
 
-export default function Home() {
+export default async function Home() {
+  // 在服务器端获取成功案例数据
+  let projects = []
+  try {
+    projects = await getProjects()
+  } catch (error) {
+    console.error('首页获取成功案例失败:', error)
+    // 如果获取失败，使用空数组，组件会显示"暂无数据"
+  }
+
   return (
     <main className="min-h-screen">
       <TopHeader />
       <StickyNav />
       <HeroCarousel />
       <ProductsSection />
-      <TestimonialsSection />
+      <TestimonialsSection projects={projects} />
       <AboutSection />
       <CustomerMessagesSection />
       <NewsBlogSection />

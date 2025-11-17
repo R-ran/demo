@@ -145,32 +145,39 @@ export async function getProjects(): Promise<Project[]> {
   const wpApiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
   if (!wpApiUrl) {
-    throw new Error('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    console.warn('NEXT_PUBLIC_WORDPRESS_API_URL is not defined, returning empty array')
+    return []
   }
 
-  const res = await fetch(
-    `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&_=${Date.now()}`,
-    {
-      next: { revalidate: 60 },
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
+  try {
+    const res = await fetch(
+      `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&_=${Date.now()}`,
+      {
+        next: { revalidate: 60 },
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        }
       }
+    )
+
+    if (!res.ok) {
+      console.error(`Projects API error: ${res.status} ${res.statusText}`)
+      return []
     }
-  )
 
-  if (!res.ok) {
-    throw new Error(`Projects API error: ${res.status}`)
+    const wpPosts = await res.json()
+    console.log(`WordPress API返回 ${wpPosts.length} 个项目`)
+
+    // 简化调试信息
+    if (wpPosts.length > 0) {
+      console.log(`WordPress API返回 ${wpPosts.length} 个项目，开始处理ACF字段数据`)
+    }
+
+    return transformProjects(wpPosts, wpApiUrl)
+  } catch (error) {
+    console.error('获取项目数据失败:', error)
+    return []
   }
-
-  const wpPosts = await res.json()
-  console.log(`WordPress API返回 ${wpPosts.length} 个项目`)
-
-  // 简化调试信息
-  if (wpPosts.length > 0) {
-    console.log(`WordPress API返回 ${wpPosts.length} 个项目，开始处理ACF字段数据`)
-  }
-
-  return transformProjects(wpPosts, wpApiUrl)
 }
 
 export async function getProjectsByCategory(categorySlug: string): Promise<Project[]> {
