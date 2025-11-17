@@ -149,16 +149,20 @@ export async function getProjects(): Promise<Project[]> {
     return []
   }
 
+  // 在客户端使用 API 路由避免 CORS 问题
+  const isClient = typeof window !== 'undefined'
+  const apiUrl = isClient
+    ? `/api/projects?per_page=100`
+    : `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&_=${Date.now()}`
+
   try {
-    const res = await fetch(
-      `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&_=${Date.now()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-        }
+    const res = await fetch(apiUrl, {
+      next: isClient ? undefined : { revalidate: 60 },
+      cache: isClient ? 'no-store' : undefined,
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
       }
-    )
+    })
 
     if (!res.ok) {
       console.error(`Projects API error: ${res.status} ${res.statusText}`)
@@ -184,20 +188,32 @@ export async function getProjectsByCategory(categorySlug: string): Promise<Proje
   const wpApiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
   
   if (!wpApiUrl) {
-    throw new Error('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    console.warn('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    return []
   }
 
-  const res = await fetch(
-    `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&project_category=${categorySlug}`,
-    { next: { revalidate: 3600 } }
-  )
+  // 在客户端使用 API 路由避免 CORS 问题
+  const isClient = typeof window !== 'undefined'
+  const apiUrl = isClient
+    ? `/api/projects?category=${encodeURIComponent(categorySlug)}&per_page=100`
+    : `${wpApiUrl}/wp-json/wp/v2/successful_project?per_page=100&_embed&status=publish&project_category=${categorySlug}`
 
-  if (!res.ok) {
-    throw new Error(`Projects by category API error: ${res.status}`)
+  try {
+    const res = await fetch(apiUrl, {
+      cache: 'no-store',
+    })
+
+    if (!res.ok) {
+      console.error(`Projects by category API error: ${res.status}`)
+      return []
+    }
+
+    const wpPosts = await res.json()
+    return transformProjects(wpPosts, wpApiUrl)
+  } catch (error) {
+    console.error('获取分类项目失败:', error)
+    return []
   }
-
-  const wpPosts = await res.json()
-  return transformProjects(wpPosts, wpApiUrl)
 }
 
 // ✅ 修复：删除重复声明，只保留一个函数
@@ -205,32 +221,47 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
   const wpApiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
   if (!wpApiUrl) {
-    throw new Error('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    console.warn('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    return null
   }
 
-  const res = await fetch(
-    `${wpApiUrl}/wp-json/wp/v2/successful_project?slug=${slug}&_embed&status=publish&_=${Date.now()}`,
-    {
-      next: { revalidate: 3600 },
+  // 在客户端使用 API 路由避免 CORS 问题
+  const isClient = typeof window !== 'undefined'
+  const apiUrl = isClient 
+    ? `/api/projects?slug=${encodeURIComponent(slug)}`
+    : `${wpApiUrl}/wp-json/wp/v2/successful_project?slug=${encodeURIComponent(slug)}&_embed&status=publish&_=${Date.now()}`
+
+  try {
+    const res = await fetch(apiUrl, {
+      cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
       }
+    })
+
+    if (!res.ok) {
+      console.error(`Project by slug API error: ${res.status} ${res.statusText}`)
+      console.error(`尝试获取的 slug: ${slug}`)
+      console.error(`API URL: ${apiUrl}`)
+      return null
     }
-  )
 
-  if (!res.ok) {
-    throw new Error(`Project by slug API error: ${res.status}`)
+    const wpPosts = await res.json()
+
+    if (wpPosts.length === 0) {
+      console.warn(`未找到 slug 为 "${slug}" 的项目`)
+      return null
+    }
+
+    // 详细调试：单个项目的ACF字段数据
+    console.log(`获取项目详情: ${wpPosts[0].title.rendered}，ACF字段数量: ${wpPosts[0].acf ? Object.keys(wpPosts[0].acf).length : 0}`)
+
+    const projects = await transformProjects(wpPosts, wpApiUrl)
+    return projects[0]
+  } catch (error) {
+    console.error('获取项目详情失败:', error)
+    return null
   }
-
-  const wpPosts = await res.json()
-
-  if (wpPosts.length === 0) return null
-
-  // 详细调试：单个项目的ACF字段数据
-  console.log(`获取项目详情: ${wpPosts[0].title.rendered}，ACF字段数量: ${wpPosts[0].acf ? Object.keys(wpPosts[0].acf).length : 0}`)
-
-  const projects = await transformProjects(wpPosts, wpApiUrl)
-  return projects[0]
 }
 
 // ✅ 修复：删除重复声明，只保留一个函数
@@ -238,32 +269,42 @@ export async function getProjectCategories(): Promise<ProjectCategory[]> {
   const wpApiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
   if (!wpApiUrl) {
-    throw new Error('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    console.warn('NEXT_PUBLIC_WORDPRESS_API_URL is not defined')
+    return []
   }
 
-  const res = await fetch(
-    `${wpApiUrl}/wp-json/wp/v2/project_category?per_page=100&_=${Date.now()}`,
-    {
-      next: { revalidate: 60 },
+  // 在客户端使用 API 路由避免 CORS 问题
+  const isClient = typeof window !== 'undefined'
+  const apiUrl = isClient
+    ? `/api/project-categories?per_page=100`
+    : `${wpApiUrl}/wp-json/wp/v2/project_category?per_page=100&_=${Date.now()}`
+
+  try {
+    const res = await fetch(apiUrl, {
+      cache: 'no-store',
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
       }
+    })
+
+    if (!res.ok) {
+      console.error(`Categories API error: ${res.status}`)
+      return []
     }
-  )
 
-  if (!res.ok) {
-    throw new Error(`Categories API error: ${res.status}`)
+    const wpCategories = await res.json()
+    console.log(`WordPress API返回 ${wpCategories.length} 个分类`)
+
+    return wpCategories.map((cat: any) => ({
+      id: cat.id.toString(),
+      name: cat.name,
+      slug: cat.slug,
+      count: cat.count,
+    }))
+  } catch (error) {
+    console.error('获取分类失败:', error)
+    return []
   }
-
-  const wpCategories = await res.json()
-  console.log(`WordPress API返回 ${wpCategories.length} 个分类`)
-
-  return wpCategories.map((cat: any) => ({
-    id: cat.id.toString(),
-    name: cat.name,
-    slug: cat.slug,
-    count: cat.count,
-  }))
 }
 
 // ✅ 修复：统一的项目数据转换函数

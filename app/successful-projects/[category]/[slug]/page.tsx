@@ -15,6 +15,7 @@ import { notFound, useParams } from "next/navigation"
 export default function ProjectDetailPage() {
   const params = useParams()
   const slug = params?.slug as string
+  const category = params?.category as string // 虽然不使用，但保留用于路由匹配
   
   // ============= 添加状态管理 =============
   const [project, setProject] = useState<Project | null>(null)
@@ -28,11 +29,23 @@ export default function ProjectDetailPage() {
   // ============= 加载WordPress数据 =============
   useEffect(() => {
     async function loadData() {
+      if (!slug) {
+        console.error('Slug 参数为空')
+        setLoading(false)
+        return
+      }
+
+      console.log('开始加载项目详情，slug:', slug)
+      
       try {
         const [projectData, categoriesData] = await Promise.all([
           getProjectBySlug(slug),
           getProjectCategories()
         ])
+        
+        console.log('项目数据加载结果:', projectData ? '找到项目' : '未找到项目')
+        console.log('项目详情:', projectData)
+        
         setProject(projectData)
         setCategories(categoriesData)
       } catch (error) {
