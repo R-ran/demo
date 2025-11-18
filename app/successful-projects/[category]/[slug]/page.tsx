@@ -150,42 +150,43 @@ export default function ProjectDetailPage() {
               </Link>
             </div>
 
-            {/* Project Image */}
+            {/* Project Title Section - 标题在上面 */}
+            <div className="mb-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">{project.title}</h1>
+              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <span className="font-semibold">Location:</span>
+                  {project.location || 'N/A'}
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="font-semibold">Year:</span>
+                  {project.date || 'N/A'}
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="font-semibold">Categories:</span>
+                  {project.categories.join(', ') || 'General'}
+                </span>
+              </div>
+            </div>
+
+            {/* Project Image - 图片在中间 */}
             <div className="mb-8 rounded-lg overflow-hidden">
               <img
                 src={project.image || "/placeholder.svg"}
                 alt={project.title}
-                className="w-full h-96 object-cover"
+                className="w-full h-auto max-h-[600px] object-cover"
                 onError={(e) => { 
                   (e.currentTarget as HTMLImageElement).src = "/placeholder.svg" 
                 }}
               />
             </div>
 
-            {/* Project Details */}
-            <div className="space-y-6">
-              <div>
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">{project.title}</h1>
-                <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
-                  <span className="flex items-center gap-2">
-                    <span className="font-semibold">Location:</span>
-                    {project.location || 'N/A'}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <span className="font-semibold">Year:</span>
-                    {project.date || 'N/A'}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <span className="font-semibold">Categories:</span>
-                    {project.categories.join(', ') || 'General'}
-                  </span>
-                </div>
-              </div>
-
+            {/* Project Content - 文案内容在下面 */}
+            <div className="space-y-8">
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Project Overview</h2>
                 <div 
-                  className="text-lg text-muted-foreground leading-relaxed whitespace-pre-line"
+                  className="text-xl text-muted-foreground leading-loose whitespace-pre-line"
                   dangerouslySetInnerHTML={{ __html: project.content }}
                 />
               </div>

@@ -213,59 +213,59 @@ export default function SuccessfulProjectsPageContent({
           {/* Project Detail View */}
           {selectedProject && (
             <div className="mb-16 p-6 bg-blue-50 rounded-lg border border-blue-200">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                {/* Image Section */}
-                <div className="relative w-full h-96 md:h-[500px] overflow-hidden rounded-lg shadow-lg">
-                  <img
-                    src={selectedProject.image || "/placeholder.svg"}
-                    alt={selectedProject.title}
-                    className="w-full h-full object-cover"
+              {/* Title Section - 标题在上面 */}
+              <div className="mb-8">
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-blue-800">{selectedProject.title}</h2>
+                <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                  <span className="flex items-center gap-2">
+                    <span className="font-semibold">Location:</span>
+                    {selectedProject.location || 'N/A'}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <span className="font-semibold">Year:</span>
+                    {selectedProject.date || 'N/A'}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <span className="font-semibold">Category:</span>
+                    {selectedProject.categories.join(', ') || 'General'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Image Section - 图片在中间 */}
+              <div className="mb-8 relative w-full overflow-hidden rounded-lg shadow-lg">
+                <img
+                  src={selectedProject.image || "/placeholder.svg"}
+                  alt={selectedProject.title}
+                  className="w-full h-auto max-h-[400px] object-cover"
+                />
+              </div>
+
+              {/* Content Section - 文案内容在下面 */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">Project Overview</h3>
+                  <div
+                    className="text-xl text-gray-700 leading-loose"
+                    dangerouslySetInnerHTML={{ __html: selectedProject.content }}
                   />
                 </div>
-
-                {/* Text Section */}
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-800">{selectedProject.title}</h2>
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
-                      <span className="flex items-center gap-2">
-                        <span className="font-semibold">Location:</span>
-                        {selectedProject.location || 'N/A'}
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <span className="font-semibold">Year:</span>
-                        {selectedProject.date || 'N/A'}
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <span className="font-semibold">Category:</span>
-                        {selectedProject.categories.join(', ') || 'General'}
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 text-gray-800">Project Overview</h3>
-                    <div
-                      className="text-lg text-gray-700 leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: selectedProject.content }}
-                    />
-                  </div>
-                  <div className="flex gap-4 pt-4">
-                    <Button
-                      onClick={() => {setSelectedProject(null);
-                        setSelectedCategory(null);
-                      }}
-                      variant="outline"
-                      className="mt-6"
-                    >
-                      <ArrowLeft className="w-4 h-4 mr-2" />
-                      Back to Projects
+                <div className="flex gap-4 pt-4">
+                  <Button
+                    onClick={() => {setSelectedProject(null);
+                      setSelectedCategory(null);
+                    }}
+                    variant="outline"
+                    className="mt-6"
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back to Projects
+                  </Button>
+                  <Link href="/contact">
+                    <Button className="mt-6 bg-blue-600 hover:bg-blue-700">
+                      Contact Us for Similar Projects
                     </Button>
-                    <Link href="/contact">
-                      <Button className="mt-6 bg-blue-600 hover:bg-blue-700">
-                        Contact Us for Similar Projects
-                      </Button>
-                    </Link>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
