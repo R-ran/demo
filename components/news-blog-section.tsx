@@ -3,32 +3,47 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-// 注释掉不再需要的导入
-// import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
-// 从共享数据文件导入
-import { getLatestNews } from "@/lib/news-blog-data"
-
-// 辅助函数：截断文本
-function truncateExcerpt(text: string, maxLength: number): string {
-  if (!text) return ''
-  const cleaned = text.replace(/<[^>]*>/g, '')
-  if (cleaned.length <= maxLength) return cleaned
-  return cleaned.substring(0, maxLength) + '...'
-}
+// 从 WordPress API 导入
+import { getNewsBlogs, truncateExcerpt } from "@/lib/wordpress"
+import type { NewsBlogArticle } from "@/lib/wordpress"
 
 export function NewsBlogSection() {
-  // 从共享数据文件获取最新的3条新闻
-  const displayNews = getLatestNews(3).map(article => ({
-    id: article.id,
-    title: article.title,
-    excerpt: article.excerpt,
-    date: article.publish_date,
-    featured_image: article.featured_image,
-    slug: article.id, // 使用 id 作为 slug
-    publish_date: article.publish_date // 添加 publish_date 以兼容现有代码
-  }))
+  const [displayNews, setDisplayNews] = useState<NewsBlogArticle[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await fetch('/api/news-blogs?perPage=3&type=news')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const result = await response.json()
+        setDisplayNews(result.data || [])
+      } catch (error) {
+        console.error('Failed to fetch news:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchNews()
+  }, [])
+
+  if (loading) {
+    return (
+      <section id="news-blogs" className="py-10 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        </div>
+      </section>
+    )
+  }
   return (
     <section id="news-blogs" className="py-10 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -62,7 +77,7 @@ export function NewsBlogSection() {
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <h3 className="text-xl font-semibold text-balance flex-1">{item.title}</h3>
                   <span className="text-sm text-muted-foreground whitespace-nowrap">
-                    {new Date(item.publish_date || item.date).toLocaleDateString("en-US", {
+                    {new Date(item.publish_date).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                     })}

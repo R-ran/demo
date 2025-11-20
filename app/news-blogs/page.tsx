@@ -10,7 +10,6 @@ import { Footer } from "@/components/footer"
 import { useEffect, useState } from "react"
 
 // WordPress API 导入
-import { getNewsBlogs } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
 export default function NewsBlogPage() {
@@ -30,13 +29,16 @@ export default function NewsBlogPage() {
     // 获取文章数据
     async function fetchArticles() {
       try {
-        console.log('准备调用 getNewsBlogs...')
-        const result = await getNewsBlogs({ page:1, perPage:12 })
-        console.log('API 调用成功:',result)
+        console.log('准备调用 /api/news-blogs...')
+        const response = await fetch('/api/news-blogs?perPage=12')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const result = await response.json()
+        console.log('API 调用成功:', result)
 
-        setArticles(result.data)
+        setArticles(result.data || [])
       } catch (err) {
-
         console.error('API 调用失败:', err)
         setError(err instanceof Error ? err.message : 'Unknown error')
       } finally {

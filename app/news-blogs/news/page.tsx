@@ -11,7 +11,7 @@ import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 // WordPress 导入
-import { getNewsBlogs, truncateExcerpt } from "@/lib/wordpress"
+import { truncateExcerpt } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
 // truncateExcept 函数已在 wordpress.ts 中定义，这里不再重复定义
@@ -53,7 +53,12 @@ function NewsPageContent() {
 
     const fetchNews = async () => {
       try {
-        const { data: remotePosts } = await getNewsBlogs({ page: 1, perPage: 12, type: 'news' })
+        const response = await fetch('/api/news-blogs?perPage=12&type=news')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const result = await response.json()
+        const remotePosts = result.data || []
 
         if (!mounted || !remotePosts?.length) {
           return
