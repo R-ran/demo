@@ -12,11 +12,10 @@ import Image from "next/image"
 import { Facebook, Twitter, Youtube, Linkedin } from "lucide-react"
 
 const productLinks = [
-  { name: "XH self-drilling anchor bolt", href: "/products/self-drilling-bolt" },
-  { name: "XH hollow grouted anchor bolt", href: "/products/hollow-grouted-bolt" },
+  { name: "XH self-drilling hollow anchor bolt", href: "/products/self-drilling-bolt" },
+  { name: "XH common anchor bolt", href: "/products/common-anchor-bolt" },
+  { name: "Combination hollow anchor bolt", href: "/products/combination-hollow-bolt" },
   { name: "Expansion-shell hollow anchor bolt", href: "/products/expansion-shell-bolt" },
-  { name: "Fiberglass anchor bolt", href: "/products/fiberglass-bolt" },
-  { name: "Accessories", href: "/products/accessories" },
 ]
 
 export function Footer() {
@@ -33,12 +32,12 @@ export function Footer() {
   }
 
   return (
-    <footer id="contact" className="bg-primary text-secondary-foreground py-16">
+    <footer id="contact" className="bg-primary text-secondary-foreground py-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Products Column */}
           <div>
-            <h3 className="text-4xl font-bold mb-14 text-write">PRODUCTS</h3>
+            <h3 className="text-4xl font-bold mb-8 text-write">PRODUCTS</h3>
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.href}>
@@ -156,8 +155,8 @@ export function Footer() {
 
 
        
-        <div className="mt-12 pt-8 border-t border-secondary-foreground/20 text-center text-sm text-black/60">
-          <p>© 2025 SINOROCK Engineering Material Co., Ltd. All Rights Reserved.</p>
+        <div className="mt-4 pt-2 border-t border-secondary-foreground/20 text-center text-sm text-black/60">
+          <p>© 2025 XINHONG Technology Co., Ltd. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

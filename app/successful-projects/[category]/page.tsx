@@ -9,10 +9,12 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, ArrowLeft } from "lucide-react"
 import { getProjectsByCategory, getProjectCategories, truncateExcerpt, type Project, type ProjectCategory } from "@/lib/wordpress"
+import { useRouter } from "next/navigation"
 
 // ============= 删除静态数据，只保留样式 =============
 
 export default function CategoryProjectsPage({ params }: { params: { category: string } }) {
+  const router = useRouter()
   const category = params?.category || ""
   
   // ============= 添加状态管理 =============
@@ -80,24 +82,21 @@ export default function CategoryProjectsPage({ params }: { params: { category: s
     )
   }
 
-  if (!categoryInfo) {
+  // 如果分类不存在，重定向到项目列表页
+  useEffect(() => {
+    if (!loading && !categoryInfo) {
+      router.replace("/successful-projects")
+    }
+  }, [loading, categoryInfo, router])
+
+  // 在重定向过程中显示加载状态
+  if (!categoryInfo && !loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <TopHeader />
-        <StickyNav />
-        <main className="pt-12">
-          <div className="container mx-auto px-4 py-20">
-            <h1 className="text-4xl font-bold mb-4">Category Not Found</h1>
-            <Link href="/successful-projects">
-              <Button>
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Projects
-              </Button>
-            </Link>
-          </div>
-        </main>
-        
-        <Footer />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Redirecting...</p>
+        </div>
       </div>
     )
   }

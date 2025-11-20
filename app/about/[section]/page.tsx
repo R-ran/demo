@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Award, Factory, Building2 } from "lucide-react"
 import { TopHeader } from "@/components/top-header"
@@ -110,25 +111,9 @@ export default async function AboutPage({ params }: { params: Promise<{ section:
     item = fallbackAboutItems[section] || null
   }
 
+  // 如果 section 不存在，重定向到 about 页面
   if (!item) {
-    return (
-      <div className="min-h-screen bg-background">
-        <TopHeader />
-        <StickyNav />
-        <main className="pt-12">
-          <div className="container mx-auto px-4 py-20">
-            <h1 className="text-4xl font-bold mb-4">Section Not Found</h1>
-            <Link href="/about">
-              <Button>
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to About Us
-              </Button>
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    )
+    redirect("/about")
   }
 
   const IconComponent = item.icon

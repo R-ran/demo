@@ -8,11 +8,12 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { getProjectBySlug, getProjectCategories, type Project, type ProjectCategory } from "@/lib/wordpress"
-import { notFound, useParams } from "next/navigation"
+import { notFound, useParams, useRouter } from "next/navigation"
 
 // ============= 删除所有静态数据 =============
 
 export default function ProjectDetailPage() {
+  const router = useRouter()
   const params = useParams()
   let slug = params?.slug as string
   const category = params?.category as string // 虽然不使用，但保留用于路由匹配
@@ -83,8 +84,32 @@ export default function ProjectDetailPage() {
     )
   }
 
-  // ============= 未找到处理 =============
+  // ============= 未找到处理 - 重定向到上一级页面 =============
+  useEffect(() => {
+    if (!loading && !project) {
+      // 重定向到项目分类页面，如果没有分类则重定向到项目列表页
+      if (category) {
+        router.replace(`/successful-projects/${category}`)
+      } else {
+        router.replace("/successful-projects")
+      }
+    }
+  }, [loading, project, category, router])
+
+  // 在重定向过程中显示加载状态
   if (!project && !loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Redirecting...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // 以下代码不应该被执行，但如果项目存在则正常渲染
+  if (!project) {
     return (
       <div className="min-h-screen bg-background">
         <TopHeader />

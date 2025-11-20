@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -51,11 +52,22 @@ type Product = {
   categories: string[]
 }
 
+// 有效的产品 slug 列表（移到组件外部，避免重复创建）
+const validProductSlugs = [
+  "T-self-drilling-bolt",
+  "R-self-drilling-bolt",
+  "common-anchor-bolt",
+  "combination-hollow-bolt",
+  "expansion-shell-bolt"
+]
+
 export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const router = useRouter()
   const [slug, setSlug] = useState<string>("")
   const [product, setProduct] = useState<Product | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [activeTab, setActiveTab] = useState("introduction")
+  const [isValidProduct, setIsValidProduct] = useState<boolean | null>(null)
 
   // Handle async params
   useEffect(() => {
@@ -68,12 +80,22 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
   useEffect(() => {
     if (!slug) return // 等待 slug 被设置
-    // 直接使用默认产品数据
-    setProduct(getDefaultProductData(slug))
-  }, [slug])
+    
+    // 检查 slug 是否有效
+    if (!validProductSlugs.includes(slug)) {
+      // 无效的产品 slug，重定向到产品列表页
+      setIsValidProduct(false)
+      router.replace("/products")
+      return
+    }
 
-  // 根据slug获取默认产品数据
-  const getDefaultProductData = (productSlug: string): Product => {
+    // 有效的 slug，获取产品数据
+    setIsValidProduct(true)
+    setProduct(getDefaultProductData(slug))
+  }, [slug, router])
+
+  // 根据slug获取默认产品数据（仅在有效 slug 时调用）
+  const getDefaultProductData = (productSlug: string): Product | null => {
     const defaultProducts: Record<string, Product> = {
       "T-self-drilling-bolt": {
         id: "self-drilling-1",
@@ -177,21 +199,36 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       },
     }
 
-    return defaultProducts[productSlug] || {
-      id: "default",
-      title: productSlug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
-      slug: productSlug,
-      content: "<p>Product information is being updated. Please contact us for more details.</p>",
-      excerpt: "High-quality anchoring solution designed for demanding geotechnical applications.",
-      featured_image: "/placeholder.svg",
-      model: "",
-      specs: "",
-      tech_params: "",
-      application_areas: "",
-      features: [],
-      case_images: [],
-      categories: []
-    }
+    return defaultProducts[productSlug] || null
+  }
+
+  // 如果产品无效，显示加载状态或返回 null（重定向会处理）
+  if (isValidProduct === false) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Redirecting...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // 如果还在验证中或产品数据未加载，显示加载状态
+  if (isValidProduct === null || !product) {
+    return (
+      <div className="min-h-screen bg-background">
+        <TopHeader />
+        <StickyNav />
+        <main className="pt-12">
+          <div className="container mx-auto px-4 py-20 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    )
   }
 
   // 获取产品数据或默认值（保持你原来的fallback逻辑）
@@ -1103,7 +1140,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                                   <th className="border border-gray-300 px-3 py-3 text-center font-semibold">Anchor Hole Diameter</th>
                                   <th className="border border-gray-300 px-3 py-3 text-center font-semibold">Standard Length</th>
                                   <th className="border border-gray-300 px-3 py-3 text-center font-semibold">Other Spec</th>
-                                </tr>
+                              </tr>
                               </thead>
                               <tbody>
                                 <tr className="bg-white hover:bg-gray-50 transition-colors">
@@ -1231,14 +1268,14 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                                   <td className="border border-gray-300 px-4 py-3 text-center">12.7</td>
                                   <td className="border border-gray-300 px-4 py-3 text-center">2.5/3/3.5/4/4.5/5</td>
                                 </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                          </tbody>
+                        </table>
+                      </div>
                           <div className="mt-4 text-sm text-muted-foreground italic">
                             We support customized needs.
                           </div>
-                        </div>
-                      )}
+                    </div>
+                  )}
 
                       {/* Combination Hollow Anchor Bolt Detailed Technical Specifications Table */}
                       {slug === "combination-hollow-bolt" && (
@@ -1271,7 +1308,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                                       <span>φ60</span>
                                       <span>φ76</span>
                                       <span>φ89</span>
-                                    </div>
+                </div>
                                   </td>
                                 </tr>
                                 <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
@@ -1300,7 +1337,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                                 </tr>
                               </tbody>
                             </table>
-                          </div>
+              </div>
                           <div className="mt-4 text-sm text-muted-foreground italic">
                             We satisfy tailored demands from our overseas clients.
                           </div>
