@@ -16,13 +16,8 @@ import { useSearchParams } from "next/navigation"
 const productCategories = [
   {
     id: "self-drilling",
-    name: "XH self-drilling anchor bolt",
+    name: "XH self-drilling hollow anchor bolt",
     href: "/products?category=self-drilling",
-  },
-  {
-    id: "grouted-anchor-bolt",
-    name: "XH grouted anchor bolt",
-    href: "/products?category=grouted-anchor-bolt",
   },
   {
     id: "common-anchor-bolt",
@@ -39,11 +34,6 @@ const productCategories = [
     name: "Expansion-shell hollow anchor bolt",
     href: "/products?category=expansion-shell",
   },
-  {
-    id: "fiberglass",
-    name: "Fiberglass anchor bolt",
-    href: "/products?category=fiberglass",
-  },
 ]
 
 type ProductItem = {
@@ -59,22 +49,22 @@ type ProductItem = {
 const getDefaultProducts = (): ProductItem[] => [
   {
     id: "self-drilling-1",
-    name: "XH Self-Drilling Anchor Bolt",
-    description: "High-efficiency self-drilling anchor bolt system for rock and soil reinforcement. Suitable for various geological conditions.",
+    name: "T-Thread Self Drilling Anchor Bolt",
+    description: "Xinhong self-drilling anchor (SDA) system enables simultaneous drilling & grouting. Cost-saving hollow anchor bolt solution for tunnels, mining & slope stabilization. Cuttable & extendable.",
     image: "/product1.jpg",
     imageAlt: "XH Self-Drilling Anchor Bolt",
-    slug: "self-drilling-bolt",
+    slug: "T-self-drilling-bolt",
   },
   {
-    id: "hollow-grouted-1",
-    name: "XH Grouted Anchor Bolt",
-    description: "Advanced grouted anchor system with superior corrosion resistance and high load-bearing capacity.",
-    image: "/product2.jpg",
-    imageAlt: "XH Grouted Anchor Bolt",
-    slug: "grouted-anchor-bolt",
+    id: "self-drilling-2",
+    name: "R-Thread Self Drilling Anchor Bolt",
+    description: "Xinhong self-drilling anchor (SDA) system enables simultaneous drilling & grouting. Cost-saving hollow anchor bolt solution for tunnels, mining & slope stabilization. Cuttable & extendable.",
+    image: "/product1.jpg",
+    imageAlt: "XH Self-Drilling Anchor Bolt",
+    slug: "R-self-drilling-bolt",
   },
   {
-    id: "expansion-shell-1",
+    id: "common-anchor-1",
     name: "XH Common Anchor Bolt",
     description: "Advanced common anchor system with superior corrosion resistance and high load-bearing capacity.",
     image: "/product3.jpg",
@@ -90,20 +80,12 @@ const getDefaultProducts = (): ProductItem[] => [
     slug: "combination-hollow-bolt",
   },
   {
-    id: "accessories-1",
+    id: "expansion-shell-1",
     name: "Expansion-Shell Hollow Anchor Bolt",
     description: "Reliable expansion-shell anchor system for immediate support in tunneling and mining applications.",
     image: "/product5.jpg",
     imageAlt: "Expansion-Shell Hollow Anchor Bolt",
     slug: "expansion-shell-bolt",
-  },
-  {
-    id: "fiberglass-1",
-    name: "Fiberglass Anchor Bolt",
-    description: "Non-metallic fiberglass anchor system with excellent corrosion resistance for permanent applications.",
-    image: "/product6.jpg",
-    imageAlt: "Fiberglass Anchor Bolt",
-    slug: "fiberglass-bolt",
   },
 ]
 
@@ -121,19 +103,15 @@ const getFilteredProducts = (cat: string | null): ProductItem[] => {
     const productSlug = product.slug.toLowerCase()
     const productName = product.name.toLowerCase()
     
-    // 匹配分类
+    // 匹配分类 - 精确匹配 slug，避免错误匹配
     if (categoryLower === 'self-drilling') {
-      return productSlug.includes('self-drilling') || productName.includes('self-drilling')
-    } else if (categoryLower === 'grouted-anchor-bolt') {
-      return productSlug.includes('grouted-anchor-bolt') || productName.includes('grouted')
+      return productSlug.includes('self-drilling')
     } else if (categoryLower === 'common-anchor-bolt') {
-      return productSlug.includes('common-anchor-bolt') || productName.includes('common')
+      return productSlug === 'common-anchor-bolt'
     } else if (categoryLower === 'combination-hollow') {
-      return productSlug.includes('combination-hollow') || productName.includes('combination')
+      return productSlug === 'combination-hollow-bolt'
     } else if (categoryLower === 'expansion-shell') {
-      return productSlug.includes('expansion-shell') || productName.includes('expansion-shell')
-    } else if (categoryLower === 'fiberglass') {
-      return productSlug.includes('fiberglass') || productName.includes('fiberglass')
+      return productSlug === 'expansion-shell-bolt'
     }
     
     return false
@@ -361,7 +339,11 @@ function ProductsPageContent() {
               {/* Product Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
-                  <Link key={product.id} href={`/products/${product.slug}`}>
+                  <Link 
+                    key={product.id} 
+                    href={`/products/${product.slug}`}
+                    title={`View ${product.name} - ${product.slug}`}
+                  >
                     <Card className="group cursor-pointer overflow-hidden hover:shadow-lg transition-all bg-white h-full">
                       <CardContent className="p-0 h-full flex flex-col">
                         {/* Image Section */}

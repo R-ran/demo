@@ -19,7 +19,7 @@ export function TopHeader() {
     { title: "Overseas Projects", category: "Projects", url: "/successful-projects/overseas" },
     { title: "Why Choose Us", category: "About", url: "/about/why-choose-us" },
     { title: "Factory Overview", category: "About", url: "/about/factory" },
-    { title: "News & Blog", category: "News", url: "/news-blog" },
+    { title: "News & Blogs", category: "News", url: "/news-blogs" },
     { title: "Contact Us", category: "Contact", url: "/contact" },
   ]
 

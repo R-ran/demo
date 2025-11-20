@@ -1,18 +1,34 @@
 "use client"
 
 import Link from "next/link"
-import { Suspense, useEffect, useState } from "react"
 import { Calendar, ArrowLeft, PenLine } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useState, useEffect } from "react"
 
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-// WordPress 导入
 import { truncateExcerpt } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
+
+// 获取数据的辅助函数
+async function getNewsData() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'}/api/news-blogs?perPage=12&type=news`, {
+      cache: 'no-store'
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const result = await response.json()
+    return result.data || []
+  } catch (error) {
+    console.error("Failed to fetch news articles:", error)
+    return []
+  }
+}
 
 // truncateExcept 函数已在 wordpress.ts 中定义，这里不再重复定义
 
@@ -29,14 +45,6 @@ type NewsItem = {
 }
 
 export default function NewsPage() {
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-background" />}>
-      <NewsPageContent />
-    </Suspense>
-  )
-}
-
-function NewsPageContent() {
   const [newsArticles, setNewsArticles] = useState<NewsItem[]>([])
   const [selectedArticle, setSelectedArticle] = useState<NewsItem | null>(null)
   const [loading, setLoading] = useState(true)

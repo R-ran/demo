@@ -17,12 +17,10 @@ const categories = [
     label: "Products",
     href: "/products",
     dropdown: [
-      { label: "XH self-drilling anchor bolt", href: "/products?category=self-drilling" },
-      { label: "XH grouted anchor bolt", href: "/products?category=grouted-anchor-bolt" },
+      { label: "XH self-drilling hollow anchor bolt", href: "/products?category=self-drilling" },
       { label: "XH common anchor bolt", href: "/products?category=common-anchor-bolt" },
       { label: "Combination hollow anchor bolt", href: "/products?category=combination-hollow" },
       { label: "Expansion-shell hollow anchor bolt", href: "/products?category=expansion-shell" },
-      { label: "Fiberglass anchor bolt", href: "/products?category=fiberglass" },
     ],
   },
   {
@@ -91,8 +89,10 @@ export function StickyNav() {
               onMouseEnter={() => category.dropdown && setActiveDropdown(category.id)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <Link href={category.href}>
-                <button
+              {category.id === "news-blogs" ? (
+                // 对于News & Blogs，使用直接的a标签测试
+                <a
+                  href={category.href}
                   className={cn(
                     "px-8 py-4 text-base font-medium transition-colors flex items-center gap-2 cursor-pointer",
                     pathname === category.href || pathname.startsWith(category.href + "/")
@@ -102,16 +102,32 @@ export function StickyNav() {
                 >
                   {category.label}
                   {category.dropdown && <ChevronDown className="w-4 h-4" />}
-                </button>
-              </Link>
+                </a>
+              ) : (
+                <Link href={category.href}>
+                  <button
+                    className={cn(
+                      "px-8 py-4 text-base font-medium transition-colors flex items-center gap-2 cursor-pointer",
+                      pathname === category.href || pathname.startsWith(category.href + "/")
+                        ? "bg-primary text-primary-foreground"
+                        : "text-secondary-foreground hover:bg-primary/20",
+                    )}
+                  >
+                    {category.label}
+                    {category.dropdown && <ChevronDown className="w-4 h-4" />}
+                  </button>
+                </Link>
+              )}
 
               {category.dropdown && activeDropdown === category.id && (
                 <div className="absolute top-full left-0 min-w-[280px] bg-primary shadow-lg py-2 animate-in fade-in slide-in-from-top-2 duration-200">
                   {category.dropdown.map((item, index) => (
-                    <Link key={index} href={item.href}>
-                    <div className="px-6 py-3 text-primary-foreground hover:bg-primary-foreground/10 transition-colors text-sm cursor-pointer">
-                        {item.label}
-                      </div>
+                    <Link
+                      key={index}
+                      href={item.href}
+                      className="block px-6 py-3 text-primary-foreground hover:bg-primary-foreground/10 transition-colors text-sm"
+                    >
+                      {item.label}
                     </Link>
                   ))}
                 </div>

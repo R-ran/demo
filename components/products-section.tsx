@@ -6,23 +6,22 @@ import { ChevronDown } from "lucide-react"
 
 export function ProductsSection() {
 
-  // 静态产品数据
+  // 静态产品数据 - 对应四个产品类型
   const fallbackProducts = [
     {
       id: "1",
-      title: "XH self-drilling anchor bolt",
+      title: "XH self-drilling hollow anchor bolt",
       featured_image: "/product1.jpg",
-      imageAlt: "Close-up of XH self-drilling anchor bolt components",
+      imageAlt: "Close-up of XH self-drilling hollow anchor bolt components",
       slug: "self-drilling-bolt",
     },
     {
       id: "2",
-      title: "XH grouted anchor bolt",
-      featured_image: "/product2.jpg",
-      imageAlt: "XH grouted anchor bolt with grout fittings",
-      slug: "grouted-anchor-bolt",
+      title: "XH common anchor bolt",
+      featured_image: "/product3.jpg",
+      imageAlt: "XH common anchor bolt ready for installation",
+      slug: "common-anchor-bolt",
     },
-    
     {
       id: "3",
       title: "Combination hollow anchor bolt",
@@ -37,7 +36,6 @@ export function ProductsSection() {
       imageAlt: "Expansion-shell hollow anchor bolt ready for installation",
       slug: "expansion-shell-bolt",
     },
-    
   ]
 
   const displayProducts = fallbackProducts
@@ -49,14 +47,12 @@ export function ProductsSection() {
     // 将产品映射到分类页面（使用查询参数）
     if (slug.includes('self-drilling') || slug.includes('self_drilling')) {
       return '/products?category=self-drilling'
-    } else if (slug.includes('hollow-grouted') || slug.includes('hollow_grouted')) {
-      return '/products?category=hollow-grouted'
+    } else if (slug === 'common-anchor-bolt') {
+      return '/products?category=common-anchor-bolt'
+    } else if (slug === 'combination-hollow-bolt') {
+      return '/products?category=combination-hollow'
     } else if (slug.includes('expansion-shell') || slug.includes('expansion_shell')) {
       return '/products?category=expansion-shell'
-    } else if (slug.includes('fiberglass')) {
-      return '/products?category=fiberglass'
-    } else if (slug.includes('accessor')) {
-      return '/products?category=accessories'
     }
 
     // 默认链接

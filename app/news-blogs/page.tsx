@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, PenLine, ArrowLeft } from "lucide-react"
@@ -12,57 +12,38 @@ import { useEffect, useState } from "react"
 // WordPress API 导入
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
-export default function NewsBlogPage() {
-  const [articles, setArticles] = useState<NewsBlogArticle[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+// 获取数据的辅助函数
+async function getNewsBlogsData() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'}/api/news-blogs?perPage=12`, {
+      cache: 'no-store'
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const result = await response.json()
+    return result.data || []
+  } catch (error) {
+    console.error("Failed to fetch articles:", error)
+    return []
+  }
+}
+
+export default async function NewsBlogPage() {
+  // 服务器端获取数据
+  const articles = await getNewsBlogsData()
+
+  return <NewsBlogPageContent articles={articles} />
+}
+
+function NewsBlogPageContent({ articles }: { articles: NewsBlogArticle[] }) {
+  "use client"
+
   const [selectedArticle, setSelectedArticle] = useState<NewsBlogArticle | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   })
-
-  // 从 WordPress 获取文章数据
-  useEffect(() => {
-    window.scrollTo(0, 0)
-
-    // 获取文章数据
-    async function fetchArticles() {
-      try {
-        console.log('准备调用 /api/news-blogs...')
-        const response = await fetch('/api/news-blogs?perPage=12')
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        const result = await response.json()
-        console.log('API 调用成功:', result)
-
-        setArticles(result.data || [])
-      } catch (err) {
-        console.error('API 调用失败:', err)
-        setError(err instanceof Error ? err.message : 'Unknown error')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchArticles()
-  }, [])
-
-  // 错误状态
-  if (error) {
-    return (
-      <div className="min-h-screen bg-background">
-        <TopHeader />
-        <StickyNav />
-        <main className="pt-12">
-          <div className="container mx-auto px-4 text-center py-20">
-            <p className="text-lg text-red-500">{error}</p>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -118,12 +99,7 @@ export default function NewsBlogPage() {
 
         {/* News Cards */}
         <div className="container mx-auto px-4 pb-20">
-          {loading ? (
-            <div className="flex justify-center items-center py-20">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-              <p className="ml-4 text-muted-foreground">Loading articles...</p>
-            </div>
-          ) : selectedArticle ? (
+          {selectedArticle ? (
             <div className="rounded-2xl border bg-card shadow-sm">
               <div className="flex flex-col gap-10 p-6 lg:p-10">
                 {/* 标题部分 - 最上面 */}

@@ -1,19 +1,34 @@
-'use client'
+"use client"
 
-import { Suspense, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Calendar, PenLine, ArrowLeft } from "lucide-react"
+import { useEffect, useState } from "react"
 
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-// WordPress 导入
 import { truncateExcerpt } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
+
+// 获取数据的辅助函数
+async function getBlogsData() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'}/api/news-blogs?perPage=12&type=blogs`, {
+      cache: 'no-store'
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const result = await response.json()
+    return result.data || []
+  } catch (error) {
+    console.error("Failed to fetch blog posts:", error)
+    return []
+  }
+}
 
 // truncateExcept 函数已在 wordpress.ts 中定义，这里不再重复定义
 
@@ -30,26 +45,6 @@ type BlogItem = {
 }
 
 export default function BlogPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-background">
-        <TopHeader />
-        <StickyNav />
-        <main className="pt-12">
-          <div className="container mx-auto px-4 py-20 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Loading...</p>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    }>
-      <BlogPageContent />
-    </Suspense>
-  )
-}
-
-function BlogPageContent() {
   const [posts, setPosts] = useState<BlogItem[]>([])
   const [selectedPost, setSelectedPost] = useState<BlogItem | null>(null)
   const [loading, setLoading] = useState(true)
@@ -213,14 +208,16 @@ function BlogPageContent() {
               {posts.map((post) => (
                 <Card key={post.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                   <div className="relative h-52 overflow-hidden">
-                    <Image
+                    <img
                       src={post.image || "/placeholder.svg"}
                       alt={post.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
+                    <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-sm font-medium rounded">
+                      {post.category}
+                    </div>
                   </div>
-                  <CardContent className="p-6 flex flex-col h-full">
+                  <CardContent className="p-6">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                       <Calendar className="h-4 w-4" />
                       <span>
@@ -234,12 +231,12 @@ function BlogPageContent() {
                     <h2 className="text-2xl font-semibold mb-3 text-balance">
                       {post.title}
                     </h2>
-                    <p className="text-muted-foreground mb-4 text-pretty flex-1 line-clamp-3">
+                    <p className="text-muted-foreground mb-4 text-pretty line-clamp-3">
                       {truncateExcerpt(post.excerpt, 150)}
                     </p>
                     <Button
                       variant="link"
-                      className="p-0 h-auto text-primary self-start"
+                      className="p-0 h-auto text-primary"
                       onClick={() => setSelectedPost(post)}
                     >
                       View More →
