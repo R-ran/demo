@@ -143,7 +143,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         slug: "common-anchor-bolt",
         content: "Common hollow anchor bolt provides economical grouting support for moderate ground conditions. Cost-effective common hollow rockbolt with integrated injection function.",
         excerpt: "Advanced common anchor system with superior corrosion resistance and high load-bearing capacity.",
-        featured_image: "/product3.jpg",
+        featured_image: "/product3.png",
         model: "XH-C-25, XH-C-32, XH-C-40",
         specs: "Diameter: 25-40mm, Length: 1.0-6.0m, Common Diameter: 15-25mm",
         tech_params: "Common Pressure: 1.5-3.0MPa, Bond Strength: ≥15MPa",

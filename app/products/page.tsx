@@ -67,7 +67,7 @@ const getDefaultProducts = (): ProductItem[] => [
     id: "common-anchor-1",
     name: "XH Common Anchor Bolt",
     description: "Advanced common anchor system with superior corrosion resistance and high load-bearing capacity.",
-    image: "/product3.jpg",
+    image: "/product3.png",
     imageAlt: "XH Common Anchor Bolt",
     slug: "common-anchor-bolt",
   },

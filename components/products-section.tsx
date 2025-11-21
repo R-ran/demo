@@ -18,7 +18,7 @@ export function ProductsSection() {
     {
       id: "2",
       title: "XH common anchor bolt",
-      featured_image: "/product3.jpg",
+      featured_image: "/product3.png",
       imageAlt: "XH common anchor bolt ready for installation",
       slug: "common-anchor-bolt",
     },
