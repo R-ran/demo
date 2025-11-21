@@ -28,7 +28,7 @@ export function TestimonialsSection({ projects = [] }: TestimonialsSectionProps)
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {displayProjects.length > 0 ? (
-            displayProjects.map((project) => {
+            displayProjects.map((project, index) => {
               // 构建跳转到成功案例列表页面的链接，带项目参数
               const detailUrl = `/successful-projects?project=${encodeURIComponent(project.slug)}`
 
@@ -36,6 +36,8 @@ export function TestimonialsSection({ projects = [] }: TestimonialsSectionProps)
                 <Link
                   key={project.id}
                   href={detailUrl}
+                  //手机端隐藏
+                  className={index >= 2 ? "hidden md:block" : ""}
                 >
                 <Card className="group cursor-pointer overflow-hidden hover:shadow-xl transition-all h-full">
                   <CardContent className="p-0">
