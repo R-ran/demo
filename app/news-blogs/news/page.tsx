@@ -248,7 +248,7 @@ export default function NewsPage() {
           </h1>
           <div className="w-20 h-1 bg-primary" />
           <p className="text-lg text-muted-foreground mt-4">
-            Explore the latest company updates, product launches, and project milestones from SINOROCK.
+            Explore the latest company updates, product launches, and project milestones from XINGHONG.
           </p>
         </div>
 

@@ -33,6 +33,11 @@ const productCategories = [
     name: "Expansion-shell hollow anchor bolt",
     href: "/products?category=expansion-shell",
   },
+  {
+    id: "accessories",
+    name: "Accessories",
+    href: "/products?category=accessories",
+  },
 ]
 
 // 产品数据类型定义
@@ -58,7 +63,8 @@ const validProductSlugs = [
   "R-self-drilling-bolt",
   "common-anchor-bolt",
   "combination-hollow-bolt",
-  "expansion-shell-bolt"
+  "expansion-shell-bolt",
+  "accessories"
 ]
 
 export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -196,6 +202,23 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         ],
         case_images: [],
         categories: ["expansion-shell"]
+      },
+      "accessories": {
+        id: "accessories-1",
+        title: "Accessories",
+        slug: "accessories",
+        content: "Accessories for self-drilling anchor bolt",
+        excerpt: "Accessories for self-drilling anchor bolt",
+        featured_image: "/product6.jpg",
+        model: "Accessories",
+        specs: "Accessories",
+        tech_params: "Accessories",
+        application_areas: "Accessories",
+        features: [
+          { feature: "Accessories" }
+        ],
+        case_images: [],
+        categories: ["accessories"]
       },
     }
 
@@ -794,43 +817,118 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                         </div>
                       )}
 
-                      {/* Cases Section - Displayed for all products */}
-                      <div className="mt-8">
-                        <h3 className="text-xl font-semibold mb-4">Cases</h3>
-                        <div className="grid grid-cols-3 gap-4">
-                          {caseStudiesImages.length > 0 ? (
-                            caseStudiesImages.slice(0, 6).map((image: any, index: number) => (
-                              <div key={index} className="aspect-video bg-muted rounded-lg overflow-hidden">
-                                <img
-                                  src={image.url || image}
-                                  alt={`Case study ${index + 1}`}
-                                  className="w-full h-full object-cover"
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement
-                                    target.src = "/placeholder.svg?height=200&width=300"
-                                  }}
-                                />
+                      {/* Accessories Detailed Content */}
+                      {slug === "accessories" && (
+                        <div className="space-y-6 mt-8">
+                          <div>
+                            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Anchor Head</h3>
+                            <div className="space-y-6">
+                              <p className="text-muted-foreground leading-relaxed mb-2">Plastic rubber material made. It connected with one side of anchor rod and buried together into the ground for the purpose of fixing and mediating the anchor rod.</p>
+                              <div>
+                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Anchor Nut</h3>
+                                <p className="text-muted-foreground leading-relaxed mb-2"> Using hemisphere or hex nuts,it can put the stress to the rod through the nut.</p>
                               </div>
-                            ))
-                          ) : (
-                            // Fallback to placeholder images if no WordPress images
-                            [1, 2, 3, 4, 5, 6].map((i) => (
-                              <div key={i} className="aspect-video bg-muted rounded-lg overflow-hidden">
-                                <img
-                                  src={`/placeholder.svg?height=200&width=300&query=case${i}`}
-                                  alt={`Illustrative case study ${i}`}
-                                  className="w-full h-full object-cover"
-                                />
+
+                              <div>
+                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Plate</h3>
+                                <p className="text-muted-foreground leading-relaxed mb-2">A hot-rolling plate. Given its flexibility, it helps the stress transfer . The plate with its adjustable angle fit with the rock surface tightly.</p>
                               </div>
-                            ))
-                          )}
+                              <div>
+                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Coupler</h3>
+                                <p className="text-muted-foreground leading-relaxed mb-2">It is a Mechanical made steel case with a step in the middle of its inside. It can combine anchors to adjust the length in case of different demands.</p>
+                              </div>
+                              <div>
+                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Grouting Stopper</h3>
+                                <p className="text-muted-foreground leading-relaxed mb-2">Grouting stopper is made of rubber and plastic materials. It provides a sealing effect to prevent the exhaust when grouting. Let the pressure grouting feasible. It also increased the fullness and density of the grouting solution. The stopper also could be a positioning support.</p>
+                              </div>
+                              <div>
+                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Drill Bit</h3>
+                                <p className="text-muted-foreground leading-relaxed mb-2">Bit is an important part of self drilling anchor, used for drilling to the ground. Variety range, include cross bit, word bit, arc edge drill, mud drill etc. Applied to various geological conditions and meets different demands.</p>
+                              </div>
+                              <div>
+                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Centralizer/Spacer</h3>
+                                <p className="text-muted-foreground leading-relaxed mb-2">It Keeps the hollow bar in the true centre of the bore-hole while drilling and grouting, meanwhile it also Guarantees a minimum 20 mm annular grout thickness all round the bar, so the steel is completely encased and protected against corrosion.</p>
+                              </div>
+                            </div>
+                          </div>
+
+                         
+
+                          {/* Cases Section - Moved to bottom of accessories introduce section */}
+                          <div className="mt-8">
+                            <h3 className="text-xl font-semibold mb-4">Cases</h3>
+                            <div className="grid grid-cols-3 gap-4">
+                              {caseStudiesImages.length > 0 ? (
+                                caseStudiesImages.slice(0, 6).map((image: any, index: number) => (
+                                  <div key={index} className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                    <img
+                                      src={image.url || image}
+                                      alt={`Case study ${index + 1}`}
+                                      className="w-full h-full object-cover"
+                                      onError={(e) => {
+                                        const target = e.target as HTMLImageElement
+                                        target.src = "/placeholder.svg?height=200&width=300"
+                                      }}
+                                    />
+                                  </div>
+                                ))
+                              ) : (
+                                // Fallback to placeholder images if no WordPress images
+                                [1, 2, 3, 4, 5, 6].map((i) => (
+                                  <div key={i} className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                    <img
+                                      src={`/placeholder.svg?height=200&width=300&query=case${i}`}
+                                      alt={`Illustrative case study ${i}`}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  </div>
+                                ))
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      )}
+
+                      {/* Cases Section - Displayed for all products except accessories */}
+                      {slug !== "accessories" && (
+                        <div className="mt-8">
+                          <h3 className="text-xl font-semibold mb-4">Cases</h3>
+                          <div className="grid grid-cols-3 gap-4">
+                            {caseStudiesImages.length > 0 ? (
+                              caseStudiesImages.slice(0, 6).map((image: any, index: number) => (
+                                <div key={index} className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                  <img
+                                    src={image.url || image}
+                                    alt={`Case study ${index + 1}`}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=200&width=300"
+                                    }}
+                                  />
+                                </div>
+                              ))
+                            ) : (
+                              // Fallback to placeholder images if no WordPress images
+                              [1, 2, 3, 4, 5, 6].map((i) => (
+                                <div key={i} className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                  <img
+                                    src={`/placeholder.svg?height=200&width=300&query=case${i}`}
+                                    alt={`Illustrative case study ${i}`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                      )}
+
                     </div>
                   )}
 
                   {activeTab === "parameters" && (
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                       {/* R-Thread Detailed Technical Specifications Table */}
                       {slug === "R-self-drilling-bolt" && (
                     <div className="space-y-4">
@@ -1340,6 +1438,344 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               </div>
                           <div className="mt-4 text-sm text-muted-foreground italic">
                             We satisfy tailored demands from our overseas clients.
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Accessories Parameter Table */}
+                      {slug === "accessories" && (
+                        <div className="space-y-4">
+                          {/* Anchor Rods Table */}
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-bold text-gray-800">Anchor Rods (杆体)</h3>
+                            <div className="w-full">
+                              <table className="w-full border-collapse text-xs">
+                                <thead>
+                                  <tr className="bg-gray-700 text-white">
+                                    <th className="border border-gray-300 px-2 py-2 text-left font-semibold">Unit</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R25N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32S</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R38N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76S</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Outer Diameter (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">25</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">32</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">32</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">32</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">38</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">51</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">51</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">76</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">76</td>
+                                  </tr>
+                                  <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Internal Diameter (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">14</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">21.5</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">19</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">16</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">19</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">36</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">33</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">51</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">45</td>
+                                  </tr>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Ultimate tensile load (kN)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">210</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">280</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">360</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">500</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">550</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">800</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1600</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1900</td>
+                                  </tr>
+                                  <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Yield load (kN)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">150</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">160</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">230</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">280</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">400</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">450</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">630</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1500</td>
+                                  </tr>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Weight per m (kg)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">2.3</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">2.8-2.9</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">3.2</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">3.6</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">5.5</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">6.5</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">8</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">16</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">19.7</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+
+                          {/* Coupler Table */}
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-bold text-gray-800">Coupler</h3>
+                            <div className="w-full">
+                              <table className="w-full border-collapse text-xs">
+                                <thead>
+                                  <tr className="bg-gray-700 text-white">
+                                    <th className="border border-gray-300 px-2 py-2 text-left font-semibold">Unit</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R25N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32S</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R38N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76S</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Diameter (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">35</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">42</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">42</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">42</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">52</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">63</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">63</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">95</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">95</td>
+                                  </tr>
+                                  <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Length (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">120</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">145</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">145</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">160or190</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">180</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">180</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200</td>
+                                  </tr>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Weight (kg)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.45</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.8</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.7</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.75</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1.7</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1.9</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">6.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">6.4</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+
+                          {/* Anchor Nuts Table */}
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-bold text-gray-800">Anchor Nuts</h3>
+                            <div className="w-full">
+                              <table className="w-full border-collapse text-xs">
+                                <thead>
+                                  <tr className="bg-gray-700 text-white">
+                                    <th className="border border-gray-300 px-2 py-2 text-left font-semibold">Unit</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R25N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32S</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R38N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76S</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Key size (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">41</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">46</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">46</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">46</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">50</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">75</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">75</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">100</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">100</td>
+                                  </tr>
+                                  <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Length (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">35</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">45</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">45</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">45</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">55</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">70</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">70</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">80</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">80</td>
+                                  </tr>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Weight (kg)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.25</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.5</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1.55</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1.55</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">3.6</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">3.6</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+
+                          {/* Anchor Plates Table */}
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-bold text-gray-800">Anchor Plates</h3>
+                            <div className="w-full">
+                              <table className="w-full border-collapse text-xs">
+                                <thead>
+                                  <tr className="bg-gray-700 text-white">
+                                    <th className="border border-gray-300 px-2 py-2 text-left font-semibold">Unit</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R25N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32S</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R38N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76S</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Dimensions (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">150x150</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">150x150</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200x200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200x200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200x200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">200x200</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">250x250</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">250x250</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">250x250</td>
+                                  </tr>
+                                  <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Thickness (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">8</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">8</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">10</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">12</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">12</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">30</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">40</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">40</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">40</td>
+                                  </tr>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Hole Diameter (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">30</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">35</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">35</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">35</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">41</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">60</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">60</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">80</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">80</td>
+                                  </tr>
+                                  <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Weight (kg)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">3</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">3.7</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">3.6</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">8.8</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">18.5</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">18</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">18</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+
+                          {/* Centralizer Table */}
+                          <div className="space-y-4">
+                            <h3 className="text-xl font-bold text-gray-800">Centralizer</h3>
+                            <div className="w-full">
+                              <table className="w-full border-collapse text-xs">
+                                <thead>
+                                  <tr className="bg-gray-700 text-white">
+                                    <th className="border border-gray-300 px-2 py-2 text-left font-semibold">Unit</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R25N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R32S</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R38N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51L</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">R51N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76N</th>
+                                    <th className="border border-gray-300 px-2 py-2 text-center font-semibold">T76S</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr className="bg-white hover:bg-gray-50 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Outer diameter (mm)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">70</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">71</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">71</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">71</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">78</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">91</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">91</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">130</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">130</td>
+                                  </tr>
+                                  <tr className="bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <td className="border border-gray-300 px-2 py-2 font-semibold text-gray-800">Unit weight (kg)</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.35</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.33</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.33</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.33</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.4</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.55</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">0.55</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1</td>
+                                    <td className="border border-gray-300 px-2 py-2 text-center">1</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 text-sm text-muted-foreground italic">
+                            We can satisfy customized needs. For more information, send email to us.
                           </div>
                         </div>
                       )}

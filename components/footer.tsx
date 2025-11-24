@@ -16,6 +16,7 @@ const productLinks = [
   { name: "XH common anchor bolt", href: "/products/common-anchor-bolt" },
   { name: "Combination hollow anchor bolt", href: "/products/combination-hollow-bolt" },
   { name: "Expansion-shell hollow anchor bolt", href: "/products/expansion-shell-bolt" },
+  { name: "Accessories", href: "/products/accessories" },
 ]
 
 export function Footer() {

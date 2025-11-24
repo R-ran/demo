@@ -53,6 +53,8 @@ export function ProductsSection() {
       return '/products?category=combination-hollow'
     } else if (slug.includes('expansion-shell') || slug.includes('expansion_shell')) {
       return '/products?category=expansion-shell'
+    } else if (slug.includes('accessories') || slug.includes('accessory')) {
+      return '/products?category=accessories'
     }
 
     // 默认链接

@@ -34,6 +34,11 @@ const productCategories = [
     name: "Expansion-shell hollow anchor bolt",
     href: "/products?category=expansion-shell",
   },
+  {
+    id: "accessories",
+    name: "Accessories",
+    href: "/products?category=accessories",
+  },
 ]
 
 type ProductItem = {
@@ -87,6 +92,14 @@ const getDefaultProducts = (): ProductItem[] => [
     imageAlt: "Expansion-Shell Hollow Anchor Bolt",
     slug: "expansion-shell-bolt",
   },
+  {
+    id: "accessories-1",
+    name: "Accessories",
+    description: "Accessories for self-drilling anchor bolt",
+    image: "/product6.jpg",
+    imageAlt: "Accessories",
+    slug: "accessories",
+  },
 ]
 
 // 根据分类过滤产品（移到组件外部）
@@ -112,8 +125,9 @@ const getFilteredProducts = (cat: string | null): ProductItem[] => {
       return productSlug === 'combination-hollow-bolt'
     } else if (categoryLower === 'expansion-shell') {
       return productSlug === 'expansion-shell-bolt'
-    }
-    
+    } else if (categoryLower === 'accessories') {
+      return productSlug === 'accessories'
+    } 
     return false
   })
 }

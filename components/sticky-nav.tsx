@@ -21,6 +21,7 @@ const categories = [
       { label: "XH common anchor bolt", href: "/products?category=common-anchor-bolt" },
       { label: "Combination hollow anchor bolt", href: "/products?category=combination-hollow" },
       { label: "Expansion-shell hollow anchor bolt", href: "/products?category=expansion-shell" },
+      { label: "Accessories", href: "/products?category=accessories" },
     ],
   },
   {

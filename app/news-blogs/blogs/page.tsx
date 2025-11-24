@@ -253,7 +253,7 @@ export default function BlogPage() {
           </h1>
           <div className="w-20 h-1 bg-primary" />
           <p className="text-lg text-muted-foreground mt-4">
-            Industry insights, technical guides, and success stories from SINOROCK.
+            Industry insights, technical guides, and success stories from XINGHONG.
           </p>
         </div>
 

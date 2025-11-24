@@ -66,7 +66,7 @@ export default function NewsBlogPage() {
           </h1>
           <div className="w-20 h-1 bg-primary" />
           <p className="text-lg text-muted-foreground mt-4 whitespace-nowrap">
-            Stay updated with the latest news, product launches, industry insights, and success stories from SINOROCK.
+            Stay updated with the latest news, product launches, industry insights, and success stories from XINGHONG.
           </p>
         </div>
 
