@@ -89,11 +89,7 @@ export function TopHeader() {
               </a>
             </div>
             <div className="flex items-center gap-1 sm:gap-4">
-              {/* Download按钮 - 移动端只显示图标 */}
-              <Button variant="secondary" size="sm" className="gap-1 sm:gap-2 px-2 sm:px-3">
-                <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Download</span>
-              </Button>
+              
               {/* Support链接 - 移动端隐藏 */}
               <Link href="/support" className="hidden sm:inline text-muted-foreground hover:text-primary transition-colors">
                 Support

@@ -95,7 +95,7 @@ const getDefaultProducts = (): ProductItem[] => [
   {
     id: "accessories-1",
     name: "Accessories",
-    description: "Accessories for self-drilling anchor bolt",
+    description: "Hollow Anchor Bolt Accessories Kit – Anchor Head, Nut, Plate, Coupler, Stopper, Bit, Centralizer",
     image: "/product6.jpg",
     imageAlt: "Accessories",
     slug: "accessories",
@@ -290,14 +290,7 @@ function ProductsPageContent() {
                     </div>
                   </div>
 
-                  {/* Fax */}
-                  <div className="flex items-start gap-4">
-                    <Printer className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <div className="font-bold text-gray-800 mb-1">Tel</div>
-                      <div className="text-sm text-gray-700">+86-510-85161569</div>
-                    </div>
-                  </div>
+                 
 
                   {/* E-mail */}
                   <div className="flex items-start gap-4">
@@ -308,13 +301,24 @@ function ProductsPageContent() {
                     </div>
                   </div>
 
-                  {/* Address */}
+                  {/* Factory Address */}
                   <div className="flex items-start gap-4">
                     <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <div className="font-bold text-gray-800 mb-1">Address</div>
+                      <div className="font-bold text-gray-800 mb-1">Factory Address</div>
                       <div className="text-sm text-gray-700 leading-relaxed">
                         Ronghu Village, Yuqi Supporting Area, Huishan Economic Development Zone, Wuxi City, Jiangsu Province, China
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Office Address */}
+                  <div className="flex items-start gap-4">
+                    <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
+                    <div>
+                      <div className="font-bold text-gray-800 mb-1">Office Address</div>
+                      <div className="text-sm text-gray-700 leading-relaxed">
+                      Room 2208, Fengshang Cultural and Creative Center, Minfeng Road, Liangxi District, Wuxi City, Jiangsu Province, China.
                       </div>
                     </div>
                   </div>

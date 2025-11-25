@@ -64,9 +64,20 @@ export default function ContactPage() {
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Address</h3>
+                    <h3 className="font-semibold mb-1">Office Address</h3>
                     <p className="text-muted-foreground">
                     Room 2208, Fengshang Cultural and Creative Center, Minfeng Road, Liangxi District, Wuxi City, Jiangsu Province, China
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Factory Address</h3>
+                    <p className="text-muted-foreground">
+                    Ronghu Village, Yuqi Supporting Area, Huishan Economic Development Zone, Wuxi City, Jiangsu Province, China
                     </p>
                   </div>
                 </div>

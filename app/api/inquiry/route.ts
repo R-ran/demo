@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: process.env.SMTP_USER, // @qq.com
+    user: process.env.SMTP_USER, // @gmail.com
     pass: process.env.SMTP_PASS, // 16位授权码
   },
 })
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
   await transporter.sendMail({
     from: `"HBOWA Web" <${process.env.SMTP_USER}>`,
-    to: process.env.RECV_MAIL, // 可填同一个 QQ 邮箱
+    to: process.env.RECV_MAIL, // 可填同一个邮箱
     subject: `New Inquiry from ${name}`,
     html: `
       <p><strong>Name:</strong> ${name}</p >

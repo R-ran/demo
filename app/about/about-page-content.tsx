@@ -51,7 +51,7 @@ const staticTimelineData: TimelineEvent[] = [
   {
     year: '2003',
     title: 'Company Founded',
-    description: 'Established in 2003, our company began as a steel pipe manufacturer, primarily producing steel pipes for rock bolt applications.'
+    description: 'Wuxi Yihong Metal Products Company was established in 2003, our company began as a steel pipe manufacturer, primarily producing steel pipes for rock bolt applications.'
   },
   {
     year: '2007',
@@ -79,14 +79,14 @@ const staticTimelineData: TimelineEvent[] = [
     description: 'By 2014, our products were exported to Europe, the Americas, and Africa, further expanding our global footprint.'
   },
   {
-    year: '2015',
+    year: '2016',
     title: 'Production Capacity Expansion',
-    description: 'To meet growing demand, we opened a new factory branch in 2015, significantly increasing our production capacity. Monthly production capacity: up to 2000 metric tons.'
+    description: 'To meet growing demand, we opened a new factory branch in 2016 and renamed Wuxi Yihong Metal Products Company to Wuxi Xinhong Metal Products Company, significantly increasing our production capacity. Monthly production capacity: up to 2000 metric tons.'
   },
   {
-    year: '2015-2025',
+    year: '2016-2025',
     title: 'Sustained Growth',
-    description: 'From 2015 to 2025, with the exception of a temporary impact during the COVID-19 pandemic, we have maintained an annual growth rate of 10%. Our current annual sales exceed 100 million RMB.'
+    description: 'From 2016 to 2025, with the exception of a temporary impact during the COVID-19 pandemic, we have maintained an annual growth rate of 10%. Our current annual sales exceed 100 million RMB.'
   }
 ]
 

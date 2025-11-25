@@ -10,6 +10,13 @@ import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { X, Download, Mail, Phone, Printer, MapPin, MessageSquare, Send, ChevronRight } from "lucide-react"
 import { useState, useEffect } from "react"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 // 产品种类数据（与产品列表页保持一致）
 const productCategories = [
@@ -120,7 +127,12 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           { feature: "Suitable for various geological conditions" },
           { feature: "Reduced installation time and costs" }
         ],
-        case_images: [],
+        case_images: [
+          
+          "/product11.jpg",
+          "/product111.jpg",
+          "/product1111.jpg"
+        ],
         categories: ["self-drilling"]
       },
       "R-self-drilling-bolt": {
@@ -140,7 +152,12 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           { feature: "Suitable for various geological conditions" },
           { feature: "Reduced installation time and costs" }
         ],
-        case_images: [],
+        case_images: [
+          
+          "/product11.jpg",
+          "/product111.jpg",
+          "/product1111.jpg"
+        ],
         categories: ["self-drilling"]
       },
       "common-anchor-bolt": {
@@ -160,7 +177,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           { feature: "High load-bearing capacity" },
           { feature: "Long-term durability" }
         ],
-        case_images: [],
+        case_images: [
+
+        ],
         categories: ["common-anchor-bolt"]
       },
       "combination-hollow-bolt": {
@@ -180,7 +199,11 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           { feature: "High load-bearing capacity" },
           { feature: "Long-term durability" }
         ],
-        case_images: [],
+        case_images: [
+          
+          "/product44.jpg",
+          "/product444.jpg"
+        ],
         categories: ["combination-hollow"]
       },
       "expansion-shell-bolt": {
@@ -200,15 +223,18 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           { feature: "High initial load capacity" },
           { feature: "Easy installation" }
         ],
-        case_images: [],
+        case_images: [
+          "/product55.jpg",
+          "/product555.jpg"
+        ],
         categories: ["expansion-shell"]
       },
       "accessories": {
         id: "accessories-1",
         title: "Accessories",
         slug: "accessories",
-        content: "Accessories for self-drilling anchor bolt",
-        excerpt: "Accessories for self-drilling anchor bolt",
+        content: "One-stop supply of hollow anchor bolt accessories: plastic anchor head, hemispheric nut, flexible plate, steel coupler, rubber grouting stopper, cross/word/arc drill bits and centralizer for 20 mm annular grout thickness, full corrosion protection and high pull-out strength. OEM & fast delivery.",
+        excerpt: "Hollow Anchor Bolt Accessories Kit – Anchor Head, Nut, Plate, Coupler, Stopper, Bit, Centralizer",
         featured_image: "/product6.jpg",
         model: "Accessories",
         specs: "Accessories",
@@ -217,7 +243,11 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         features: [
           { feature: "Accessories" }
         ],
-        case_images: [],
+        case_images: [
+          "/product66.jpg",
+          "/product666.jpg",
+          "/product6666.jpg"
+        ],
         categories: ["accessories"]
       },
     }
@@ -270,6 +300,14 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
   // Case studies images from ACF gallery field
   const caseStudiesImages = product?.case_images || []
+
+  // 准备轮播图图片数组：合并主图和案例图片
+  const productImages = [
+    productImage, // 主图放在第一位
+    ...(caseStudiesImages.length > 0 
+      ? caseStudiesImages.map((img: any) => img.url || img).slice(0, 5) // 最多显示5张案例图
+      : []),
+  ].filter(Boolean) // 过滤掉空值
 
   // 将特性数组转换为 conditions 格式
   const conditions = productFeatures.length > 0 
@@ -363,10 +401,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 </ul>
               </div>
 
-              <Button className="w-full bg-primary hover:bg-primary/90 text-white mb-6" size="lg">
-                <Download className="w-4 h-4 mr-2" />
-                Download
-              </Button>
+              
 
               <div className="bg-white p-6 shadow-sm">
                 <h2 className="text-xl font-bold text-gray-800 mb-6">CONTACT US</h2>
@@ -378,13 +413,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       <div className="text-sm text-gray-700">+86 18961838902</div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <Printer className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <div className="font-bold text-gray-800 mb-1">Tel</div>
-                      <div className="text-sm text-gray-700">+86-510-85161569</div>
-                    </div>
-                  </div>
+                  
                   <div className="flex items-start gap-4">
                     <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                     <div>
@@ -395,9 +424,20 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   <div className="flex items-start gap-4">
                     <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <div className="font-bold text-gray-800 mb-1">Address</div>
+                      <div className="font-bold text-gray-800 mb-1">Factory Address</div>
                       <div className="text-sm text-gray-700 leading-relaxed">
                       Ronghu Village, Yuqi Supporting Area, Huishan Economic Development Zone, Wuxi City, Jiangsu Province, China
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Office Address */}
+                  <div className="flex items-start gap-4">
+                    <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
+                    <div>
+                      <div className="font-bold text-gray-800 mb-1">Office Address</div>
+                      <div className="text-sm text-gray-700 leading-relaxed">
+                      Room 2208, Fengshang Cultural and Creative Center, Minfeng Road, Liangxi District, Wuxi City, Jiangsu Province, China.
                       </div>
                     </div>
                   </div>
@@ -410,19 +450,47 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               {/* Product Display Section */}
               <div className="bg-white p-4 shadow-sm mb-6">
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Product Image */}
-                  <div className="rounded-lg overflow-hidden h-80 md:h-[400px] relative flex items-center justify-center">
-                    <img
-                      src={productImage}
-                      alt={productImageAlt}
-                      className="w-full h-full object-contain"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        if (!target.src.includes("placeholder")) {
-                          target.src = "/placeholder.svg?height=500&width=500"
-                        }
-                      }}
-                    />
+                  {/* Product Image Carousel */}
+                  <div className="rounded-lg overflow-hidden h-80 md:h-[400px] relative">
+                    {productImages.length > 1 ? (
+                      <Carousel className="w-full h-full">
+                        <CarouselContent className="h-full">
+                          {productImages.map((img, index) => (
+                            <CarouselItem key={index} className="h-full">
+                              <div className="h-full flex items-center justify-center bg-gray-50">
+                                <img
+                                  src={img}
+                                  alt={`${productImageAlt} - ${index + 1}`}
+                                  className="w-full h-full object-contain"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement
+                                    if (!target.src.includes("placeholder")) {
+                                      target.src = "/placeholder.svg?height=500&width=500"
+                                    }
+                                  }}
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious className="left-2" />
+                        <CarouselNext className="right-2" />
+                      </Carousel>
+                    ) : (
+                      <div className="h-full flex items-center justify-center bg-gray-50">
+                        <img
+                          src={productImage}
+                          alt={productImageAlt}
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement
+                            if (!target.src.includes("placeholder")) {
+                              target.src = "/placeholder.svg?height=500&width=500"
+                            }
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* Product Details */}
@@ -477,6 +545,16 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       }`}
                     >
                       Parameters
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("application-scenarios")}
+                      className={`px-6 py-4 font-semibold transition-colors ${
+                        activeTab === "application-scenarios"
+                          ? "bg-gray-800 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      Application Scenarios
                     </button>
                   </div>
                 </div>
@@ -971,73 +1049,6 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
                          
 
-                          {/* Cases Section - Moved to bottom of accessories introduce section */}
-                          <div className="mt-8">
-                            <h3 className="text-xl font-semibold mb-4">Cases</h3>
-                            <div className="grid grid-cols-3 gap-4">
-                              {caseStudiesImages.length > 0 ? (
-                                caseStudiesImages.slice(0, 6).map((image: any, index: number) => (
-                                  <div key={index} className="aspect-video bg-muted rounded-lg overflow-hidden">
-                                    <img
-                                      src={image.url || image}
-                                      alt={`Case study ${index + 1}`}
-                                      className="w-full h-full object-cover"
-                                      onError={(e) => {
-                                        const target = e.target as HTMLImageElement
-                                        target.src = "/placeholder.svg?height=200&width=300"
-                                      }}
-                                    />
-                                  </div>
-                                ))
-                              ) : (
-                                // Fallback to placeholder images if no WordPress images
-                                [1, 2, 3, 4, 5, 6].map((i) => (
-                                  <div key={i} className="aspect-video bg-muted rounded-lg overflow-hidden">
-                                    <img
-                                      src={`/placeholder.svg?height=200&width=300&query=case${i}`}
-                                      alt={`Illustrative case study ${i}`}
-                                      className="w-full h-full object-cover"
-                                    />
-                                  </div>
-                                ))
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Cases Section - Displayed for all products except accessories */}
-                      {slug !== "accessories" && (
-                        <div className="mt-8">
-                          <h3 className="text-xl font-semibold mb-4">Cases</h3>
-                          <div className="grid grid-cols-3 gap-4">
-                            {caseStudiesImages.length > 0 ? (
-                              caseStudiesImages.slice(0, 6).map((image: any, index: number) => (
-                                <div key={index} className="aspect-video bg-muted rounded-lg overflow-hidden">
-                                  <img
-                                    src={image.url || image}
-                                    alt={`Case study ${index + 1}`}
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                      const target = e.target as HTMLImageElement
-                                      target.src = "/placeholder.svg?height=200&width=300"
-                                    }}
-                                  />
-                                </div>
-                              ))
-                            ) : (
-                              // Fallback to placeholder images if no WordPress images
-                              [1, 2, 3, 4, 5, 6].map((i) => (
-                                <div key={i} className="aspect-video bg-muted rounded-lg overflow-hidden">
-                                  <img
-                                    src={`/placeholder.svg?height=200&width=300&query=case${i}`}
-                                    alt={`Illustrative case study ${i}`}
-                                    className="w-full h-full object-cover"
-                                  />
-                                </div>
-                              ))
-                            )}
-                          </div>
                         </div>
                       )}
 
@@ -1897,6 +1908,81 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                         </div>
                       )}
                       
+                    </div>
+                  )}
+
+                  {activeTab === "application-scenarios" && (
+                    <div className="space-y-4">
+                      <div className="mt-8">
+                        <h3 className="text-xl font-semibold mb-6">Application Scenarios</h3>
+                        <div className="space-y-8">
+                          {(() => {
+                            // 准备应用场景数据
+                            const scenarios = caseStudiesImages.length > 0 
+                              ? caseStudiesImages.slice(0, 6).map((image: any, index: number) => ({
+                                  title: `Application Scenario ${index + 1}`,
+                                  image: image.url || image,
+                                  description: `This application scenario demonstrates the practical use of our anchor bolt system in real-world construction projects. The solution provides reliable support and stability for various geological conditions.`
+                                }))
+                              : [
+                                  {
+                                    title: "Tunnel Construction",
+                                    image: "/tunnel-construction-project.jpg",
+                                    description: "Our anchor bolt system is widely used in tunnel construction projects, providing reliable support for underground structures and ensuring long-term stability in challenging geological conditions."
+                                  },
+                                  {
+                                    title: "Slope Stabilization",
+                                    image: "/industrial-construction-site-with-rock-bolts.jpg",
+                                    description: "Effective slope stabilization using our self-drilling anchor bolts prevents landslides and protects infrastructure in mountainous and hilly terrains."
+                                  },
+                                  {
+                                    title: "Mining Applications",
+                                    image: "/industrial-factory-production-floor.jpg",
+                                    description: "Mining operations benefit from our high-strength anchor bolt systems that provide secure reinforcement for underground mining tunnels and chambers."
+                                  },
+                                  {
+                                    title: "Bridge Foundation",
+                                    image: "/construction-site-with-installed-rock-bolts.jpg",
+                                    description: "Bridge foundation projects utilize our anchor bolt solutions for deep foundation support, ensuring structural integrity and load-bearing capacity."
+                                  },
+                                  {
+                                    title: "Retaining Walls",
+                                    image: "/anchor-bolt-drilling-equipment.jpg",
+                                    description: "Retaining wall construction relies on our anchor bolt systems to anchor structures securely into the ground, preventing movement and ensuring stability."
+                                  },
+                                  {
+                                    title: "Highway Construction",
+                                    image: "/anchor-accessories-and-tools.jpg",
+                                    description: "Highway and road construction projects use our anchor bolt systems for slope protection and rock reinforcement along transportation corridors."
+                                  }
+                                ];
+
+                            return scenarios.map((scenario, index) => (
+                              <div key={index} className="space-y-4">
+                                <h4 className="text-xl md:text-2xl font-bold text-gray-800">{scenario.title}</h4>
+                                <div className="flex flex-col md:flex-row gap-6 items-start">
+                                  <div className="w-full md:w-1/3 flex-shrink-0">
+                                    <img
+                                      src={scenario.image}
+                                      alt={scenario.title}
+                                      className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                      onError={(e) => {
+                                        const target = e.target as HTMLImageElement
+                                        target.src = "/placeholder.svg?height=300&width=400"
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="w-full md:flex-1">
+                                    <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                      {scenario.description}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            ));
+                          })()}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>

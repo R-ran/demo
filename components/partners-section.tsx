@@ -10,38 +10,62 @@ const partners = [
     id: 1,
     name: "Partner Company 1",
     logo: "/partners1.jpg",
-    imageAlt: "Partner Company 1 logo supporting SINOROCK projects",
+    imageAlt: "Partner Company 1 logo supporting XINHONG projects",
   },
   {
     id: 2,
     name: "Partner Company 2",
     logo: "/partners2.gif",
-    imageAlt: "Partner Company 2 logo collaborating with SINOROCK",
+    imageAlt: "Partner Company 2 logo collaborating with XINHONG",
   },
   {
     id: 3,
     name: "Partner Company 3",
     logo: "/partners3.gif",
-    imageAlt: "Partner Company 3 logo in SINOROCK partner network",
+    imageAlt: "Partner Company 3 logo in XINHONG partner network",
   },
   {
     id: 4,
     name: "Partner Company 4",
     logo: "/partners4.jpg",
-    imageAlt: "Partner Company 4 logo participating in SINOROCK projects",
+    imageAlt: "Partner Company 4 logo participating in XINHONG projects",
   },
   {
     id: 5,
     name: "Partner Company 5",
     logo: "/partners5.jpg",
-    imageAlt: "Partner Company 5 logo supporting SINOROCK anchor solutions",
+    imageAlt: "Partner Company 5 logo supporting XINHONG anchor solutions",
   },
   {
     id: 6,
     name: "Partner Company 6",
     logo: "/partner6.jpg",
-    imageAlt: "Partner Company 6 logo in SINOROCK global network",
+    imageAlt: "Partner Company 6 logo in XINHONG global network",
   },
+  {
+    id: 7,
+    name: "Partner Company 7",
+    logo: "/partner7.jpg",
+    imageAlt: "Partner Company 7 logo in XINHONG global network",
+  },
+  {
+    id: 8,
+    name: "Partner Company 8",
+    logo: "/partner8.jpg",
+    imageAlt: "Partner Company 8 logo in XINHONG global network",
+  }, 
+  {
+    id: 9,
+    name: "Partner Company 9",
+    logo: "/partner9.jpg",
+    imageAlt: "Partner Company 9 logo in XINHONG global network",
+  },
+  {
+    id: 10,
+    name: "Partner Company 10",
+    logo: "/partner10.jpg",
+    imageAlt: "Partner Company 10 logo in XINHONG global network",
+  }
 ]
 
 export function PartnersSection() {
@@ -56,7 +80,7 @@ export function PartnersSection() {
           <div className="w-20 h-1 bg-primary mx-auto" />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center">
           {partners.map((partner) => (
             <div
               key={partner.id}
