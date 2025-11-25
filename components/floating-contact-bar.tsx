@@ -25,8 +25,8 @@ export function FloatingContactBar() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
   const email = "export@cnxhanchor.com"
-  const whatsapp = "+8618662678180"
-  const wechatQRCode = "/wechat-qr.png" // 微信二维码图片路径
+  const whatsapp = "+86 18961838902"
+  const wechatQRCode = "/wechat-qr-code.png" // 微信二维码图片路径
 
   const handleEmailClick = () => {
     window.location.href = `mailto:${email}`

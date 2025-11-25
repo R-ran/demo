@@ -10,21 +10,21 @@ const slides = [
     subtitle: "on hollow anchor bolts since 2006",
     description: "",
     image: "/industrial-construction-site-with-rock-bolts.jpg",
-    imageAlt: "SINOROCK self-drilling anchor bolts reinforcing an industrial construction site",
+    imageAlt: "XINHONG self-drilling anchor bolts reinforcing an industrial construction site",
   },
   {
     title: "Supreme Quality",
     subtitle: "export more than 120 countries",
     description: "",
     image: "/industrial-factory-production-floor.jpg",
-    imageAlt: "Modern SINOROCK factory production line manufacturing anchor bolts",
+    imageAlt: "Modern XINHONG factory production line manufacturing anchor bolts",
   },
   {
     title: "Application:",
     subtitle: "Tunnel, Railway, High-speed Roads, Mine, Civil engineering. ",
     description: "",
     image: "/tunnel-construction-project.jpg",
-    imageAlt: "Quality control inspection of SINOROCK anchor bolt components",
+    imageAlt: "Quality control inspection of XINHONG anchor bolt components",
   },
 ]
 

@@ -195,3 +195,64 @@
   font-size: 1.125rem; /* 18px - 与 prose-2xl 的段落字体大小一致 */
   line-height: 1.75; /* 行高 */
 }
+
+/* 隔离 timeline 组件的样式，不受全局样式影响 */
+.timeline-container ol,
+.timeline-container li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline-container time,
+.timeline-container h3,
+.timeline-container p {
+  margin: 0;
+  padding: 0;
+}
+
+/* 确保时间轴字体大小和粗细不被全局样式覆盖 */
+.timeline-container time {
+  font-size: 1.5rem !important; /* text-xl */
+  font-weight: 700 !important; /* font-bold */
+}
+
+@media (min-width: 768px) {
+  .timeline-container time {
+    font-size: 1.5rem !important; /* md:text-2xl */
+  }
+}
+
+.timeline-container h3 {
+  font-size: 1.25rem !important; /* text-xl */
+  font-weight: 700 !important; /* font-bold */
+}
+
+@media (min-width: 768px) {
+  .timeline-container h3 {
+    font-size: 1.5rem !important; /* md:text-2xl */
+  }
+}
+
+.timeline-container p {
+  font-size: 1.125rem !important; /* text-lg */
+  font-weight: 400 !important; /* font-normal */
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* History 卡片描述文字限制显示 6 行（移动端）和 5 行（桌面端） */
+.line-clamp-6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+  .line-clamp-6 {
+    -webkit-line-clamp: 5;
+  }
+}

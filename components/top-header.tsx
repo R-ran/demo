@@ -176,28 +176,28 @@ export function TopHeader() {
         <div className="flex items-center justify-between py-3 sm:py-6">
           {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="relative">
+            <div className="relative flex-shrink-0">
                 <Image 
                   src="/xinhong logo.png" 
                   alt="XINHONG" 
-                  width={128} 
+                  width={256} 
                   height={128}
-                  className="w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32"
+                  className="w-auto h-12 sm:h-16 md:h-20 object-contain"
                 />
             </div>
             <div>
               <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground">XINHONG</h1>
-              <p className="text-[10px] sm:text-xs text-muted-foreground">Engineering Excellence</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Hollow Anchor Bolts</p>
             </div>
           </div>
 
           {/* Tagline with handwriting font - 移动端隐藏 */}
           <div className="hidden md:block text-center">
             <p className="text-2xl md:text-3xl text-primary" style={{ fontFamily: "var(--font-handwriting)" }}>
-              Safer space
+            Authentic Quality
             </p>
             <p className="text-2xl md:text-3xl text-foreground" style={{ fontFamily: "var(--font-handwriting)" }}>
-              Better life
+            Consistent Stability
             </p>
           </div>
 

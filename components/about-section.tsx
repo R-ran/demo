@@ -150,8 +150,8 @@ export function AboutSection({ initialSections = [] }: AboutSectionProps) {
       title: "History",
       subtitle: "History",
       description:
-        "Learn about our journey from inception to becoming a leading provider of geotechnical anchoring solutions.",
-      detailedDescription: "Since our founding, SINOROCK has been on a remarkable journey of growth and innovation. Starting as a small operation with a vision to revolutionize geotechnical anchoring, we have steadily expanded our capabilities and market presence. Over the years, we have invested heavily in research and development, manufacturing infrastructure, and talent acquisition. Today, we are proud to be recognized as a leading provider of geotechnical anchoring solutions, serving clients across multiple continents and industries. Our history is a testament to our commitment to excellence and our dedication to meeting the evolving needs of the construction and mining sectors.",
+        "From a startup to an industry benchmark, we focus on innovative geotechnical anchoring technology, continuously investing in research, development, and manufacturing upgrades. We have now grown into a world-leading provider of anchor solutions, serving markets across multiple continents and committed to providing safe and reliable support for construction and mining clients worldwide.",
+      detailedDescription: "From a startup to an industry benchmark, we focus on innovative geotechnical anchoring technology, continuously investing in research, development, and manufacturing upgrades. We have now grown into a world-leading provider of anchor solutions, serving markets across multiple continents and committed to providing safe and reliable support for construction and mining clients worldwide.",
       icon: "History" as const,
       image: "/history.jpg",
       imageAlt: "Historical display of SINOROCK project milestones",
@@ -195,10 +195,17 @@ export function AboutSection({ initialSections = [] }: AboutSectionProps) {
 
   const displaySections = loading || !aboutSections || aboutSections.length === 0
     ? fallbackAboutSections
-    : getOrderedSections(aboutSections).map(section => ({
-        ...section,
-        image: processSectionImage(section)
-      }))
+    : getOrderedSections(aboutSections).map(section => {
+        // 如果是 history，使用正确的描述文字
+        const isHistory = section.id?.toLowerCase() === 'history'
+        return {
+          ...section,
+          image: processSectionImage(section),
+          description: isHistory 
+            ? 'From a startup to an industry benchmark, we focus on innovative geotechnical anchoring technology, continuously investing in research, development, and manufacturing upgrades. We have now grown into a world-leading provider of anchor solutions, serving markets across multiple continents and committed to providing safe and reliable support for construction and mining clients worldwide.'
+            : section.description
+        }
+      })
 
   const handleImageError = useCallback(
     (event: SyntheticEvent<HTMLImageElement>, fallback: string) => {
@@ -250,7 +257,12 @@ export function AboutSection({ initialSections = [] }: AboutSectionProps) {
                       </div>
                     </div>
                     <div className="p-6">
-                      <p className="text-muted-foreground line-clamp-5">{item.description}</p>
+                      <p className={`text-muted-foreground ${item.id.toLowerCase() === 'history' ? 'line-clamp-6' : 'line-clamp-5'}`}>
+                        {item.id.toLowerCase() === 'history' 
+                          ? 'From a startup to an industry benchmark, we focus on innovative geotechnical anchoring technology, continuously investing in research, development, and manufacturing upgrades. We have now grown into a world-leading provider of anchor solutions, serving markets across multiple continents and committed to providing safe and reliable support for construction and mining clients worldwide.'
+                          : item.description
+                        }
+                      </p>
                     </div>
                   </CardContent>
                 </Card>

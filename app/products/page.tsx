@@ -286,7 +286,7 @@ function ProductsPageContent() {
                     <Phone className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                     <div>
                       <div className="font-bold text-gray-800 mb-1">Phone</div>
-                      <div className="text-sm text-gray-700">+86-18021425296</div>
+                      <div className="text-sm text-gray-700">+86 18961838902</div>
                     </div>
                   </div>
 

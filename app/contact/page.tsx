@@ -55,7 +55,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+86 180 2142 5296</p>
+                    <p className="text-muted-foreground">+86 189 6183 8902</p>
                   </div>
                 </div>
 
@@ -66,7 +66,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold mb-1">Address</h3>
                     <p className="text-muted-foreground">
-                    Ronghu Village, Yuqi Supporting Area, Huishan Economic Development Zone, Wuxi City, Jiangsu Province, China
+                    Room 2208, Fengshang Cultural and Creative Center, Minfeng Road, Liangxi District, Wuxi City, Jiangsu Province, China
                     </p>
                   </div>
                 </div>
@@ -110,6 +110,18 @@ export default function ContactPage() {
                 </Button>
               </form>
             </div>
+          </div>
+
+          {/* Map - 占满一整行 */}
+          <div className="w-full overflow-hidden rounded-xl border border-slate-200 shadow-sm mt-12">
+            <iframe
+              title="XinHong Location"
+              src="https://www.google.com/maps?q=Room+2208,+Fengshang+Cultural+and+Creative+Center,+Minfeng+Road,+Liangxi+District,+Wuxi+City,+Jiangsu+Province,+China&output=embed&zoom=17"
+              className="h-[600px] w-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
           </div>
         </div>
       </main>

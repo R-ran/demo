@@ -33,16 +33,16 @@ export function Footer() {
   }
 
   return (
-    <footer id="contact" className="bg-primary text-secondary-foreground py-8">
+    <footer id="contact" className="bg-white text-black py-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Products Column */}
           <div>
-            <h3 className="text-4xl font-bold mb-8 text-write">PRODUCTS</h3>
+            <h3 className="text-4xl font-bold mb-8 text-black">PRODUCTS</h3>
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-secondary-foreground/80 hover:text-black/80 transition-colors">
+                  <Link href={link.href} className="text-black/80 hover:text-black/80 transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -55,7 +55,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary-foreground/80 hover:text-black/80 transition-colors"
+                className="text-black/80 hover:text-black/80 transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
@@ -64,7 +64,7 @@ export function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary-foreground/80 hover:text-black/80 transition-colors"
+                className="text-black/80 hover:text-black/80 transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
@@ -73,7 +73,7 @@ export function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary-foreground/80 hover:text-black/80 transition-colors"
+                className="text-black/80 hover:text-black/80 transition-colors"
                 aria-label="YouTube"
               >
                 <Youtube className="w-5 h-5" />
@@ -82,7 +82,7 @@ export function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary-foreground/80 hover:text-black/80 transition-colors"
+                className="text-black/80 hover:text-black/80 transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
@@ -102,27 +102,27 @@ export function Footer() {
               />
             </div>
             <p className="text-3xl text-center font-bold">XinHong</p>
-            <p className="text-1xl text-black/60 mt-4 text-center">Safer Space, Better Life</p>
+            <p className="text-1xl text-black/60 mt-4 text-center">Authentic Quality, Consistent Stability</p>
           </div>
 
           {/* Inquiry Form Column */}
           <div>
-            <h3 className="text-2xl font-bold mb-6 text-write">INQUIRY</h3>
+            <h3 className="text-2xl font-bold mb-6 text-black">INQUIRY</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="company" className="text-secondary-foreground">
+                <Label htmlFor="company" className="text-black">
                   *Company:
                 </Label>
                 <Input
                   id="company"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="bg-secondary-foreground/10 border-secondary-foreground/20 text-secondary-foreground"
+                  className="bg-black/10 border-black/20 text-black"
                   required
                 />
               </div>
               <div>
-                <Label htmlFor="email" className="text-secondary-foreground">
+                <Label htmlFor="email" className="text-black">
                   *Email:
                 </Label>
                 <Input
@@ -130,23 +130,23 @@ export function Footer() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-secondary-foreground/10 border-secondary-foreground/20 text-secondary-foreground"
+                  className="bg-black/10 border-black/20 text-black"
                   required
                 />
               </div>
               <div>
-                <Label htmlFor="message" className="text-secondary-foreground">
+                <Label htmlFor="message" className="text-black">
                   *Message:
                 </Label>
                 <Textarea
                   id="message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="bg-secondary-foreground/10 border-secondary-foreground/20 text-secondary-foreground min-h-24"
+                  className="bg-black/10 border-black/20 text-black min-h-24"
                   required
                 />
               </div>
-              <Button type="submit" className="w-full bg-write hover:bg-black transition-all">
+              <Button type="submit" className="w-full bg-black text-white hover:bg-black/80 transition-all">
                 SEND NOW
               </Button>
             </form>
@@ -156,7 +156,7 @@ export function Footer() {
 
 
        
-        <div className="mt-4 pt-2 border-t border-secondary-foreground/20 text-center text-sm text-black/60">
+        <div className="mt-4 pt-2 border-t border-black/20 text-center text-sm text-black/60">
           <p>© 2025 XINHONG Technology Co., Ltd. All Rights Reserved.</p>
         </div>
       </div>

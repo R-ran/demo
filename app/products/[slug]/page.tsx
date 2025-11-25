@@ -375,7 +375,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                     <Phone className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                     <div>
                       <div className="font-bold text-gray-800 mb-1">Phone</div>
-                      <div className="text-sm text-gray-700">+86-18021425296</div>
+                      <div className="text-sm text-gray-700">+86 18961838902</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -820,34 +820,151 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       {/* Accessories Detailed Content */}
                       {slug === "accessories" && (
                         <div className="space-y-6 mt-8">
-                          <div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">Anchor Head</h3>
-                            <div className="space-y-6">
-                              <p className="text-muted-foreground leading-relaxed mb-2">Plastic rubber material made. It connected with one side of anchor rod and buried together into the ground for the purpose of fixing and mediating the anchor rod.</p>
-                              <div>
-                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Anchor Nut</h3>
-                                <p className="text-muted-foreground leading-relaxed mb-2"> Using hemisphere or hex nuts,it can put the stress to the rod through the nut.</p>
+                          <div className="space-y-8">
+                            {/* Anchor Head */}
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">ANCHOR HEAD</h3>
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="w-full md:w-1/3 flex-shrink-0">
+                                  <img
+                                    src="/anchor-head.png"
+                                    alt="Anchor Head"
+                                    className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=300&width=400"
+                                    }}
+                                  />
+                                </div>
+                                <div className="w-full md:flex-1">
+                                  <p className="text-muted-foreground leading-relaxed text-base md:text-lg">Plastic rubber material made. It connected with one side of anchor rod and buried together into the ground for the purpose of fixing and mediating the anchor rod.</p>
+                                </div>
                               </div>
+                            </div>
 
-                              <div>
-                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Plate</h3>
-                                <p className="text-muted-foreground leading-relaxed mb-2">A hot-rolling plate. Given its flexibility, it helps the stress transfer . The plate with its adjustable angle fit with the rock surface tightly.</p>
+                            {/* Anchor Nut */}
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">ANCHOR NUT</h3>
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="w-full md:w-1/3 flex-shrink-0">
+                                  <img
+                                    src="/anchor-nut.jpg"
+                                    alt="Anchor Nut"
+                                    className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=300&width=400"
+                                    }}
+                                  />
+                                </div>
+                                <div className="w-full md:flex-1">
+                                  <p className="text-muted-foreground leading-relaxed text-base md:text-lg">Using hemisphere or hex nuts,it can put the stress to the rod through the nut.</p>
+                                </div>
                               </div>
-                              <div>
-                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Coupler</h3>
-                                <p className="text-muted-foreground leading-relaxed mb-2">It is a Mechanical made steel case with a step in the middle of its inside. It can combine anchors to adjust the length in case of different demands.</p>
+                            </div>
+
+                            {/* Plate */}
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">ANCHOR PLATE</h3>
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="w-full md:w-1/3 flex-shrink-0">
+                                  <img
+                                    src="/Plate.png"
+                                    alt="Plate"
+                                    className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=300&width=400"
+                                    }}
+                                  />
+                                </div>
+                                <div className="w-full md:flex-1">
+                                  <p className="text-muted-foreground leading-relaxed text-base md:text-lg">A hot-rolling plate. Given its flexibility, it helps the stress transfer . The plate with its adjustable angle fit with the rock surface tightly.</p>
+                                </div>
                               </div>
-                              <div>
-                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Grouting Stopper</h3>
-                                <p className="text-muted-foreground leading-relaxed mb-2">Grouting stopper is made of rubber and plastic materials. It provides a sealing effect to prevent the exhaust when grouting. Let the pressure grouting feasible. It also increased the fullness and density of the grouting solution. The stopper also could be a positioning support.</p>
+                            </div>
+
+                            {/* Coupler */}
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">ANCHOR COUPLER</h3>
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="w-full md:w-1/3 flex-shrink-0">
+                                  <img
+                                    src="/coupler.png"
+                                    alt="Coupler"
+                                    className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=300&width=400"
+                                    }}
+                                  />
+                                </div>
+                                <div className="w-full md:flex-1">
+                                  <p className="text-muted-foreground leading-relaxed text-base md:text-lg">It is a Mechanical made steel case with a step in the middle of its inside. It can combine anchors to adjust the length in case of different demands.</p>
+                                </div>
                               </div>
-                              <div>
-                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Drill Bit</h3>
-                                <p className="text-muted-foreground leading-relaxed mb-2">Bit is an important part of self drilling anchor, used for drilling to the ground. Variety range, include cross bit, word bit, arc edge drill, mud drill etc. Applied to various geological conditions and meets different demands.</p>
+                            </div>
+
+                            {/* Grouting Stopper */}
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">GROUTING STOPPER</h3>
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="w-full md:w-1/3 flex-shrink-0">
+                                  <img
+                                    src="/grouting-stopper.png"
+                                    alt="Grouting Stopper"
+                                    className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=300&width=400"
+                                    }}
+                                  />
+                                </div>
+                                <div className="w-full md:flex-1">
+                                  <p className="text-muted-foreground leading-relaxed text-base md:text-lg">Grouting stopper is made of rubber and plastic materials. It provides a sealing effect to prevent the exhaust when grouting. Let the pressure grouting feasible. It also increased the fullness and density of the grouting solution. The stopper also could be a positioning support.</p>
+                                </div>
                               </div>
-                              <div>
-                                <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">Centralizer/Spacer</h3>
-                                <p className="text-muted-foreground leading-relaxed mb-2">It Keeps the hollow bar in the true centre of the bore-hole while drilling and grouting, meanwhile it also Guarantees a minimum 20 mm annular grout thickness all round the bar, so the steel is completely encased and protected against corrosion.</p>
+                            </div>
+
+                            {/* Drill Bit */}
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">DRILL BIT</h3>
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="w-full md:w-1/3 flex-shrink-0">
+                                  <img
+                                    src="/drill-bit.png"
+                                    alt="Drill Bit"
+                                    className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=300&width=400"
+                                    }}
+                                  />
+                                </div>
+                                <div className="w-full md:flex-1">
+                                  <p className="text-muted-foreground leading-relaxed text-base md:text-lg">Bit is an important part of self drilling anchor, used for drilling to the ground. Variety range, include cross bit, word bit, arc edge drill, mud drill etc. Applied to various geological conditions and meets different demands.</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Centralizer/Spacer */}
+                            <div>
+                              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">CENTRALIZER/SPACER</h3>
+                              <div className="flex flex-col md:flex-row gap-6 items-start">
+                                <div className="w-full md:w-1/3 flex-shrink-0">
+                                  <img
+                                    src="/centralizer-spacer.jpg"
+                                    alt="Centralizer/Spacer"
+                                    className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement
+                                      target.src = "/placeholder.svg?height=300&width=400"
+                                    }}
+                                  />
+                                </div>
+                                <div className="w-full md:flex-1">
+                                  <p className="text-muted-foreground leading-relaxed text-base md:text-lg">It Keeps the hollow bar in the true centre of the bore-hole while drilling and grouting, meanwhile it also Guarantees a minimum 20 mm annular grout thickness all round the bar, so the steel is completely encased and protected against corrosion.</p>
+                                </div>
                               </div>
                             </div>
                           </div>
