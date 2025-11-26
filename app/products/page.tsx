@@ -3,6 +3,7 @@
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
+import { PageBanner } from "@/components/page-banner"
 import { Suspense, useEffect, useState } from "react"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
@@ -138,6 +139,10 @@ export default function ProductsPage() {
       <div className="min-h-screen bg-background">
         <TopHeader />
         <StickyNav />
+        <PageBanner 
+          title="Products" 
+          subtitle="High-quality anchor bolt solutions for your construction needs"
+        />
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -174,6 +179,10 @@ function ProductsPageContent() {
       <div className="min-h-screen bg-background">
         <TopHeader />
         <StickyNav />
+        <PageBanner 
+          title="Products" 
+          subtitle="High-quality anchor bolt solutions for your construction needs"
+        />
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -191,6 +200,10 @@ function ProductsPageContent() {
       <div className="min-h-screen bg-background">
         <TopHeader />
         <StickyNav />
+        <PageBanner 
+          title="Products" 
+          subtitle="High-quality anchor bolt solutions for your construction needs"
+        />
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
             <p className="text-lg text-muted-foreground mb-4">
@@ -217,6 +230,11 @@ function ProductsPageContent() {
       <TopHeader />
       <StickyNav />
 
+      <PageBanner 
+        title="Products" 
+        subtitle="High-quality anchor bolt solutions for your construction needs"
+        backgroundImage="/products-banner.jpg"
+      />
       <main className="pt-12">
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 mb-4">

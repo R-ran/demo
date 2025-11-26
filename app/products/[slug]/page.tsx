@@ -81,6 +81,14 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const [showModal, setShowModal] = useState(false)
   const [activeTab, setActiveTab] = useState("introduction")
   const [isValidProduct, setIsValidProduct] = useState<boolean | null>(null)
+  // 表单状态管理
+  const [formData, setFormData] = useState({
+    company: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   // Handle async params
   useEffect(() => {
@@ -178,6 +186,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           { feature: "Long-term durability" }
         ],
         case_images: [
+          "/product33.jpg",
+          "/product333.jpg",
 
         ],
         categories: ["common-anchor-bolt"]
@@ -202,7 +212,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         case_images: [
           
           "/product44.jpg",
-          "/product444.jpg"
+          "/product444.jpg",
+          "/product4444.jpg"
         ],
         categories: ["combination-hollow"]
       },
@@ -225,7 +236,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         ],
         case_images: [
           "/product55.jpg",
-          "/product555.jpg"
+          "/product5555.jpg",
+          "/product555.jpg",
+          
         ],
         categories: ["expansion-shell"]
       },
@@ -319,11 +332,128 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
     ? product.categories[0] 
     : null
 
+  // 根据产品 slug 获取特定的应用场景数据
+  const getApplicationScenarios = (productSlug: string) => {
+    // T-Thread 和 R-Thread 使用相同的应用场景
+    const sharedScenarios = [
+      {
+        category: "Tunneling & Underground Engineering",
+        scenarios: [
+          {
+            title: "Tunnel roof and wall support",
+            subtitle: "Tunneling & Underground Engineering",
+            image: "/tunneling scenarios.png",
+            imageAlt: "Tunnel roof and wall support",
+          },
+          {
+            title: "Highway and railway tunnel reinforcement",
+            subtitle: "Tunneling & Underground Engineering",
+            image: "/industrial-construction-site-with-rock-bolts.jpg",
+            imageAlt: "Highway and railway tunnel reinforcement",
+          },
+          {
+            title: "Subway station excavation support",
+            subtitle: "Tunneling & Underground Engineering",
+            image: "/construction-site-with-installed-rock-bolts.jpg",
+            imageAlt: "Subway station excavation support",
+          }
+        ]
+      },
+      {
+        category: "Mining Support Systems",
+        scenarios: [
+          {
+            title: "Coal mine roadway support",
+            subtitle: "Mining Support Systems",
+            image: "/mining.png",
+            imageAlt: "Coal mine roadway support",
+          },
+          {
+            title: "Metal mine shaft stabilization",
+            subtitle: "Mining Support Systems",
+            image: "/anchor-bolt-drilling-equipment.jpg",
+            imageAlt: "Metal mine shaft stabilization",
+          },
+          {
+            title: "Open-pit slope reinforcement",
+            subtitle: "Mining Support Systems",
+            image: "/anchor-accessories-and-tools.jpg",
+            imageAlt: "Open-pit slope reinforcement",
+          }
+        ]
+      },
+      {
+        category: "Civil Construction",
+        scenarios: [
+          {
+            title: "Slope stabilization and landslide prevention",
+            subtitle: "Civil Construction",
+            image: "/slope stablization.png",
+            imageAlt: "Slope stabilization and landslide prevention",
+          },
+          {
+            title: "Foundation underpinning",
+            subtitle: "Civil Construction",
+            image: "/construction-site-with-installed-rock-bolts.jpg",
+            imageAlt: "Foundation underpinning",
+          },
+          {
+            title: "Soil nailing for retaining walls",
+            subtitle: "Civil Construction",
+            image: "/tunnel-construction-project.jpg",
+            imageAlt: "Soil nailing for retaining walls",
+          }
+        ]
+      }
+    ]
+
+    if (productSlug === "T-self-drilling-bolt" || productSlug === "R-self-drilling-bolt") {
+      return sharedScenarios
+    }
+    return null
+  }
+
   // 处理表单提交
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    alert("Message sent successfully!")
-    setShowModal(false)
+    setStatus('loading')
+
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          // 将 company 映射为 API 期望的 name 字段
+          name: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          country: 'Not provided', // 表单没有这个字段，提供默认值
+          message: formData.message
+        })
+      })
+
+      if (res.ok) {
+        setStatus('success')
+        // 清空表单
+        setFormData({ company: '', email: '', phone: '', message: '' })
+        // 3秒后自动关闭弹窗
+        setTimeout(() => {
+          setShowModal(false)
+          setStatus('idle')
+        }, 3000)
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  // 处理 WhatsApp 跳转
+  const handleWhatsAppClick = () => {
+    // WhatsApp 号码: +86 189 6183 8902
+    const phoneNumber = '8618961838902' // 移除 + 和空格
+    window.open(`https://wa.me/${phoneNumber}`, '_blank')
   }
 
   return (
@@ -511,7 +641,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       <Button
                         variant="secondary"
                         className="flex-1"
-                        onClick={() => setShowModal(true)}
+                        onClick={handleWhatsAppClick}
                       >
                         <MessageSquare className="w-4 h-4 mr-2" />
                         Chat Now
@@ -1914,10 +2044,45 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   {activeTab === "application-scenarios" && (
                     <div className="space-y-4">
                       <div className="mt-8">
-                        <h3 className="text-xl font-semibold mb-6">Application Scenarios</h3>
                         <div className="space-y-8">
                           {(() => {
-                            // 准备应用场景数据
+                            // 获取特定产品的应用场景数据
+                            const productScenarios = getApplicationScenarios(slug)
+                            
+                            // 如果有特定产品的场景数据，使用它
+                            if (productScenarios) {
+                              return productScenarios.map((category, categoryIndex) => (
+                                <div key={categoryIndex} className="space-y-6">
+                                  <h4 className="text-xl md:text-2xl font-bold text-gray-800 border-b-2 border-primary pb-2">
+                                    {category.category}
+                                  </h4>
+                                  <div className="flex flex-col md:flex-row gap-6 items-start">
+                                    {/* 左侧图片 */}
+                                    <div className="w-full md:w-1/4 flex-shrink-0">
+                                      <img
+                                        src={category.scenarios[0]?.image || "/placeholder.svg?height=300&width=400"}
+                                        alt={category.category}
+                                        className="w-full h-auto rounded-lg object-cover max-w-[300px]"
+                                        onError={(e) => {
+                                          const target = e.target as HTMLImageElement
+                                          target.src = "/placeholder.svg?height=300&width=400"
+                                        }}
+                                      />
+                                    </div>
+                                    {/* 右侧三个小标题 */}
+                                    <div className="w-full md:flex-1 space-y-4">
+                                      {category.scenarios.map((scenario, scenarioIndex) => (
+                                        <h5 key={scenarioIndex} className="text-base md:text-lg font-normal text-gray-700">
+                                          {scenario.title}
+                                        </h5>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              ))
+                            }
+                            
+                            // 否则使用默认场景或案例图片
                             const scenarios = caseStudiesImages.length > 0 
                               ? caseStudiesImages.slice(0, 6).map((image: any, index: number) => ({
                                   title: `Application Scenario ${index + 1}`,
@@ -1998,7 +2163,11 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       {showModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-          onClick={() => setShowModal(false)}
+          onClick={() => {
+            setShowModal(false)
+            setStatus('idle')
+            setFormData({ company: '', email: '', phone: '', message: '' })
+          }}
         >
           <div
             className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
@@ -2007,44 +2176,95 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
               <h2 className="text-2xl font-bold">Send Us a Message</h2>
               <button
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false)
+                  setStatus('idle')
+                  setFormData({ company: '', email: '', phone: '', message: '' })
+                }}
                 className="text-gray-500 hover:text-gray-700 transition-colors"
               >
                 <X className="h-6 w-6" />
               </button>
             </div>
             <div className="p-6">
+              {/* 状态提示 */}
+              {status === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 text-green-600 rounded-lg border border-green-200">
+                  ✓ Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+              {status === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg border border-red-200">
+                  ✗ Failed to send message. Please try again or email us directly.
+                </div>
+              )}
+
               <form className="space-y-6" onSubmit={handleFormSubmit}>
                 <div>
-                  <label htmlFor="company" className="block text-sm font-medium mb-2">
+                  <label htmlFor="modal-company" className="block text-sm font-medium mb-2">
                     Company Name *
                   </label>
-                  <Input id="company" placeholder="Your company name" required />
+                  <Input 
+                    id="modal-company" 
+                    placeholder="Your company name" 
+                    required 
+                    value={formData.company}
+                    onChange={(e) => setFormData({...formData, company: e.target.value})}
+                    disabled={status === 'loading'}
+                  />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
+                  <label htmlFor="modal-email" className="block text-sm font-medium mb-2">
                     Email Address *
                   </label>
-                  <Input id="email" type="email" placeholder="your@email.com" required />
+                  <Input 
+                    id="modal-email" 
+                    type="email" 
+                    placeholder="your@email.com" 
+                    required 
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    disabled={status === 'loading'}
+                  />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                  <label htmlFor="modal-phone" className="block text-sm font-medium mb-2">
                     Phone Number
                   </label>
-                  <Input id="phone" type="tel" placeholder="+86 123 4567 8900" />
+                  <Input 
+                    id="modal-phone" 
+                    type="tel" 
+                    placeholder="+86 123 4567 8900" 
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    disabled={status === 'loading'}
+                  />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
+                  <label htmlFor="modal-message" className="block text-sm font-medium mb-2">
                     Message *
                   </label>
-                  <Textarea id="message" placeholder="Tell us about your project or inquiry..." rows={6} required />
+                  <Textarea 
+                    id="modal-message" 
+                    placeholder="Tell us about your project or inquiry..." 
+                    rows={6} 
+                    required 
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    disabled={status === 'loading'}
+                  />
                 </div>
 
-                <Button type="submit" className="w-full" size="lg">
-                  Send Message
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  size="lg"
+                  disabled={status === 'loading'}
+                >
+                  {status === 'loading' ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </div>

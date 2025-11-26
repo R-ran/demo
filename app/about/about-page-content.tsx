@@ -11,9 +11,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
+import { PageBanner } from "@/components/page-banner"
 import { Building2, Factory, Award, X, History, ScrollText } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import type { AboutSection as WordPressAboutSection } from "@/lib/wordpress"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 type AboutSection = WordPressAboutSection & {
   fallbackImage?: string
@@ -27,6 +35,66 @@ const FALLBACK_IMAGES: Record<string, string> = {
   certificate: "/certificate.jpg",
   overview: "/construction-site-with-installed-rock-bolts.jpg",
 }
+
+// Factory Overview 和 Certificate 的图片数组
+const factoryImages = [
+  "/factory1.jpg",
+  "/factory2.jpg",
+  "/factory3.jpg",
+  "/factory4.jpg",
+  "/factory5.jpg",
+  "/factory6.jpg",
+  "/factory7.png",
+  "/factory8.jpg",
+  "/factory9.jpg",
+  "/factory10.jpg",
+  "/factory11.jpg",
+  "/factory12.jpg",
+]
+
+// Certificate 图片数据，包含图片路径和描述 - 共8张，分两行显示
+const certificateImages = [
+  {
+    image: "/certificate1.jpg",
+    title: "EMSC ISO14001-2015 Certificate",
+    imageAlt: "EMSC ISO14001-2015 Certificate"
+  },
+  {
+    image: "/certificate2.jpg",
+    title: "HSMS ISO450001-2018 Certificate",
+    imageAlt: "HSMS ISO450001-2018 Certificate"
+  },
+  {
+    image: "/certificate3.jpg",
+    title: "ISO9001-2015 Certificate",
+    imageAlt: "ISO9001-2015 Certificate"
+  },
+  {
+    image: "/certificate4.jpg",
+    title: "ISO9001-2008 Certification",
+    imageAlt: "ISO9001-2008 Certification"
+  },
+  {
+    image: "/certificate5.jpg",
+    title: "YIHONG ISO Certificate",
+    imageAlt: "YIHONG ISO Certificate"
+  },
+  {
+    image: "/certificate6.jpg",
+    title: "TEST REPORT Certificate",
+    imageAlt: "TEST REPORT Certificate"
+  },
+  {
+    image: "/certificate7.jpg",
+    title: "TEST REPORT Certificate",
+    imageAlt: "TEST REPORT Certificate"
+  },
+  {
+    image: "/certificate8.jpg",
+    title: "TEST REPORT Certificate",
+    imageAlt: "TEST REPORT Certificate"
+  },
+]
 
 const PRIORITY_SECTION_IDS = ["why-choose-us"]
 
@@ -459,6 +527,80 @@ function parseTimelineEvents(htmlContent: string): TimelineEvent[] {
   })
 }
 
+// 处理 Factory Overview 的文字描述，加粗标题并将 Hold 相关文字转换为带复选框的重点标注样式
+function processFactoryDescription(html: string): string {
+  if (!html) return html
+
+  let processedHtml = html
+
+  // 1. 加粗标题 "Key Quality Control Points (typical ITP hold points)"
+  const titlePattern = /(Key Quality Control Points\s*\(typical ITP hold points\))/gi
+  processedHtml = processedHtml.replace(titlePattern, '<strong class="text-gray-800 font-bold">$1</strong>')
+
+  // 2. 加粗并增大 "Hollow Self-Drilling Anchor Bolt-Manufacturing Flow" 标题
+  const flowTitlePattern = /(Hollow Self-Drilling Anchor Bolt-Manufacturing Flow)/gi
+  processedHtml = processedHtml.replace(flowTitlePattern, '<h3 class="text-2xl md:text-2xl font-bold text-gray-800 mt-6 mb-4">$1</h3>')
+
+  // 3. 匹配 Hold 相关的文字模式
+  // 例如: Hold 2: Raw-tube UT → Witness
+  const holdPattern = /Hold\s+(\d+):\s*([^→\n<]+?)\s*→\s*([^\n<]+)/gi
+  
+  const holdItems: Array<{ hold: string; description: string; action: string; originalText: string }> = []
+  
+  // 提取所有 Hold 项目
+  let match
+  while ((match = holdPattern.exec(html)) !== null) {
+    const originalText = match[0].trim()
+    holdItems.push({
+      hold: match[1],
+      description: match[2].trim(),
+      action: match[3].trim(),
+      originalText: originalText
+    })
+  }
+  
+  // 3. 如果有 Hold 项目，替换为带复选框的重点标注样式
+  if (holdItems.length > 0) {
+    // 创建复选框列表 HTML
+    const checkboxList = holdItems.map(item => {
+      return `
+        <div class="flex items-start gap-3 mb-3">
+          <div class="flex-shrink-0 mt-1 w-5 h-5 rounded border-2 border-primary bg-primary flex items-center justify-center">
+            <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div class="flex-1 text-gray-700">
+            <strong class="font-semibold">Hold ${item.hold}:</strong> ${item.description} <span class="text-primary font-medium">→ ${item.action}</span>
+          </div>
+        </div>
+      `
+    }).join('')
+    
+    // 替换原始 Hold 文字为复选框列表
+    holdItems.forEach(item => {
+      // 转义特殊字符用于正则匹配
+      const escapedDescription = item.description.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      const escapedAction = item.action.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      
+      // 匹配可能包含 HTML 标签的原始文本
+      const pattern = new RegExp(
+        `Hold\\s+${item.hold}:\\s*[^→]*?${escapedDescription}[^→]*?→\\s*[^<\\n]*?${escapedAction}`,
+        'gi'
+      )
+      processedHtml = processedHtml.replace(pattern, '')
+    })
+    
+    // 清理多余的换行和空格
+    processedHtml = processedHtml.replace(/\n\s*\n+/g, '\n').trim()
+    
+    // 在文字描述后添加复选框列表
+    processedHtml = processedHtml + '<div class="mt-6 space-y-2">' + checkboxList + '</div>'
+  }
+  
+  return processedHtml
+}
+
 interface Props {
   sections: AboutSection[]
 }
@@ -530,6 +672,14 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
   const [showModal, setShowModal] = useState(false)
   const searchParams = useSearchParams()
   const router = useRouter()
+  // 表单状态管理
+  const [formData, setFormData] = useState({
+    company: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>, fallback: string) => {
     if (!fallback) {
@@ -639,11 +789,39 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
     setShowModal(true)
   }
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("Form submitted")
-    alert("Message sent successfully!")
-    setShowModal(false)
+    setStatus('loading')
+
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          // 将 company 映射为 API 期望的 name 字段
+          name: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          country: 'Not provided', // 表单没有这个字段，提供默认值
+          message: formData.message
+        })
+      })
+
+      if (res.ok) {
+        setStatus('success')
+        // 清空表单
+        setFormData({ company: '', email: '', phone: '', message: '' })
+        // 3秒后自动关闭弹窗
+        setTimeout(() => {
+          setShowModal(false)
+          setStatus('idle')
+        }, 3000)
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   // 无数据时展示占位
@@ -652,6 +830,11 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
       <div className="min-h-screen bg-background">
         <TopHeader />
         <StickyNav />
+        <PageBanner 
+          title="About Us" 
+          subtitle="Learn more about our company, team, and state-of-the-art manufacturing facilities"
+          backgroundImage="/about-us-banner.jpg"
+        />
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -668,6 +851,10 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
       <TopHeader />
       <StickyNav />
 
+      <PageBanner 
+        title="About Us" 
+        subtitle="Learn more about our company, team, and state-of-the-art manufacturing facilities"
+      />
       <main className="pt-12">
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 mb-4">
@@ -823,38 +1010,171 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
               </div>
             </div>
           ) : (
-            // 其他部分的默认布局
+            // 其他部分的布局
             <div className="container mx-auto px-4 mb-16">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div className="relative w-full flex items-center justify-center">
-                  <img
-                    src={selectedItem.image || selectedItem.fallbackImage || "/placeholder.svg"}
-                    alt={selectedItem.imageAlt || selectedItem.title}
-                    className="w-full h-auto max-h-[600px] object-contain rounded-lg"
-                    data-fallback={selectedItem.fallbackImage || "/placeholder.svg"}
-                    onError={(event) =>
-                      handleImageError(event, selectedItem.fallbackImage || "/placeholder.svg")
-                    }
-                  />
-                </div>
-
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4 mb-4">
+              {selectedItem.id.toLowerCase() === "factory" || selectedItem.id.toLowerCase() === "factory-overview" ? (
+                // Factory Overview: 上下结构 - 标题 -> 文字 -> 轮播图
+                <div className="max-w-4xl mx-auto space-y-8">
+                  {/* 标题 */}
+                  <div className="flex items-center gap-4">
                     {SelectedIcon && <SelectedIcon className="h-12 w-12 text-primary" />}
                     <h2 className="text-3xl md:text-4xl font-bold">{selectedItem.title}</h2>
                   </div>
+                  
+                  {/* 文字描述 */}
                   <div 
                     className="text-lg text-muted-foreground leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: processFactoryDescription(selectedItem.detailedDescription) }}
+                  />
+                  
+                  {/* 轮播图 - 放在文字最下面，参考图片样式 */}
+                  <div className="relative w-full mt-8">
+                    <Carousel 
+                      className="w-full"
+                      opts={{
+                        align: "start",
+                        loop: true,
+                        slidesToScroll: 1,
+                      }}
+                    >
+                      <CarouselContent className="-ml-2 md:-ml-4">
+                        {factoryImages.map((img, index) => (
+                          <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                            <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg bg-gray-50 shadow-md hover:shadow-lg transition-shadow">
+                              <img
+                                src={img}
+                                alt={`${selectedItem.imageAlt || selectedItem.title} - ${index + 1}`}
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement
+                                  if (!target.src.includes("placeholder")) {
+                                    target.src = "/placeholder.svg?height=400&width=600"
+                                  }
+                                }}
+                              />
+                            </div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious className="left-2 md:left-4 hidden md:flex" />
+                      <CarouselNext className="right-2 md:right-4 hidden md:flex" />
+                    </Carousel>
+                  </div>
+                </div>
+              ) : selectedItem.id.toLowerCase() === "certificate" ? (
+                // Certificate: 上下结构 - 标题 -> 文字 -> 多张图片排列
+                <div className="w-full space-y-8">
+                  {/* 标题 */}
+                  <div className="flex items-center gap-4">
+                    {SelectedIcon && <SelectedIcon className="h-12 w-12 text-primary" />}
+                    <h2 className="text-3xl md:text-4xl font-bold">{selectedItem.title}</h2>
+                  </div>
+                  
+                  {/* 文字描述 */}
+                  <div 
+                    className="text-lg text-muted-foreground leading-relaxed max-w-7xl"
                     dangerouslySetInnerHTML={{ __html: selectedItem.detailedDescription }}
                   />
-                  <button
-                    onClick={handleLearnMoreClick}
-                    className="mt-6 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-                  >
-                    Learn More →
-                  </button>
+                  
+                  {/* 证书图片网格布局 - 一行4张，共两行8张 */}
+                  <div className="w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                      {certificateImages.map((cert, index) => (
+                        <div 
+                          key={index} 
+                          className="w-full"
+                        >
+                          {/* 证书图片 */}
+                          <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg bg-white shadow-lg border-2 border-gray-200 hover:shadow-xl transition-shadow">
+                            <div className="w-full h-full flex items-center justify-center bg-gray-50">
+                              <img
+                                src={cert.image}
+                                alt={cert.title}
+                                className="w-full h-full object-contain p-3"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement
+                                  if (!target.src.includes("placeholder")) {
+                                    target.src = "/placeholder.svg?height=600&width=400"
+                                  }
+                                }}
+                              />
+                            </div>
+                          </div>
+                          {/* 证书描述文字 */}
+                          <div className="mt-4 text-center px-2">
+                            <h3 className="text-sm md:text-base font-semibold text-gray-800 mb-2 leading-tight">
+                              {cert.title}
+                            </h3>
+                              
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                // 其他部分的默认布局（左右结构）
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div className="relative w-full flex items-center justify-center">
+                      <img
+                        src={selectedItem.image || selectedItem.fallbackImage || "/placeholder.svg"}
+                        alt={selectedItem.imageAlt || selectedItem.title}
+                        className="w-full h-auto max-h-[600px] object-contain rounded-lg"
+                        data-fallback={selectedItem.fallbackImage || "/placeholder.svg"}
+                        onError={(event) =>
+                          handleImageError(event, selectedItem.fallbackImage || "/placeholder.svg")
+                        }
+                      />
+                    </div>
+
+                    <div className="space-y-6">
+                      <div className="flex items-center gap-4 mb-4">
+                        {SelectedIcon && <SelectedIcon className="h-12 w-12 text-primary" />}
+                        <h2 className="text-3xl md:text-4xl font-bold">{selectedItem.title}</h2>
+                      </div>
+                      <div 
+                        className="text-lg text-muted-foreground leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: selectedItem.detailedDescription }}
+                      />
+                      
+                    </div>
+                  </div>
+                  
+                  {/* 统计模块和按钮 - 仅在 why choose us 部分显示 */}
+                  {selectedItem.id.toLowerCase() === "why-choose-us" && (
+                    <>
+                      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="text-center">
+                          <div className="text-4xl md:text-5xl font-bold text-primary mb-2">20+</div>
+                          <div className="text-base md:text-lg text-gray-600">Years of establishment</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-4xl md:text-5xl font-bold text-primary mb-2">10+</div>
+                          <div className="text-base md:text-lg text-gray-600">Partners</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-4xl md:text-5xl font-bold text-primary mb-2">8000m²</div>
+                          <div className="text-base md:text-lg text-gray-600">Warehouse</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-4xl md:text-5xl font-bold text-primary mb-2">24000T</div>
+                          <div className="text-base md:text-lg text-gray-600">Annual Output</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-center mt-6">
+                        <button
+                          onClick={handleLearnMoreClick}
+                          className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                        >
+                          Learn More →
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </>
+                
+              )}
             </div>
           )
         ) : (
@@ -907,7 +1227,11 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
         {showModal && selectedItem && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-            onClick={() => setShowModal(false)}
+            onClick={() => {
+              setShowModal(false)
+              setStatus('idle')
+              setFormData({ company: '', email: '', phone: '', message: '' })
+            }}
           >
             <div
               className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
@@ -916,44 +1240,95 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
               <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
                 <h2 className="text-2xl font-bold">Send Us a Message</h2>
                 <button
-                  onClick={() => setShowModal(false)}
+                  onClick={() => {
+                    setShowModal(false)
+                    setStatus('idle')
+                    setFormData({ company: '', email: '', phone: '', message: '' })
+                  }}
                   className="text-gray-500 hover:text-gray-700 transition-colors"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
               <div className="p-6">
+                {/* 状态提示 */}
+                {status === 'success' && (
+                  <div className="mb-6 p-4 bg-green-50 text-green-600 rounded-lg border border-green-200">
+                    ✓ Message sent successfully! We'll get back to you soon.
+                  </div>
+                )}
+                {status === 'error' && (
+                  <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg border border-red-200">
+                    ✗ Failed to send message. Please try again or email us directly.
+                  </div>
+                )}
+
                 <form className="space-y-6" onSubmit={handleFormSubmit}>
                   <div>
-                    <label htmlFor="company" className="block text-sm font-medium mb-2">
+                    <label htmlFor="about-company" className="block text-sm font-medium mb-2">
                       Company Name *
                     </label>
-                    <Input id="company" placeholder="Your company name" required />
+                    <Input 
+                      id="about-company" 
+                      placeholder="Your company name" 
+                      required 
+                      value={formData.company}
+                      onChange={(e) => setFormData({...formData, company: e.target.value})}
+                      disabled={status === 'loading'}
+                    />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                    <label htmlFor="about-email" className="block text-sm font-medium mb-2">
                       Email Address *
                     </label>
-                    <Input id="email" type="email" placeholder="your@email.com" required />
+                    <Input 
+                      id="about-email" 
+                      type="email" 
+                      placeholder="your@email.com" 
+                      required 
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      disabled={status === 'loading'}
+                    />
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                    <label htmlFor="about-phone" className="block text-sm font-medium mb-2">
                       Phone Number
                     </label>
-                    <Input id="phone" type="tel" placeholder="+86 123 4567 8900" />
+                    <Input 
+                      id="about-phone" 
+                      type="tel" 
+                      placeholder="+86 123 4567 8900" 
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      disabled={status === 'loading'}
+                    />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    <label htmlFor="about-message" className="block text-sm font-medium mb-2">
                       Message *
                     </label>
-                    <Textarea id="message" placeholder="Tell us about your project or inquiry..." rows={6} required />
+                    <Textarea 
+                      id="about-message" 
+                      placeholder="Tell us about your project or inquiry..." 
+                      rows={6} 
+                      required 
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      disabled={status === 'loading'}
+                    />
                   </div>
 
-                  <Button type="submit" className="w-full" size="lg">
-                    Send Message
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    size="lg"
+                    disabled={status === 'loading'}
+                  >
+                    {status === 'loading' ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               </div>

@@ -3,6 +3,7 @@
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
+import { PageBanner } from "@/components/page-banner"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -38,6 +39,11 @@ export default function SuccessfulProjectsPageContent({
       <div className="min-h-screen bg-background">
         <TopHeader />
         <StickyNav />
+        <PageBanner 
+          title="Successful Projects" 
+          subtitle="Explore our successful projects and case studies"
+          backgroundImage="/successful-projects-banner.jpg"
+        />
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
             <div className="p-8 border border-red-500 rounded-lg">
@@ -150,6 +156,10 @@ export default function SuccessfulProjectsPageContent({
       <TopHeader />
       <StickyNav />
 
+      <PageBanner 
+        title="Successful Projects" 
+        subtitle="Explore our successful projects and case studies"
+      />
       <main className="pt-12">
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 mb-4">
@@ -160,19 +170,6 @@ export default function SuccessfulProjectsPageContent({
 
         {/* Main Content Area */}
         <div className="container mx-auto px-4 mb-16">
-          {/* Project Title Section */}
-          <div className="mb-8 bg-muted/30 py-8 px-6 rounded-lg">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <div>
-                <h1 className="text-4xl md:text-6xl font-bold mb-2">
-                  <span className="text-primary">PROJECT</span>
-                </h1>
-                <p className="text-muted-foreground text-sm">
-                  world's leading self drilling anchor bolt manufacturer.
-                </p>
-              </div>
-            </div>
-          </div>
 
           {/* Project Categories Navigation */}
           <div className="mb-8 bg-gray-800 rounded-lg overflow-hidden" data-nav-section>

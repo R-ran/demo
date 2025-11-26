@@ -9,6 +9,13 @@ import { Metadata } from "next"
 import { getAboutSections } from "@/lib/wordpress"
 import type { AboutSection } from "@/lib/wordpress"
 import React from 'react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 
 // 时间线事件接口
@@ -416,6 +423,21 @@ const staticTimelineData: TimelineItem[] = [
 // 调试：输出静态数据
 console.log('静态时间轴数据:', staticTimelineData);
 
+// Factory Overview 和 Certificate 的图片数组
+const factoryImages = [
+  "/industrial-factory-production-floor.jpg",
+  "/construction-site-with-installed-rock-bolts.jpg",
+  "/anchor-bolt-drilling-equipment.jpg",
+  "/industrial-construction-site-with-rock-bolts.jpg",
+]
+
+const certificateImages = [
+  "/certificate.jpg",
+  "/industrial-factory-production-floor.jpg",
+  "/construction-site-with-installed-rock-bolts.jpg",
+  "/anchor-bolt-drilling-equipment.jpg",
+]
+
 // 静态 fallback 数据（当 WordPress 数据不可用时使用）
 const fallbackAboutItems: Record<string, {
   title: string
@@ -616,30 +638,109 @@ export default async function AboutPage({ params }: { params: Promise<{ section:
               )}
             </div>
           ) : (
-            // 其他部分的默认布局
+            // 其他部分的布局
             <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
-                {/* Image Section */}
-                <div className="relative w-full h-96 md:h-[500px] overflow-hidden rounded-lg">
-                <img
-                  src={item.image || "/placeholder.svg"}
-                  alt={item.imageAlt || item.title}
-                  className="w-full h-full object-cover"
-                />
-                </div>
-
-                {/* Text Section */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4 mb-4">
+              {section.toLowerCase() === "factory" || section.toLowerCase() === "factory-overview" ? (
+                // Factory Overview: 上下结构 - 标题 -> 文字 -> 轮播图
+                <div className="space-y-8">
+                  {/* 标题 */}
+                  <div className="flex items-center gap-4">
                     <IconComponent className="h-12 w-12 text-primary" />
                     <h1 className="text-3xl md:text-4xl font-bold">{item.title}</h1>
                   </div>
+                  
+                  {/* 文字描述 */}
                   <div 
                     className="text-lg text-muted-foreground leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: item.detailedDescription }}
                   />
+                  
+                  {/* 轮播图 */}
+                  <div className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden">
+                    <Carousel className="w-full h-full">
+                      <CarouselContent className="h-full">
+                        {factoryImages.map((img, index) => (
+                          <CarouselItem key={index} className="h-full">
+                            <div className="h-full flex items-center justify-center bg-gray-50">
+                              <img
+                                src={img}
+                                alt={`${item.imageAlt || item.title} - ${index + 1}`}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement
+                                  if (!target.src.includes("placeholder")) {
+                                    target.src = "/placeholder.svg?height=500&width=800"
+                                  }
+                                }}
+                              />
+                            </div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious className="left-2" />
+                      <CarouselNext className="right-2" />
+                    </Carousel>
+                  </div>
                 </div>
-              </div>
+              ) : section.toLowerCase() === "certificate" ? (
+                // Certificate: 上下结构 - 标题 -> 文字 -> 多张图片排列
+                <div className="space-y-8">
+                  {/* 标题 */}
+                  <div className="flex items-center gap-4">
+                    <IconComponent className="h-12 w-12 text-primary" />
+                    <h1 className="text-3xl md:text-4xl font-bold">{item.title}</h1>
+                  </div>
+                  
+                  {/* 文字描述 */}
+                  <div 
+                    className="text-lg text-muted-foreground leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: item.detailedDescription }}
+                  />
+                  
+                  {/* 多张图片排列 */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {certificateImages.map((img, index) => (
+                      <div key={index} className="relative w-full h-64 md:h-80 overflow-hidden rounded-lg">
+                        <img
+                          src={img}
+                          alt={`${item.imageAlt || item.title} - ${index + 1}`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement
+                            if (!target.src.includes("placeholder")) {
+                              target.src = "/placeholder.svg?height=400&width=600"
+                            }
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                // 其他部分的默认布局（左右结构）
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
+                  {/* Image Section */}
+                  <div className="relative w-full h-96 md:h-[500px] overflow-hidden rounded-lg">
+                    <img
+                      src={item.image || "/placeholder.svg"}
+                      alt={item.imageAlt || item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Text Section */}
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4 mb-4">
+                      <IconComponent className="h-12 w-12 text-primary" />
+                      <h1 className="text-3xl md:text-4xl font-bold">{item.title}</h1>
+                    </div>
+                    <div 
+                      className="text-lg text-muted-foreground leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: item.detailedDescription }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

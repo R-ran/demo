@@ -1,6 +1,6 @@
 "use client"
 
-import { Facebook, Twitter, Youtube, Linkedin, Search, Download, X, Menu } from "lucide-react"
+import { Facebook, Youtube, Linkedin, Search, Download, X, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
@@ -97,70 +97,10 @@ export function TopHeader() {
               {/* 语言选择 - 移动端简化 */}
               <select className="bg-transparent border-none text-muted-foreground hover:text-primary cursor-pointer text-xs sm:text-sm">
                 <option>EN</option>
-                <option>中文</option>
+               
               </select>
               <div className="relative">
-                <button
-                  onClick={handleSearchClick}
-                  className="text-muted-foreground hover:text-primary transition-colors p-1"
-                  aria-label="Search"
-                >
-                  <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-
-                {/* Search Dropdown */}
-                {isSearchOpen && (
-                  <div className="search-dropdown absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
-                    <div className="p-3 sm:p-4 border-b border-gray-200">
-                      <div className="flex items-center gap-2">
-                        <Search className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
-                        <Input
-                          type="text"
-                          placeholder="Search..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="flex-1 border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-sm sm:text-base"
-                          autoFocus
-                        />
-                        <button
-                          onClick={handleCloseSearch}
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                          aria-label="Close search"
-                        >
-                          <X className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </button>
-                      </div>
-                    </div>
-                    {searchQuery.trim() && (
-                      <div className="max-h-96 overflow-y-auto">
-                        {searchResults.length > 0 ? (
-                          <div className="p-2">
-                            {searchResults.map((result, index) => (
-                              <Link
-                                key={index}
-                                href={result.url}
-                                onClick={handleCloseSearch}
-                                className="block px-3 sm:px-4 py-2 sm:py-3 hover:bg-muted/50 transition-colors rounded-md"
-                              >
-                                <div className="font-medium text-foreground text-sm sm:text-base">{result.title}</div>
-                                <div className="text-xs sm:text-sm text-muted-foreground">{result.category}</div>
-                              </Link>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="p-6 sm:p-8 text-center text-muted-foreground text-sm sm:text-base">
-                            No results found for "{searchQuery}"
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {!searchQuery.trim() && (
-                      <div className="p-6 sm:p-8 text-center text-muted-foreground text-sm sm:text-base">
-                        Type to search...
-                      </div>
-                    )}
-                  </div>
-                )}
+                                
               </div>
             </div>
           </div>
@@ -208,15 +148,7 @@ export function TopHeader() {
             >
               <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
+            
             <a
               href="https://youtube.com"
               target="_blank"
@@ -227,7 +159,7 @@ export function TopHeader() {
               <Youtube className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/wuxi-oriental-xinhong-hollow-anchor-bolt/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"

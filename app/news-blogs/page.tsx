@@ -7,6 +7,7 @@ import Link from "next/link"
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
+import { PageBanner } from "@/components/page-banner"
 import { useEffect, useState } from "react"
 
 // WordPress API 导入
@@ -49,7 +50,11 @@ export default function NewsBlogPage() {
     <div className="min-h-screen bg-background">
       <TopHeader />
       <StickyNav />
-
+      <PageBanner 
+        title="News & Blogs" 
+        subtitle="Stay updated with the latest news, product launches, industry insights, and success stories"
+        backgroundImage="/news-blogs-banner.jpg"
+      />
       <main className="pt-12">
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 mb-4">

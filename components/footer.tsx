@@ -23,13 +23,39 @@ export function Footer() {
   const [formData, setFormData] = useState({
     company: "",
     email: "",
+    phone: "",
     message: "",
   })
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Handle form submission
+    setStatus('loading')
+
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          // 将 company 映射为 API 期望的 name 字段
+          name: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          country: 'Not provided', // 表单没有这个字段，提供默认值
+          message: formData.message
+        })
+      })
+
+      if (res.ok) {
+        setStatus('success')
+        // 清空表单
+        setFormData({ company: '', email: '', phone: '', message: '' })
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -60,15 +86,7 @@ export function Footer() {
               >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-black/80 hover:text-black/80 transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
+              
               <a
                 href="https://youtube.com"
                 target="_blank"
@@ -79,7 +97,7 @@ export function Footer() {
                 <Youtube className="w-5 h-5" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/wuxi-oriental-xinhong-hollow-anchor-bolt/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-black/80 hover:text-black/80 transition-colors"
@@ -108,46 +126,80 @@ export function Footer() {
           {/* Inquiry Form Column */}
           <div>
             <h3 className="text-2xl font-bold mb-6 text-black">INQUIRY</h3>
+            
+            {/* 状态提示 */}
+            {status === 'success' && (
+              <div className="mb-4 p-3 bg-green-50 text-green-600 rounded-lg border border-green-200 text-sm">
+                ✓ Message sent successfully! We'll get back to you soon.
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg border border-red-200 text-sm">
+                ✗ Failed to send message. Please try again or email us directly.
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="company" className="text-black">
+                <Label htmlFor="footer-company" className="text-black">
                   *Company:
                 </Label>
                 <Input
-                  id="company"
+                  id="footer-company"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                   className="bg-black/10 border-black/20 text-black"
                   required
+                  disabled={status === 'loading'}
                 />
               </div>
               <div>
-                <Label htmlFor="email" className="text-black">
+                <Label htmlFor="footer-email" className="text-black">
                   *Email:
                 </Label>
                 <Input
-                  id="email"
+                  id="footer-email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="bg-black/10 border-black/20 text-black"
                   required
+                  disabled={status === 'loading'}
                 />
               </div>
               <div>
-                <Label htmlFor="message" className="text-black">
+                <Label htmlFor="footer-phone" className="text-black">
+                  Phone Number:
+                </Label>
+                <Input
+                  id="footer-phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="bg-black/10 border-black/20 text-black"
+                  placeholder="+86 123 4567 8900"
+                  disabled={status === 'loading'}
+                />
+              </div>
+              <div>
+                <Label htmlFor="footer-message" className="text-black">
                   *Message:
                 </Label>
                 <Textarea
-                  id="message"
+                  id="footer-message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="bg-black/10 border-black/20 text-black min-h-24"
                   required
+                  disabled={status === 'loading'}
                 />
               </div>
-              <Button type="submit" className="w-full bg-black text-white hover:bg-black/80 transition-all">
-                SEND NOW
+              <Button 
+                type="submit" 
+                className="w-full bg-black text-white hover:bg-black/80 transition-all"
+                disabled={status === 'loading'}
+              >
+                {status === 'loading' ? 'Sending...' : 'SEND NOW'}
               </Button>
             </form>
           </div>

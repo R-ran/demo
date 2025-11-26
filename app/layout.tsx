@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono, Caveat } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { FloatingContactBar } from "@/components/floating-contact-bar"
+import { TawkToChat } from "@/components/tawk-to-chat"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         {children}
         <FloatingContactBar />
+        <TawkToChat />
         <Analytics />
       </body>
     </html>
