@@ -415,19 +415,6 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
   );
 };
 
-// 静态时间轴数据（用于 history 部分）- 确保使用这个数据而不是 WordPress
-const staticTimelineData: TimelineItem[] = [
-  { year: '2010年', desc: 'XINHONG 公司正式成立，开始专注于地质锚固解决方案的研发与生产。' },
-  { year: '2012年', desc: '成功研发出第一代自钻式锚杆产品，获得多项技术专利，奠定了行业技术领先地位。' },
-  { year: '2015年', desc: '产品成功进入国际市场，与多个国家的工程公司建立合作关系，业务覆盖亚洲、欧洲等多个地区。' },
-  { year: '2017年', desc: '投资建设现代化生产基地，引进先进生产设备，年产能大幅提升，产品质量达到国际先进水平。' },
-  { year: '2019年', desc: '通过 ISO 9001:2015 质量管理体系认证，建立完善的质量控制体系，确保产品符合国际标准。' },
-  { year: '2021年', desc: '推出新一代高性能锚固产品，在多个重大工程项目中成功应用，获得客户高度认可。' },
-  { year: '2023年', desc: '持续加大研发投入，拓展产品线，服务更多行业客户，成为地质锚固领域的知名品牌。' },
-];
-
-// 调试：输出静态数据
-console.log('静态时间轴数据:', staticTimelineData);
 
 // Factory Overview 和 Certificate 的图片数组
 const factoryImages = [
@@ -504,13 +491,7 @@ export default async function AboutPage({ params }: { params: Promise<{ section:
   // 如果是 history 部分，跳过 WordPress 数据获取，使用静态数据
   const isHistory = section.toLowerCase() === 'history'
   
-  // 调试信息 - 强制输出
-  console.log('=== History 页面调试信息 ===');
-  console.log('当前 section:', section);
-  console.log('section.toLowerCase():', section.toLowerCase());
-  console.log('isHistory:', isHistory);
-  console.log('staticTimelineData 长度:', staticTimelineData.length);
-  console.log('staticTimelineData 第一个事件:', staticTimelineData[0]);
+  
   
   // 确保 history 部分不使用 WordPress 数据
   if (!isHistory) {
@@ -588,64 +569,8 @@ export default async function AboutPage({ params }: { params: Promise<{ section:
               </div>
 
               {/* 直接渲染时间轴，使用静态数据 staticTimelineData - 使用 grid 布局左右交替显示 */}
-              {staticTimelineData && staticTimelineData.length > 0 ? (
-                <>
-                  <ol className="relative max-w-4xl mx-auto py-8 timeline-container list-none m-0 p-0">
-                    {/* 中心垂直线 */}
-                    <div className="absolute left-8 top-0 bottom-0 w-px bg-gray-300 md:left-1/2 md:-translate-x-1/2"></div>
-                    
-                    {staticTimelineData.map((item, index) => {
-                      const isLeft = index % 2 === 0
-                      return (
-                        <li key={`timeline-${index}`} className={`timeline-item grid grid-cols-1 md:grid-cols-2 gap-4 ${index < staticTimelineData.length - 1 ? 'mb-10' : ''} list-none m-0 p-0 relative`}>
-                          {isLeft ? (
-                            <>
-                              {/* 左侧内容（奇数项） */}
-                              <div className="md:pr-8 md:text-right">
-                                <time className="text-4xl font-bold leading-none text-blue-600 block" style={{ fontSize: '2.25rem', fontWeight: '700' }}>{item.year}</time>
-                                <p className="text-lg font-normal text-muted-foreground leading-relaxed mt-2 whitespace-normal" style={{ fontSize: '1.125rem' }}>
-                                  {item.desc}
-                                </p>
-                              </div>
-                              
-                              {/* 中心圆点 */}
-                              <div className="absolute left-8 w-3 h-3 bg-blue-600 rounded-full border-4 border-white shadow-md md:left-1/2 md:-translate-x-1/2 z-10"></div>
-                              
-                              {/* 右侧占位（奇数项） */}
-                              <div className="hidden md:block"></div>
-                            </>
-                          ) : (
-                            <>
-                              {/* 左侧占位（偶数项） */}
-                              <div className="hidden md:block"></div>
-                              
-                              {/* 中心圆点 */}
-                              <div className="absolute left-8 w-3 h-3 bg-blue-600 rounded-full border-4 border-white shadow-md md:left-1/2 md:-translate-x-1/2 z-10"></div>
-                              
-                              {/* 右侧内容（偶数项） */}
-                              <div className="md:pl-8">
-                                <time className="text-4xl font-bold leading-none text-blue-600 block" style={{ fontSize: '2.25rem', fontWeight: '700' }}>{item.year}</time>
-                                <p className="text-lg font-normal text-muted-foreground leading-relaxed mt-2 whitespace-normal" style={{ fontSize: '1.125rem' }}>
-                                  {item.desc}
-                                </p>
-                              </div>
-                            </>
-                          )}
-                        </li>
-                      )
-                    })}
-                  </ol>
-                  
-                </>
-              ) : (
-                <div className="text-center text-muted-foreground py-12">
-                  暂无历史数据
-                </div>
-              )}
-            </div>
-          ) : (
-            // 其他部分的布局
-            <div className="max-w-4xl mx-auto">
+              
+              
               {section.toLowerCase() === "factory" || section.toLowerCase() === "factory-overview" ? (
                 // Factory Overview: 上下结构 - 标题 -> 文字 -> 轮播图
                 <div className="space-y-8">
@@ -748,10 +673,10 @@ export default async function AboutPage({ params }: { params: Promise<{ section:
                 </div>
               )}
             </div>
-          )}
+          ) : null}
         </div>
       </main>
       <Footer />
     </div>
-  )
+  );  
 }

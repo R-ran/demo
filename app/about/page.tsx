@@ -5,23 +5,24 @@ import { Metadata } from "next"
 import AboutPageClient from "./about-page-content"
 import { getAboutSections, type AboutSection } from "@/lib/wordpress"
 import { StructuredData } from "@/components/structured-data"
+import { getPageTitle, getFullPageTitle } from "@/lib/page-titles"
 
-
-
+// 从统一配置获取页面标题
+const pageConfig = getPageTitle('/about')
 
 export const metadata: Metadata = {
-  title: "About Us",
-  description: "Learn more about XINHONG company, team, and state-of-the-art manufacturing facilities. Leading provider of geotechnical anchoring solutions with over 20 years of experience.",
-  keywords: ["XINHONG", "about us", "company history", "manufacturing facilities", "geotechnical solutions"],
+  title: pageConfig.title,
+  description: pageConfig.description,
+  keywords: pageConfig.keywords,
   openGraph: {
-    title: "About Us | XINHONG",
-    description: "Learn more about XINHONG company, team, and state-of-the-art manufacturing facilities.",
+    title: getFullPageTitle('/about'),
+    description: pageConfig.description,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Us | XINHONG",
-    description: "Learn more about XINHONG company, team, and state-of-the-art manufacturing facilities.",
+    title: getFullPageTitle('/about'),
+    description: pageConfig.description,
   },
 }
 
