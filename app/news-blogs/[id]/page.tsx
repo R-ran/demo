@@ -15,7 +15,13 @@ import type { NewsBlogArticle } from "@/lib/wordpress"
 
 export const metadata: Metadata = {
   title: "News & Blogs",
-  description: "News & Blogs",
+  description: "Read the latest news and blog articles from XINHONG about anchor bolt technology, industry insights, and project case studies.",
+  keywords: ["XINHONG", "news", "blogs", "anchor bolt technology", "industry insights"],
+  openGraph: {
+    title: "News & Blogs | XINHONG",
+    description: "Read the latest news and blog articles from XINHONG about anchor bolt technology and industry insights.",
+    type: "article",
+  },
 }
 
 // 修改：从WordPress获取所有文章路径

@@ -353,7 +353,13 @@ function parseTimelineEvents(htmlContent: string): TimelineEvent[] {
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "About Us",
+  description: "Learn more about XINHONG company sections including factory overview, history, certificates, and why choose us.",
+  keywords: ["XINHONG", "about us", "factory", "history", "certificates"],
+  openGraph: {
+    title: "About Us | XINHONG",
+    description: "Learn more about XINHONG company sections including factory overview, history, certificates, and why choose us.",
+    type: "website",
+  },
 }
 
 // 强制动态渲染，避免缓存问题
@@ -411,7 +417,7 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
 
 // 静态时间轴数据（用于 history 部分）- 确保使用这个数据而不是 WordPress
 const staticTimelineData: TimelineItem[] = [
-  { year: '2010年', desc: 'SINOROCK 公司正式成立，开始专注于地质锚固解决方案的研发与生产。' },
+  { year: '2010年', desc: 'XINHONG 公司正式成立，开始专注于地质锚固解决方案的研发与生产。' },
   { year: '2012年', desc: '成功研发出第一代自钻式锚杆产品，获得多项技术专利，奠定了行业技术领先地位。' },
   { year: '2015年', desc: '产品成功进入国际市场，与多个国家的工程公司建立合作关系，业务覆盖亚洲、欧洲等多个地区。' },
   { year: '2017年', desc: '投资建设现代化生产基地，引进先进生产设备，年产能大幅提升，产品质量达到国际先进水平。' },

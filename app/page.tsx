@@ -13,7 +13,18 @@ import { getProjects, getAboutSections } from "@/lib/wordpress"
 
 export const metadata: Metadata = {
   title: "Home",
-  description: "Home",
+  description: "XINHONG - Leading provider of geotechnical anchoring solutions including self-drilling anchor bolts, rock bolts, and tunnel support systems. Quality anchor solutions for mining, construction, and infrastructure projects worldwide.",
+  keywords: ["XINHONG", "anchor bolt", "rock bolt", "geotechnical anchoring", "self-drilling anchor", "tunnel support", "mining solutions"],
+  openGraph: {
+    title: "XINHONG - Industrial Anchoring Solutions",
+    description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "XINHONG - Industrial Anchoring Solutions",
+    description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
+  },
 }
 
 export default async function Home() {

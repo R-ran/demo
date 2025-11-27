@@ -11,9 +11,50 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 const _caveat = Caveat({ subsets: ["latin"], weight: ["400", "700"] })
 
 export const metadata: Metadata = {
-  title: "SINOROCK - Industrial Anchoring Solutions",
+  title: {
+    default: "XINHONG - Industrial Anchoring Solutions",
+    template: "%s | XINHONG"
+  },
   description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
-  generator: "v0.app",
+  generator: "Next.js",
+  keywords: ["anchor bolt", "rock bolt", "geotechnical anchoring", "mining solutions", "tunnel support", "XINHONG", "self-drilling anchor"],
+  authors: [{ name: "XINHONG" }],
+  creator: "XINHONG",
+  publisher: "XINHONG",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://cnxhanchor.com'),
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "XINHONG",
+    title: "XINHONG - Industrial Anchoring Solutions",
+    description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "XINHONG - Industrial Anchoring Solutions",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "XINHONG - Industrial Anchoring Solutions",
+    description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
@@ -22,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" itemScope itemType="https://schema.org/Organization">
       <body className={`font-sans antialiased`}>
         {children}
         <FloatingContactBar />

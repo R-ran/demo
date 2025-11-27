@@ -53,7 +53,7 @@ export default function NewsBlogPage() {
       <PageBanner 
         title="News & Blogs" 
         subtitle="Stay updated with the latest news, product launches, industry insights, and success stories"
-        backgroundImage="/news-blogs-banner.jpg"
+        backgroundImage="/news-banner.jpg"
       />
       <main className="pt-12">
         {/* Breadcrumbs */}

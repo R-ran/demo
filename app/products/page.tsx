@@ -233,7 +233,7 @@ function ProductsPageContent() {
       <PageBanner 
         title="Products" 
         subtitle="High-quality anchor bolt solutions for your construction needs"
-        backgroundImage="/products-banner.jpg"
+        backgroundImage="/product-banner.jpg"
       />
       <main className="pt-12">
         {/* Breadcrumbs */}

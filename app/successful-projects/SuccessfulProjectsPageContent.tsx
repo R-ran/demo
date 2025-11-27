@@ -42,7 +42,7 @@ export default function SuccessfulProjectsPageContent({
         <PageBanner 
           title="Successful Projects" 
           subtitle="Explore our successful projects and case studies"
-          backgroundImage="/successful-projects-banner.jpg"
+          backgroundImage="/project-banner.jpg"
         />
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
@@ -159,6 +159,7 @@ export default function SuccessfulProjectsPageContent({
       <PageBanner 
         title="Successful Projects" 
         subtitle="Explore our successful projects and case studies"
+        backgroundImage="/project-banner.jpg"
       />
       <main className="pt-12">
         {/* Breadcrumbs */}

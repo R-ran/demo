@@ -300,7 +300,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   // 获取产品数据或默认值（保持你原来的fallback逻辑）
   const productTitle = product?.title || slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())
   const productImage = product?.featured_image || "/product1.jpg"
-  const productImageAlt = product?.title || "SINOROCK anchor bolt system"
+  const productImageAlt = product?.title || "XINHONG anchor bolt system"
   const productDescription = product?.excerpt || "High-quality anchoring solution designed for demanding geotechnical applications."
   const productContent = product?.content || "Product introduction and detailed description."
   
@@ -342,7 +342,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           {
             title: "Tunnel roof and wall support",
             subtitle: "Tunneling & Underground Engineering",
-            image: "/tunneling scenarios.png",
+            image: "/tunneling-scenarios.avif",
             imageAlt: "Tunnel roof and wall support",
           },
           {
@@ -388,7 +388,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           {
             title: "Slope stabilization and landslide prevention",
             subtitle: "Civil Construction",
-            image: "/slope stablization.png",
+            image: "/slope-stablization.avif",
             imageAlt: "Slope stabilization and landslide prevention",
           },
           {
@@ -2046,6 +2046,183 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                       <div className="mt-8">
                         <div className="space-y-8">
                           {(() => {
+                            // XH Common Anchor Bolt 的专属应用场景
+                            if (slug === "common-anchor-bolt") {
+                              const commonAnchorScenarios = [
+                                {
+                                  title: "Tunneling & Underground Construction",
+                                  image: "/tunnel-construction-project.png",
+                                  description: [
+                                    "Primary support: Radial reinforcement in highway/railway tunnels and subway sections, combined with shotcrete and steel arches to stabilize excavation faces and prevent collapse.",
+                                    "Forepoling: Serving as advance pipe roofing in weak (Grade IV/V) surrounding rock where conventional drilling fails Specialized.",
+                                    "Support: Ideal for roof support, footing locking, and face stabilization."
+                                  ]
+                                },
+                                {
+                                  title: "Mining Operations",
+                                  image: "/mining-operations.png",
+                                  description: [
+                                    "Roadway support: Reinforcing fractured roof and rib strata in underground mine roadways, accounting for >60% of total hollow bolt usage.",
+                                    "Deep shaft reinforcement: Supporting high-stress environments in deep mine shafts and working faces.",
+                                    "Corrosion resistance: Full-length grout encapsulation provides superior protection vs. traditional partial coating."
+                                  ]
+                                },
+                                {
+                                  title: "Slope & Foundation Pit Stabilization",
+                                  image: "/Slope-Foundation-Pit-Stabilization.png",
+                                  description: [
+                                    "Slope reinforcement: Filling internal fissures in roadbeds, hydraulic structures, and mine slopes to prevent landslides, especially in complex geological conditions.",
+                                    "Excavation support: Vertical/horizontal bracing for deep foundation pits with water-sealing function in water-rich strata.",
+                                    "Soil nailing: Acting as soil/rock nails for weathered or highly jointed rock slopes."
+                                  ]
+                                }
+                              ]
+                              
+                              return commonAnchorScenarios.map((scenario, index) => (
+                                <div key={index} className="space-y-4">
+                                  <h4 className="text-xl md:text-2xl font-bold text-gray-800">{scenario.title}</h4>
+                                  <div className="flex flex-col md:flex-row gap-6 items-start">
+                                    <div className="w-full md:w-1/3 flex-shrink-0">
+                                      <img
+                                        src={scenario.image}
+                                        alt={scenario.title}
+                                        className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                        onError={(e) => {
+                                          const target = e.target as HTMLImageElement
+                                          target.src = "/placeholder.svg?height=300&width=400"
+                                        }}
+                                      />
+                                    </div>
+                                    <div className="w-full md:flex-1 space-y-3">
+                                      {scenario.description.map((paragraph, pIndex) => (
+                                        <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                          {paragraph}
+                                        </p>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              ));
+                            }
+                            
+                            // Combination Hollow Anchor Bolt 的专属应用场景
+                            if (slug === "combination-hollow-bolt") {
+                              const combinationHollowScenarios = [
+                                {
+                                  title: "Tunneling & Underground Construction",
+                                  image: "/tunnel-construction-project.png",
+                                  description: [
+                                    "Primary support: Radial reinforcement in highway/railway tunnels and subway sections, combined with shotcrete and steel arches to stabilize excavation faces and prevent collapse.",
+                                    "Forepoling: Serving as advance pipe roofing in weak (Grade IV/V) surrounding rock where conventional drilling fails.",
+                                    "Support: Ideal for roof support, footing locking, and face stabilization."
+                                  ]
+                                },
+                                {
+                                  title: "Mining Operations",
+                                  image: "/mining-operations.png",
+                                  description: [
+                                    "Roadway support: Reinforcing fractured roof and rib strata in underground mine roadways, accounting for >60% of total hollow bolt usage.",
+                                    "Deep shaft reinforcement: Supporting high-stress environments in deep mine shafts and working faces.",
+                                    "Corrosion resistance: Full-length grout encapsulation provides superior protection vs. traditional partial coating."
+                                  ]
+                                },
+                                {
+                                  title: "Slope & Foundation Pit Stabilization",
+                                  image: "/Slope-Foundation-Pit-Stabilization.png",
+                                  description: [
+                                    "Slope reinforcement: Filling internal fissures in roadbeds, hydraulic structures, and mine slopes to prevent landslides, especially in complex geological conditions.",
+                                    "Excavation support: Vertical/horizontal bracing for deep foundation pits with water-sealing function in water-rich strata.",
+                                    "Soil nailing: Acting as soil/rock nails for weathered or highly jointed rock slopes."
+                                  ]
+                                }
+                              ]
+                              
+                              return combinationHollowScenarios.map((scenario, index) => (
+                                <div key={index} className="space-y-4">
+                                  <h4 className="text-xl md:text-2xl font-bold text-gray-800">{scenario.title}</h4>
+                                  <div className="flex flex-col md:flex-row gap-6 items-start">
+                                    <div className="w-full md:w-1/3 flex-shrink-0">
+                                      <img
+                                        src={scenario.image}
+                                        alt={scenario.title}
+                                        className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                        onError={(e) => {
+                                          const target = e.target as HTMLImageElement
+                                          target.src = "/placeholder.svg?height=300&width=400"
+                                        }}
+                                      />
+                                    </div>
+                                    <div className="w-full md:flex-1 space-y-3">
+                                      {scenario.description.map((paragraph, pIndex) => (
+                                        <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                          {paragraph}
+                                        </p>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              ));
+                            }
+                            
+                            // Expansion-Shell Hollow Anchor Bolt 的专属应用场景
+                            if (slug === "expansion-shell-bolt") {
+                              const expansionShellScenarios = [
+                                {
+                                  title: "Tunneling & Underground Construction",
+                                  image: "/tunnel-construction-project.png",
+                                  description: [
+                                    "Primary support: Radial reinforcement in highway/railway tunnels and subway sections, combined with shotcrete and steel arches to stabilize excavation faces and prevent collapse.",
+                                    "Forepoling: Serving as advance pipe roofing in weak (Grade IV/V) surrounding rock where conventional drilling fails.",
+                                    "Support: Ideal for roof support, footing locking, and face stabilization."
+                                  ]
+                                },
+                                {
+                                  title: "Mining Operations",
+                                  image: "/mining-operations.png",
+                                  description: [
+                                    "Roadway support: Reinforcing fractured roof and rib strata in underground mine roadways, accounting for >60% of total hollow bolt usage.",
+                                    "Deep shaft reinforcement: Supporting high-stress environments in deep mine shafts and working faces.",
+                                    "Corrosion resistance: Full-length grout encapsulation provides superior protection vs. traditional partial coating."
+                                  ]
+                                },
+                                {
+                                  title: "Slope & Foundation Pit Stabilization",
+                                  image: "/Slope-Foundation-Pit-Stabilization.png",
+                                  description: [
+                                    "Slope reinforcement: Filling internal fissures in roadbeds, hydraulic structures, and mine slopes to prevent landslides, especially in complex geological conditions.",
+                                    "Excavation support: Vertical/horizontal bracing for deep foundation pits with water-sealing function in water-rich strata.",
+                                    "Soil nailing: Acting as soil/rock nails for weathered or highly jointed rock slopes."
+                                  ]
+                                }
+                              ]
+                              
+                              return expansionShellScenarios.map((scenario, index) => (
+                                <div key={index} className="space-y-4">
+                                  <h4 className="text-xl md:text-2xl font-bold text-gray-800">{scenario.title}</h4>
+                                  <div className="flex flex-col md:flex-row gap-6 items-start">
+                                    <div className="w-full md:w-1/3 flex-shrink-0">
+                                      <img
+                                        src={scenario.image}
+                                        alt={scenario.title}
+                                        className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                        onError={(e) => {
+                                          const target = e.target as HTMLImageElement
+                                          target.src = "/placeholder.svg?height=300&width=400"
+                                        }}
+                                      />
+                                    </div>
+                                    <div className="w-full md:flex-1 space-y-3">
+                                      {scenario.description.map((paragraph, pIndex) => (
+                                        <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                          {paragraph}
+                                        </p>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              ));
+                            }
+                            
                             // 获取特定产品的应用场景数据
                             const productScenarios = getApplicationScenarios(slug)
                             
@@ -2082,69 +2259,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                               ))
                             }
                             
-                            // 否则使用默认场景或案例图片
-                            const scenarios = caseStudiesImages.length > 0 
-                              ? caseStudiesImages.slice(0, 6).map((image: any, index: number) => ({
-                                  title: `Application Scenario ${index + 1}`,
-                                  image: image.url || image,
-                                  description: `This application scenario demonstrates the practical use of our anchor bolt system in real-world construction projects. The solution provides reliable support and stability for various geological conditions.`
-                                }))
-                              : [
-                                  {
-                                    title: "Tunnel Construction",
-                                    image: "/tunnel-construction-project.jpg",
-                                    description: "Our anchor bolt system is widely used in tunnel construction projects, providing reliable support for underground structures and ensuring long-term stability in challenging geological conditions."
-                                  },
-                                  {
-                                    title: "Slope Stabilization",
-                                    image: "/industrial-construction-site-with-rock-bolts.jpg",
-                                    description: "Effective slope stabilization using our self-drilling anchor bolts prevents landslides and protects infrastructure in mountainous and hilly terrains."
-                                  },
-                                  {
-                                    title: "Mining Applications",
-                                    image: "/industrial-factory-production-floor.jpg",
-                                    description: "Mining operations benefit from our high-strength anchor bolt systems that provide secure reinforcement for underground mining tunnels and chambers."
-                                  },
-                                  {
-                                    title: "Bridge Foundation",
-                                    image: "/construction-site-with-installed-rock-bolts.jpg",
-                                    description: "Bridge foundation projects utilize our anchor bolt solutions for deep foundation support, ensuring structural integrity and load-bearing capacity."
-                                  },
-                                  {
-                                    title: "Retaining Walls",
-                                    image: "/anchor-bolt-drilling-equipment.jpg",
-                                    description: "Retaining wall construction relies on our anchor bolt systems to anchor structures securely into the ground, preventing movement and ensuring stability."
-                                  },
-                                  {
-                                    title: "Highway Construction",
-                                    image: "/anchor-accessories-and-tools.jpg",
-                                    description: "Highway and road construction projects use our anchor bolt systems for slope protection and rock reinforcement along transportation corridors."
-                                  }
-                                ];
-
-                            return scenarios.map((scenario, index) => (
-                              <div key={index} className="space-y-4">
-                                <h4 className="text-xl md:text-2xl font-bold text-gray-800">{scenario.title}</h4>
-                                <div className="flex flex-col md:flex-row gap-6 items-start">
-                                  <div className="w-full md:w-1/3 flex-shrink-0">
-                                    <img
-                                      src={scenario.image}
-                                      alt={scenario.title}
-                                      className="w-full h-auto rounded-lg object-cover max-w-xs"
-                                      onError={(e) => {
-                                        const target = e.target as HTMLImageElement
-                                        target.src = "/placeholder.svg?height=300&width=400"
-                                      }}
-                                    />
-                                  </div>
-                                  <div className="w-full md:flex-1">
-                                    <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
-                                      {scenario.description}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            ));
+                            // 如果没有匹配的产品，返回空内容
+                            return null;
                           })()}
                         </div>
                       </div>

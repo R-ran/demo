@@ -40,7 +40,7 @@ const FALLBACK_IMAGES: Record<string, string> = {
 const factoryImages = [
   "/factory1.jpg",
   "/factory2.jpg",
-  "/factory3.jpg",
+  "/factory3.avif",
   "/factory4.jpg",
   "/factory5.jpg",
   "/factory6.jpg",
@@ -55,42 +55,42 @@ const factoryImages = [
 // Certificate 图片数据，包含图片路径和描述 - 共8张，分两行显示
 const certificateImages = [
   {
-    image: "/certificate1.jpg",
+    image: "/certificate1.avif",
     title: "EMSC ISO14001-2015 Certificate",
     imageAlt: "EMSC ISO14001-2015 Certificate"
   },
   {
-    image: "/certificate2.jpg",
+    image: "/certificate2.avif",
     title: "HSMS ISO450001-2018 Certificate",
     imageAlt: "HSMS ISO450001-2018 Certificate"
   },
   {
-    image: "/certificate3.jpg",
+    image: "/certificate3.avif",
     title: "ISO9001-2015 Certificate",
     imageAlt: "ISO9001-2015 Certificate"
   },
   {
-    image: "/certificate4.jpg",
+    image: "/certificate4.avif",
     title: "ISO9001-2008 Certification",
     imageAlt: "ISO9001-2008 Certification"
   },
   {
-    image: "/certificate5.jpg",
+    image: "/certificate5.avif",
     title: "YIHONG ISO Certificate",
     imageAlt: "YIHONG ISO Certificate"
   },
   {
-    image: "/certificate6.jpg",
+    image: "/certificate6.avif",
     title: "TEST REPORT Certificate",
     imageAlt: "TEST REPORT Certificate"
   },
   {
-    image: "/certificate7.jpg",
+    image: "/certificate7.avif",
     title: "TEST REPORT Certificate",
     imageAlt: "TEST REPORT Certificate"
   },
   {
-    image: "/certificate8.jpg",
+    image: "/certificate8.avif",
     title: "TEST REPORT Certificate",
     imageAlt: "TEST REPORT Certificate"
   },
@@ -833,7 +833,7 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
         <PageBanner 
           title="About Us" 
           subtitle="Learn more about our company, team, and state-of-the-art manufacturing facilities"
-          backgroundImage="/about-us-banner.jpg"
+          backgroundImage="/about-banner.jpg"
         />
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
@@ -854,6 +854,7 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
       <PageBanner 
         title="About Us" 
         subtitle="Learn more about our company, team, and state-of-the-art manufacturing facilities"
+        backgroundImage="/about-banner.jpg"
       />
       <main className="pt-12">
         {/* Breadcrumbs */}
