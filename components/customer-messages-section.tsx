@@ -24,7 +24,7 @@ export function CustomerMessagesSection() {
         <div className="grid grid-cols-4 gap-0 items-center">
   <div className="relative h-[500px] overflow-hidden">
     <img
-      src="/customer1.jpg"
+      src="/customer1.avif"
       alt="XINHONG client team reviewing anchor bolt specifications"
       className="w-full h-full object-cover"
     />
@@ -36,7 +36,7 @@ export function CustomerMessagesSection() {
 
   <div className="relative h-[500px] overflow-hidden">
     <img
-      src="/customer2.jpg"
+      src="/customer2.avif"
       alt="Engineers discussing XINHONG anchor bolt installation"
       className="w-full h-full object-cover"
     />

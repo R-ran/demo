@@ -2112,30 +2112,57 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                             if (slug === "combination-hollow-bolt") {
                               const combinationHollowScenarios = [
                                 {
-                                  title: "Tunneling & Underground Construction",
-                                  image: "/tunnel-construction-project.png",
+                                  title: "Composite Hollow Anchor Bolts: 5 Critical Applications for Complex Geotechnical Conditions",
                                   description: [
-                                    "Primary support: Radial reinforcement in highway/railway tunnels and subway sections, combined with shotcrete and steel arches to stabilize excavation faces and prevent collapse.",
-                                    "Forepoling: Serving as advance pipe roofing in weak (Grade IV/V) surrounding rock where conventional drilling fails.",
-                                    "Support: Ideal for roof support, footing locking, and face stabilization."
+                                    "Composite hollow anchor bolts integrate a hollow grout-injection stem with internal reinforcement elements (steel bars, pipes, or resin cartridges) to deliver dual-function ground control. This adaptable system achieves load capacities of 300-600kN, making it ideal for challenging geological scenarios where standard anchors fail."
                                   ]
                                 },
                                 {
-                                  title: "Mining Operations",
-                                  image: "/mining-operations.png",
+                                  title: " Ultra-Soft Ground Reinforcement",
+                                  image: "/ultra.avif",
+                                  imageAlt: "Ultra-Soft Ground Reinforcement",
                                   description: [
-                                    "Roadway support: Reinforcing fractured roof and rib strata in underground mine roadways, accounting for >60% of total hollow bolt usage.",
-                                    "Deep shaft reinforcement: Supporting high-stress environments in deep mine shafts and working faces.",
-                                    "Corrosion resistance: Full-length grout encapsulation provides superior protection vs. traditional partial coating."
+                                    "In fault zones, heavily weathered rock, and loose soil-sand mixtures, the **hollow stem performs pressure grouting** while the inner steel core provides high-tensile strength. This dual mechanism increases installation success rates by **60%** in collapse-prone boreholes and prevents total support failure even when partial wall collapse occurs."
                                   ]
                                 },
                                 {
-                                  title: "Slope & Foundation Pit Stabilization",
-                                  image: "/Slope-Foundation-Pit-Stabilization.png",
+                                  title: "Deep Mining with High Geostress",
+                                  image: "/deep.webp",
+                                  imageAlt: "Deep Mining with High Geostress",
                                   description: [
-                                    "Slope reinforcement: Filling internal fissures in roadbeds, hydraulic structures, and mine slopes to prevent landslides, especially in complex geological conditions.",
-                                    "Excavation support: Vertical/horizontal bracing for deep foundation pits with water-sealing function in water-rich strata.",
-                                    "Soil nailing: Acting as soil/rock nails for weathered or highly jointed rock slopes."
+                                    "For roadways exceeding 1,000m depth experiencing severe deformation, the hollow bolt + resin cartridge + yielding plate configuration enables two-stage support: immediate mechanical anchoring followed by pressure grouting. This controls large-scale wall closure effectively. Stainless steel variants paired with carbon steel cores extend service life beyond 30 years in corrosive environments.",
+                                    
+                                  ]
+                                },
+                                {
+                                  title: "Water-Rich Stratum Sealing & Anchoring",
+                                  image: "/water.webp",
+                                  imageAlt: "Water-Rich Stratum Sealing & Anchoring",
+                                  description: [
+                                    
+                                    "In karst or fractured aquifers, composite bolts execute high-pressure grouting for water sealing while simultaneously providing permanent tensile capacity through the internal bar. This seal-and-reinforce single-pass solution creates impermeable grout curtains around tunnels and foundation pits, cutting construction time by 40%."
+                                  ]
+                                },
+                                {
+                                  title: "Hybrid TBM-Drill-and-Blast Projects",
+                                  image: "/tbm.webp",
+                                  imageAlt: "Hybrid TBM-Drill-and-Blast Projects",
+                                  description: [
+                                    "When transitioning between TBM and conventional excavation methods, composite systems allow on-site adaptation: standard hollow bolts in stable TBM sections shift to “hollow stem + expansion shell” combos in fractured drill-and-blast zones, ensuring seamless support parameter adjustment without equipment changes."
+                                  ]
+                                },
+                                {
+                                  title: "Heavy-Duty Slope & Foundation Stabilization",
+                                  image: "/heavy.webp",
+                                  imageAlt: "Heavy-Duty Slope & Foundation Stabilization",
+                                  description: [
+                                    "Replacing costly prestressed cables, \"Φ50-89mm hollow steel tube + threaded bar + pressure grouting\" combos deliver 600kN capacity at 30-40% lower cost. Clustered as composite micropile groups, they anchor bridge foundations, resist building uplift, and remediate landslides efficiently.",
+                                  ]
+                                },
+                                {
+                                  title: "Core Advantage",
+                                  description: [
+                                    "Composite hollow anchor bolts provide 40-60% higher adaptability, load capacity, and construction flexibility compared to single-element anchors, making them the cost-effective, reliable choice for complex geotechnical challenges."
                                   ]
                                 }
                               ]
@@ -2143,19 +2170,31 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                               return combinationHollowScenarios.map((scenario, index) => (
                                 <div key={index} className="space-y-4">
                                   <h4 className="text-xl md:text-2xl font-bold text-gray-800">{scenario.title}</h4>
-                                  <div className="flex flex-col md:flex-row gap-6 items-start">
-                                    <div className="w-full md:w-1/3 flex-shrink-0">
-                                      <img
-                                        src={scenario.image}
-                                        alt={scenario.title}
-                                        className="w-full h-auto rounded-lg object-cover max-w-xs"
-                                        onError={(e) => {
-                                          const target = e.target as HTMLImageElement
-                                          target.src = "/placeholder.svg?height=300&width=400"
-                                        }}
-                                      />
+                                  {scenario.image ? (
+                                    <div className="flex flex-col md:flex-row gap-6 items-start">
+                                      <div className="w-full md:w-1/3 flex-shrink-0">
+                                        <img
+                                          src={scenario.image}
+                                          alt={scenario.imageAlt || scenario.title}
+                                          className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                          onError={(e) => {
+                                            const target = e.target as HTMLImageElement
+                                            target.src = "/placeholder.svg?height=300&width=400"
+                                          }}
+                                        />
+                                      </div>
+                                      <div className="w-full md:flex-1 space-y-3">
+                                        {scenario.description && scenario.description.length > 0 ? (
+                                          scenario.description.map((paragraph, pIndex) => (
+                                            <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                              {paragraph}
+                                            </p>
+                                          ))
+                                        ) : null}
+                                      </div>
                                     </div>
-                                    <div className="w-full md:flex-1 space-y-3">
+                                  ) : (
+                                    <div className="w-full space-y-3">
                                       {scenario.description && scenario.description.length > 0 ? (
                                         scenario.description.map((paragraph, pIndex) => (
                                           <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
@@ -2164,7 +2203,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                                         ))
                                       ) : null}
                                     </div>
-                                  </div>
+                                  )}
                                 </div>
                               ));
                             }

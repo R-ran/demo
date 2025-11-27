@@ -90,10 +90,7 @@ export function TopHeader() {
             </div>
             <div className="flex items-center gap-1 sm:gap-4">
               
-              {/* Support链接 - 移动端隐藏 */}
-              <Link href="/support" className="hidden sm:inline text-muted-foreground hover:text-primary transition-colors">
-                Support
-              </Link>
+              
               {/* 语言选择 - 移动端简化 */}
               <select className="bg-transparent border-none text-muted-foreground hover:text-primary cursor-pointer text-xs sm:text-sm">
                 <option>EN</option>
