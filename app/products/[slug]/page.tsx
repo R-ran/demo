@@ -17,6 +17,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { title } from "process"
 
 // 产品种类数据（与产品列表页保持一致）
 const productCategories = [
@@ -2094,11 +2095,13 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                                       />
                                     </div>
                                     <div className="w-full md:flex-1 space-y-3">
-                                      {scenario.description.map((paragraph, pIndex) => (
-                                        <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
-                                          {paragraph}
-                                        </p>
-                                      ))}
+                                      {scenario.description && scenario.description.length > 0 ? (
+                                        scenario.description.map((paragraph, pIndex) => (
+                                          <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                            {paragraph}
+                                          </p>
+                                        ))
+                                      ) : null}
                                     </div>
                                   </div>
                                 </div>
@@ -2153,11 +2156,13 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                                       />
                                     </div>
                                     <div className="w-full md:flex-1 space-y-3">
-                                      {scenario.description.map((paragraph, pIndex) => (
-                                        <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
-                                          {paragraph}
-                                        </p>
-                                      ))}
+                                      {scenario.description && scenario.description.length > 0 ? (
+                                        scenario.description.map((paragraph, pIndex) => (
+                                          <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                            {paragraph}
+                                          </p>
+                                        ))
+                                      ) : null}
                                     </div>
                                   </div>
                                 </div>
@@ -2168,30 +2173,72 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                             if (slug === "expansion-shell-bolt") {
                               const expansionShellScenarios = [
                                 {
-                                  title: "Tunneling & Underground Construction",
-                                  image: "/tunnel-construction-project.png",
+                                  title: "Expansion Shell Hollow Grout Anchor Bolts: 5 Critical Applications for High-Stress Ground Control",
                                   description: [
-                                    "Primary support: Radial reinforcement in highway/railway tunnels and subway sections, combined with shotcrete and steel arches to stabilize excavation faces and prevent collapse.",
-                                    "Forepoling: Serving as advance pipe roofing in weak (Grade IV/V) surrounding rock where conventional drilling fails.",
-                                    "Support: Ideal for roof support, footing locking, and face stabilization."
+                                    "Expansion shell hollow grout anchor bolts (also called slotted shell prestressed hollow anchors) deliver immediate active support through mechanical expansion heads. This technology enables rapid pre-stress locking, making it indispensable for complex geological conditions requiring instant ground reinforcement.",
+                                    
                                   ]
                                 },
                                 {
-                                  title: "Mining Operations",
-                                  image: "/mining-operations.png",
+                                  title: "Rock Burst Prevention in High-Geostress Tunnels (Premier Application)",
+                                  image: "/rock.avif",
+                                  imageAlt: "Rock Burst Prevention in High-Geostress Tunnels (Premier Application)",
                                   description: [
-                                    "Roadway support: Reinforcing fractured roof and rib strata in underground mine roadways, accounting for >60% of total hollow bolt usage.",
-                                    "Deep shaft reinforcement: Supporting high-stress environments in deep mine shafts and working faces.",
-                                    "Corrosion resistance: Full-length grout encapsulation provides superior protection vs. traditional partial coating."
+                                    "Superior Performance in Extreme Conditions",
+                                    "Deep tunnel rock burst mitigation: In high-stress hard rock tunnels (e.g., Jinping-II Hydropower diversion tunnel at 2,525m depth with 69.94 MPa in-situ stress), rapid pre-stress application effectively controls rock deformation, demonstrating **exceptional effectiveness in preventing collapse and rock bursts.",
+                                    "Zero-delay support: Installed immediately after excavation, the expansion shell creates instant frictional resistance against borehole walls, actively altering tunnel boundary stress fields and restoring radial confinement to suppress rock burst initiation and propagation."
                                   ]
                                 },
                                 {
-                                  title: "Slope & Foundation Pit Stabilization",
-                                  image: "/Slope-Foundation-Pit-Stabilization.png",
+                                  title: "Permanent Support for Hard Rock Underground Excavations",
+                                  image: "/permanent.png",
+                                  imageAlt: "Permanent Support for Hard Rock Underground Excavations",
                                   description: [
-                                    "Slope reinforcement: Filling internal fissures in roadbeds, hydraulic structures, and mine slopes to prevent landslides, especially in complex geological conditions.",
-                                    "Excavation support: Vertical/horizontal bracing for deep foundation pits with water-sealing function in water-rich strata.",
-                                    "Soil nailing: Acting as soil/rock nails for weathered or highly jointed rock slopes."
+                                    "Long-Term Stability in Challenging Rock Mass",
+                                    "Medium-to-good quality rock: Ideal for hard rock with developed joints, clay-filled fractures, or groundwater presence. Maintains long-term stability through adequate pre-stressing.",
+                                    "Systematic support systems: Functions as permanent systematic support in large caverns such as underground powerhouses (e.g., Xianju Pumped Storage Power Station: 176m×26.5m×55m** excavation).",
+                                    "Crown optimization: Maximum effectiveness within the 120° tunnel crown range for rapid rock mass locking."
+                                  ]
+                                },
+                                {
+                                  title: "Slope Stabilization & Geohazard Remediation",
+                                  image: "/slope.png",
+                                  imageAlt: "Slope Stabilization & Geohazard Remediation",
+                                  description: [
+                                    "Proactive Geoengineering Solutions",
+                                    "High-steep slope reinforcement: Secures tunnel portal slopes and mine highwalls to prevent landslides and raveling failures.",
+                                    "Geohazard treatment: Addresses deformed slopes and subsided foundations through pre-stress anchorage combined with grout injection to improve rock mass integrity."
+                                  ]
+                                },
+                                {
+                                  title: " TBM Tunneling Acceleration",
+                                  image: "/TBM.png",
+                                  imageAlt: "TBM Tunneling Acceleration",
+                                  description: [
+                                    "Optimized for High-Speed Excavation",
+                                    "TBM compatibility: Engineered for rapid advance rates, significantly outperforming conventional mortar bolts in installation speed while combining temporary and permanent support functions.",
+                                    "Workflow efficiency**: Provides effective support without grout curing delays, maximizing construction progress and reducing cycle times"
+                                    
+                                  ]
+                                },
+                                {
+                                  title: "Advance Pre-Support in Fractured Zones",
+                                  image: "/advance .avif",
+                                  imageAlt: "Advance Pre-Support in Fractured Zones",
+                                  description: [
+                                    "Forward-Looking Ground Control",
+                                    "Fractured ground crossing: Serves as advance pre-support ahead of tunnel faces in rock or horizontally bedded strata, proactively controlling deformation.",
+                                    "Water-inrush management: In water-bearing formations, subsequent hollow-stem grouting achieves integrated water sealing and reinforcement."
+                                  ]
+                                },
+                                {
+                                  title: "Performance Advantage: 40%+ Improvement",
+                                  description: []
+                                },
+                                {
+                                  title: "Why Expansion Shell Outperforms Standard Hollow Bolts",
+                                  description: [
+                                    "Unlike conventional hollow anchors relying on grout strength development, expansion shell bolts deliver immediate mechanical pre-stress, achieving >40% better active support performance in high-geostress environments."
                                   ]
                                 }
                               ]
@@ -2199,26 +2246,40 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                               return expansionShellScenarios.map((scenario, index) => (
                                 <div key={index} className="space-y-4">
                                   <h4 className="text-xl md:text-2xl font-bold text-gray-800">{scenario.title}</h4>
-                                  <div className="flex flex-col md:flex-row gap-6 items-start">
-                                    <div className="w-full md:w-1/3 flex-shrink-0">
-                                      <img
-                                        src={scenario.image}
-                                        alt={scenario.title}
-                                        className="w-full h-auto rounded-lg object-cover max-w-xs"
-                                        onError={(e) => {
-                                          const target = e.target as HTMLImageElement
-                                          target.src = "/placeholder.svg?height=300&width=400"
-                                        }}
-                                      />
+                                  {scenario.image ? (
+                                    <div className="flex flex-col md:flex-row gap-6 items-start">
+                                      <div className="w-full md:w-1/3 flex-shrink-0">
+                                        <img
+                                          src={scenario.image}
+                                          alt={scenario.imageAlt || scenario.title}
+                                          className="w-full h-auto rounded-lg object-cover max-w-xs"
+                                          onError={(e) => {
+                                            const target = e.target as HTMLImageElement
+                                            target.src = "/placeholder.svg?height=300&width=400"
+                                          }}
+                                        />
+                                      </div>
+                                      <div className="w-full md:flex-1 space-y-3">
+                                        {scenario.description && scenario.description.length > 0 ? (
+                                          scenario.description.map((paragraph, pIndex) => (
+                                            <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                              {paragraph}
+                                            </p>
+                                          ))
+                                        ) : null}
+                                      </div>
                                     </div>
-                                    <div className="w-full md:flex-1 space-y-3">
-                                      {scenario.description.map((paragraph, pIndex) => (
-                                        <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
-                                          {paragraph}
-                                        </p>
-                                      ))}
+                                  ) : (
+                                    <div className="w-full space-y-3">
+                                      {scenario.description && scenario.description.length > 0 ? (
+                                        scenario.description.map((paragraph, pIndex) => (
+                                          <p key={pIndex} className="text-muted-foreground leading-relaxed text-base md:text-lg">
+                                            {paragraph}
+                                          </p>
+                                        ))
+                                      ) : null}
                                     </div>
-                                  </div>
+                                  )}
                                 </div>
                               ));
                             }
