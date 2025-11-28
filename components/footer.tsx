@@ -86,16 +86,7 @@ export function Footer() {
               >
                 <Facebook className="w-5 h-5" />
               </a>
-              
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-black/80 hover:text-black/80 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
+             
               <a
                 href="https://www.linkedin.com/company/wuxi-oriental-xinhong-hollow-anchor-bolt/"
                 target="_blank"

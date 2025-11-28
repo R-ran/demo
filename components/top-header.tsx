@@ -146,15 +146,7 @@ export function TopHeader() {
               <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
             
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-              aria-label="YouTube"
-            >
-              <Youtube className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
+          
             <a
               href="https://www.linkedin.com/company/wuxi-oriental-xinhong-hollow-anchor-bolt/"
               target="_blank"
