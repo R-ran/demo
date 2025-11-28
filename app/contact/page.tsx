@@ -95,7 +95,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-muted-foreground">+86 189 6183 8902</p>
+                    <p className="text-muted-foreground">+86 189 6180 1363</p>
                   </div>
                 </div>
 

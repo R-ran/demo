@@ -78,7 +78,7 @@ export function Footer() {
             {/* Social Media Links */}
             <div className="mt-4 flex items-center gap-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/people/Xinhong-Hollow-Anchor-Bolt-China-Factory/61584574700620/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-black/80 hover:text-black/80 transition-colors"
