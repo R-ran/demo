@@ -130,6 +130,19 @@
   }
 }
 
+/* Screen reader only - 隐藏元素但保留在DOM中供SEO和屏幕阅读器使用 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* 自定义 news 和 blogs 文章内容中的小标题样式 */
 .prose h2 {
   font-weight: 700;
