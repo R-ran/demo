@@ -236,8 +236,18 @@ function ProductsPageContent() {
         backgroundImage="/product-banner.jpg"
       />
       <main className="pt-12">
-        {/* Hidden SEO Keywords */}
-        <div className="sr-only">
+        {/* Hidden SEO Keywords - 使用内联样式确保在HTML中存在但对用户不可见 */}
+        <div style={{ 
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: 0,
+          margin: '-1px',
+          overflow: 'hidden',
+          clip: 'rect(0, 0, 0, 0)',
+          whiteSpace: 'nowrap',
+          borderWidth: 0
+        }}>
           <h2>hollow anchor bolt</h2>
           <h2>hollow anchor rockbolt</h2>
           <h2>hollow core bolts</h2>
