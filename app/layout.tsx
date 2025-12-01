@@ -12,12 +12,16 @@ const _caveat = Caveat({ subsets: ["latin"], weight: ["400", "700"] })
 
 export const metadata: Metadata = {
   title: {
-    default: "XINHONG - Industrial Anchoring Solutions",
+    default: "Hollow Anchor bolt | China Manufacturer | Wuxi Xinghong SDA system",
     template: "%s | XINHONG"
   },
-  description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
+  description: "ISO-certified XINGHONG manufacturer is specializing in hollow anchor bolt, combination hollow core bolts, self-drilling rockbolts(SDA), expansion-shell rock bolt for global tunneling&mining projects.",
   generator: "Next.js",
-  keywords: ["anchor bolt", "rock bolt", "geotechnical anchoring", "mining solutions", "tunnel support", "XINHONG", "self-drilling anchor"],
+  keywords: ["hollow anchor bolt", 
+    "hollow core bolt",
+     "self-drilling rock bolt", 
+     "Expansion-shell rock bolt", 
+      "self-drilling anchor bolt"],
   authors: [{ name: "XINHONG" }],
   creator: "XINHONG",
   publisher: "XINHONG",
@@ -27,21 +31,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     siteName: "XINHONG",
-    title: "XINHONG - Industrial Anchoring Solutions",
-    description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
+    title: "Hollow Anchor bolt | China Manufacturer | Wuxi Xinghong SDA system",
+    description: "ISO-certified XINGHONG manufacturer is specializing in hollow anchor bolt, combination hollow core bolts, self-drilling rockbolts(SDA), expansion-shell rock bolt for global tunneling&mining projects.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "XINHONG - Industrial Anchoring Solutions",
+        alt: "Hollow Anchor bolt | China Manufacturer | Wuxi Xinghong SDA system",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "XINHONG - Industrial Anchoring Solutions",
-    description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
+    title: "Hollow Anchor bolt | China Manufacturer | Wuxi Xinghong SDA system",
+    description: "ISO-certified XINGHONG manufacturer is specializing in hollow anchor bolt, combination hollow core bolts, self-drilling rockbolts(SDA), expansion-shell rock bolt for global tunneling&mining projects.",
     images: ["/og-image.jpg"],
   },
   robots: {
