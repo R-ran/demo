@@ -12,9 +12,13 @@ import { Metadata } from "next"
 import { getProjects, getAboutSections } from "@/lib/wordpress"
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "XINHONG - Leading provider of geotechnical anchoring solutions including self-drilling anchor bolts, rock bolts, and tunnel support systems. Quality anchor solutions for mining, construction, and infrastructure projects worldwide.",
-  keywords: ["XINHONG", "anchor bolt", "rock bolt", "geotechnical anchoring", "self-drilling anchor", "tunnel support", "mining solutions"],
+  title: "Hollow Anchor bolt | China Manufacturer | Wuxi Xinghong SDA systems",
+  description: " ISO-certified XINGHONG manufacturer is specializing in hollow anchor bolt, combination hollow core bolts, self-drilling rockbolts(SDA), expansion-shell rock bolt for global tunneling&mining projects.",
+  keywords: ["hollow anchor bolt",
+     "hollow core bolt",
+      "self-drilling rock bolt", 
+      "Expansion-shell rock bolt", 
+      "self-drilling anchor bolt"],
   openGraph: {
     title: "XINHONG - Industrial Anchoring Solutions",
     description: "Leading provider of geotechnical anchoring solutions - Safer Space, Better Life",
