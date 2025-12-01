@@ -17,7 +17,8 @@ import type { NewsBlogArticle } from "@/lib/wordpress"
 // 获取数据的辅助函数
 async function getBlogsData() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'}/api/news-blogs?perPage=12&type=blogs`, {
+    // 使用相对路径避免跨域问题
+    const response = await fetch('/api/news-blogs?perPage=12&type=blogs', {
       cache: 'no-store'
     })
     if (!response.ok) {

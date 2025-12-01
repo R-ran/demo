@@ -22,8 +22,8 @@ export default function NewsBlogPage() {
   useEffect(() => {
     async function getNewsBlogsData() {
       try {
-        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3002')
-        const response = await fetch(`${siteUrl}/api/news-blogs?perPage=12`, {
+        // 使用相对路径避免跨域问题
+        const response = await fetch('/api/news-blogs?perPage=12', {
           cache: 'no-store'
         })
         if (!response.ok) {

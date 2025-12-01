@@ -48,7 +48,7 @@ export function CustomerMessagesSection() {
 
   <div className="relative h-[500px] overflow-hidden">
     <img
-      src="/customer3.jpg"
+      src="/customer3.avif"
       alt="Construction project using XINHONG anchor bolts"
       className="w-full h-full object-cover"
     />
@@ -60,7 +60,7 @@ export function CustomerMessagesSection() {
 
   <div className="relative h-[500px] overflow-hidden">
     <img
-      src="/customer4.jpg"
+      src="/customer4.avif"
       alt="Quality inspection of XINHONG anchor bolt products"
       className="w-full h-full object-cover"
     />
