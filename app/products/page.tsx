@@ -236,6 +236,20 @@ function ProductsPageContent() {
         backgroundImage="/product-banner.jpg"
       />
       <main className="pt-12">
+        {/* Hidden SEO Keywords */}
+        <div className="sr-only">
+          <h2>hollow anchor bolt</h2>
+          <h2>hollow anchor rockbolt</h2>
+          <h2>hollow core bolts</h2>
+          <h2>self-drilling anchor bolt</h2>
+          <h2>self-drilling anchors</h2>
+          <h2>self-drilling rock bolts</h2>
+          <h2>self-drilling hollow bar</h2>
+          <h2>Expansion-shell rock bolt</h2>
+          <h2>swellex hollow anchor bolt</h2>
+          <h2>hollow grouting bolt</h2>
+        </div>
+
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 mb-4">
           <div className="text-muted-foreground text-sm">
