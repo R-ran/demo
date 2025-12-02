@@ -1,18 +1,34 @@
-"use client"
+"use client";
 
-import { Facebook, Youtube, Linkedin, Search, Download, X, Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import Image from "next/image"
+import { Facebook, Youtube, Linkedin, Search, Download, X, Menu, Globe, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { changeLanguage } from "@/components/GoogleTranslate";
 
 export function TopHeader() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const languageRef = useRef<HTMLDivElement>(null);
 
-  // 模拟搜索数据（实际应该从API或内容管理系统获取）
+  // 支持的语言列表
+  const languages = [
+    { code: 'en', name: 'English', nativeName: 'English' },
+    
+    { code: 'fr', name: 'French', nativeName: 'Français' },
+    { code: 'es', name: 'Spanish', nativeName: 'Español' },
+    
+    { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
+    { code: 'ru', name: 'Russian', nativeName: 'Русский' },
+    { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
+    
+  ];
+
+  // 模拟搜索数据（实际应该从 API 或 CMS 获取）
   const searchableContent = [
     { title: "Self-Drilling Anchor Bolt", category: "Products", url: "/products/self-drilling-bolt" },
     { title: "Hollow Grouted Anchor Bolt", category: "Products", url: "/products/hollow-grouted-bolt" },
@@ -22,7 +38,7 @@ export function TopHeader() {
     { title: "Factory Overview", category: "About", url: "/about/factory" },
     { title: "News & Blogs", category: "News", url: "/news-blogs" },
     { title: "Contact Us", category: "Contact", url: "/contact" },
-  ]
+  ];
 
   // 执行搜索
   useEffect(() => {
@@ -31,48 +47,64 @@ export function TopHeader() {
         (item) =>
           item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           item.category.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      setSearchResults(results)
+      );
+      setSearchResults(results);
     } else {
-      setSearchResults([])
+      setSearchResults([]);
     }
-  }, [searchQuery])
+  }, [searchQuery]);
 
-  // 处理ESC键关闭搜索和点击外部关闭
+  // 处理 ESC 键关闭搜索和点击外部关闭
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isSearchOpen) {
-        setIsSearchOpen(false)
-        setSearchQuery("")
+      if (e.key === "Escape") {
+        if (isSearchOpen) {
+          setIsSearchOpen(false);
+          setSearchQuery("");
+        }
+        if (isLanguageOpen) {
+          setIsLanguageOpen(false);
+        }
       }
-    }
-
+    };
     const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (isSearchOpen && !target.closest('.search-dropdown') && !target.closest('[aria-label="Search"]')) {
-        setIsSearchOpen(false)
-        setSearchQuery("")
+      const target = e.target as HTMLElement;
+      if (
+        isSearchOpen &&
+        !target.closest(".search-dropdown") &&
+        !target.closest('[aria-label="Search"]')
+      ) {
+        setIsSearchOpen(false);
+        setSearchQuery("");
       }
-    }
-
-    window.addEventListener("keydown", handleEscape)
-    document.addEventListener("mousedown", handleClickOutside)
-    
+      if (
+        isLanguageOpen &&
+        languageRef.current &&
+        !languageRef.current.contains(target)
+      ) {
+        setIsLanguageOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      window.removeEventListener("keydown", handleEscape)
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isSearchOpen])
+      window.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSearchOpen, isLanguageOpen]);
 
-  const handleSearchClick = () => {
-    setIsSearchOpen(true)
-  }
+  // 处理语言切换
+  const handleLanguageChange = (langCode: string) => {
+    changeLanguage(langCode);
+    setIsLanguageOpen(false);
+  };
 
+  const handleSearchClick = () => setIsSearchOpen(true);
   const handleCloseSearch = () => {
-    setIsSearchOpen(false)
-    setSearchQuery("")
-    setSearchResults([])
-  }
+    setIsSearchOpen(false);
+    setSearchQuery("");
+    setSearchResults([]);
+  };
 
   return (
     <div className="bg-background border-b">
@@ -83,21 +115,47 @@ export function TopHeader() {
             {/* Email - 移动端隐藏文字，只显示图标或简化 */}
             <div className="flex items-center gap-1 sm:gap-2 text-muted-foreground">
               <span className="hidden sm:inline">Email:</span>
-              <a href="mailto:export@cnxhanchor.com" className="hover:text-primary transition-colors truncate max-w-[120px] sm:max-w-none">
+              <a
+                href=" "
+                className="hover:text-primary transition-colors truncate max-w-[120px] sm:max-w-none"
+              >
                 <span className="hidden sm:inline">export@cnxhanchor.com</span>
                 <span className="sm:hidden text-[10px]">Email</span>
-              </a>
+              </a >
             </div>
+
+            {/* 右侧语言 / 社交 */}
             <div className="flex items-center gap-1 sm:gap-4">
-              
-              
-              {/* 语言选择 - 移动端简化 */}
-              <select className="bg-transparent border-none text-muted-foreground hover:text-primary cursor-pointer text-xs sm:text-sm">
-                <option>EN</option>
-               
-              </select>
-              <div className="relative">
-                                
+              {/* 语言切换 - 自定义下拉框 */}
+              <div className="relative" ref={languageRef}>
+                <button
+                  onClick={() => setIsLanguageOpen(!isLanguageOpen)}
+                  className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                  aria-label="Select language"
+                >
+                  <Globe className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Language</span>
+                  <span className="sm:hidden">Lang</span>
+                  <ChevronDown className={`w-3 h-3 transition-transform ${isLanguageOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* 语言选择下拉框 */}
+                {isLanguageOpen && (
+                  <div className="absolute right-0 top-full mt-1 bg-background border border-border rounded-md shadow-lg z-50 min-w-[180px] max-h-[300px] overflow-y-auto">
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => handleLanguageChange(lang.code)}
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between"
+                      >
+                        <div className="flex flex-col">
+                          <span className="font-medium">{lang.nativeName}</span>
+                          <span className="text-xs text-muted-foreground">{lang.name}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -110,28 +168,36 @@ export function TopHeader() {
           {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="relative flex-shrink-0">
-                <Image 
-                  src="/xinhong logo.png" 
-                  alt="XINHONG" 
-                  width={256} 
-                  height={128}
-                  className="w-auto h-12 sm:h-16 md:h-20 object-contain"
-                />
+              <Image
+                src="/xinhong logo.png"
+                alt="XINHONG"
+                width={256}
+                height={128}
+                className="w-auto h-12 sm:h-16 md:h-20 object-contain"
+              />
             </div>
             <div>
-              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground">XINHONG</h1>
-              <p className="text-[10px] sm:text-xs text-muted-foreground">Hollow Anchor Bolts</p>
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground">
+                XINHONG
+              </h1>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Hollow Anchor Bolts</p >
             </div>
           </div>
 
-          {/* Tagline with handwriting font - 移动端隐藏 */}
+          {/* Tagline - 移动端隐藏 */}
           <div className="hidden md:block text-center">
-            <p className="text-2xl md:text-3xl text-primary" style={{ fontFamily: "var(--font-handwriting)" }}>
-            Authentic Quality
-            </p>
-            <p className="text-2xl md:text-3xl text-foreground" style={{ fontFamily: "var(--font-handwriting)" }}>
-            Consistent Stability
-            </p>
+            <p
+              className="text-2xl md:text-3xl text-primary"
+              style={{ fontFamily: "var(--font-handwriting)" }}
+            >
+              Authentic Quality
+            </p >
+            <p
+              className="text-2xl md:text-3xl text-foreground"
+              style={{ fontFamily: "var(--font-handwriting)" }}
+            >
+              Consistent Stability
+            </p >
           </div>
 
           {/* Social media icons - 移动端简化 */}
@@ -144,9 +210,7 @@ export function TopHeader() {
               aria-label="Facebook"
             >
               <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
-            
-          
+            </a >
             <a
               href="https://www.linkedin.com/company/wuxi-oriental-xinhong-hollow-anchor-bolt/"
               target="_blank"
@@ -155,10 +219,10 @@ export function TopHeader() {
               aria-label="LinkedIn"
             >
               <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
+            </a >
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

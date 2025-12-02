@@ -6,6 +6,11 @@ import { FloatingContactBar } from "@/components/floating-contact-bar"
 import { TawkToChat } from "@/components/tawk-to-chat"
 import "./globals.css"
 
+import GoogleTranslate from '@/components/GoogleTranslate'
+
+
+
+
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 const _caveat = Caveat({ subsets: ["latin"], weight: ["400", "700"] })
@@ -69,6 +74,7 @@ export default function RootLayout({
   return (
     <html lang="en" itemScope itemType="https://schema.org/Organization">
       <body className={`font-sans antialiased`}>
+      <GoogleTranslate />
         {children}
         <FloatingContactBar />
         <TawkToChat />

@@ -6,6 +6,14 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  turboPack: {
+    root: 'C:/Users/R_ran/Desktop/web'
+  }
+  // experimental: {
+  //   turbopack: {root: '.'}
+  // },
 }
+
+
 
 export default nextConfig

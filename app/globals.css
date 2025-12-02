@@ -269,3 +269,27 @@
     -webkit-line-clamp: 5;
   }
 }
+
+/* 彻底隐藏 Google 翻译所有提示条 */
+body .skiptranslate,
+body .goog-te-banner-frame,
+body .goog-te-balloon-frame,
+body #goog-gt-tt,
+body .goog-te-banner,
+body .goog-te-balloon {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+
+/* 防止顶部被撑开 */
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* 隐藏 Google 自带下拉（我们用自己的） */
+.goog-te-combo {
+  display: none !important;
+}
