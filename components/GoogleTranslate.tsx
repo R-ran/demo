@@ -1,3 +1,5 @@
+
+
 'use client'
 
 import { useEffect } from 'react'
@@ -7,105 +9,113 @@ declare global {
     googleTranslateElementInit: () => void
     google: {
       translate: {
-        TranslateElement: new (options: any, elementId: string) => void
+        TranslateElement: new (o: any, e: string) => void
       }
     }
   }
 }
 
+/* -------------- 组件：隐藏的原生容器 -------------- */
 export default function GoogleTranslate() {
   useEffect(() => {
-    // 只在浏览器注入脚本
-    const s = document.createElement('script')
-    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
-    s.async = true
-    document.body.appendChild(s)
+    const script = document.createElement('script')
+    script.src =
+      'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+    script.async = true
+    document.body.appendChild(script)
 
-    // 初始化函数
     window.googleTranslateElementInit = () => {
       new window.google.translate.TranslateElement(
-        { pageLanguage: 'en', includedLanguages: 'en,fr,es,ar,ru,pt', layout: 0 },
+        {
+          pageLanguage: 'en',
+          includedLanguages: 'en,fr,es,ar,ru,pt,zh-CN,zh-TW,de,it,ja,ko',
+          layout: 0
+        },
         'google_translate_element'
       )
-      
-      // 隐藏 Google Translate 的默认 UI
+
+      handleRTL('en')
+
+      // 隐藏原生 UI
       setTimeout(() => {
-        const select = document.querySelector('.goog-te-combo')
-        if (select) {
-          const container = select.closest('#google_translate_element')
-          if (container) {
-            ;(container as HTMLElement).style.display = 'none'
-          }
-        }
-        // 也隐藏可能出现的其他 Google Translate UI 元素
-        const googTeBanner = document.querySelector('.goog-te-banner-frame')
-        if (googTeBanner) {
-          ;(googTeBanner as HTMLElement).style.display = 'none'
-        }
-        const googTeGadget = document.querySelector('.goog-te-gadget')
-        if (googTeGadget) {
-          ;(googTeGadget as HTMLElement).style.display = 'none'
-        }
+        const container = document.getElementById('google_translate_element')
+        if (container) container.style.display = 'none'
+        const banner = document.querySelector('.goog-te-banner-frame') as HTMLElement
+        if (banner) banner.style.display = 'none'
       }, 100)
     }
 
     return () => {
-      if (document.body.contains(s)) {
-        document.body.removeChild(s)
-      }
+      if (document.body.contains(script)) document.body.removeChild(script)
       window.googleTranslateElementInit = undefined as any
     }
   }, [])
 
-  // 返回隐藏的容器，用于 Google Translate 初始化
   return <div id="google_translate_element" style={{ display: 'none' }} />
 }
 
-// 导出切换语言的函数
+/* -------------- 彻底回到原始英文（推荐方案） -------------- */
+export function restoreToEnglish() {
+  if (typeof window === 'undefined') return
+
+  // 方法一：最狠最有效的方式 —— 直接改 cookie + reload
+  const cookieName = 'googtrans'
+  const cookiePath = '; path=/'
+  const cookieDomain = location.hostname.startsWith('www.')
+    ? '; domain=' + location.hostname
+    : '; domain=' + location.hostname.substring(location.hostname.indexOf('.') )
+
+  // 彻底清除三种可能的 googtrans 存储方式
+  document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath + cookieDomain
+  document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath
+  document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+
+  // 同时清除 sessionStorage（部分新版 Google 用这个）
+  sessionStorage.removeItem('googtrans')
+  localStorage.removeItem('googtrans')
+
+  // 再强制把下拉框清空（保险）
+  setTimeout(() => {
+    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
+    if (select) {
+      select.value = ''
+      select.dispatchEvent(new Event('change', { bubbles: true }))
+    }
+
+    // 清除 goog-te-gadget 添加的 class
+    document.documentElement.removeAttribute('class')
+
+    // 最后再 reload 一次，确保新页面读不到任何翻译痕迹
+    location.reload()
+  }, 100)
+}
+
+/* -------------- 其它语言切换（保持原逻辑） -------------- */
 export function changeLanguage(langCode: string) {
-  if (typeof window !== 'undefined') {
-    // 等待 Google Translate 加载完成
-    const tryChangeLanguage = () => {
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
-      if (select) {
-        // Google Translate 使用特定的语言代码格式
-        // 对于英语，使用空字符串
-        const langValue = langCode === 'en' ? '' : langCode
-        select.value = langValue
-        // 触发 change 事件
-        const event = new Event('change', { bubbles: true })
-        select.dispatchEvent(event)
-        // 也尝试直接调用 Google Translate 的 API
-        if (window.google?.translate?.TranslateElement) {
-          // 重新初始化以切换语言
-          try {
-            select.dispatchEvent(new Event('change'))
-          } catch (e) {
-            console.log('Language change triggered')
-          }
-        }
-      } else {
-        // 如果还没加载，等待一下再试（最多等待5秒）
-        setTimeout(tryChangeLanguage, 100)
-      }
-    }
-    
-    // 如果 Google Translate 已经加载
-    if (window.google?.translate) {
-      tryChangeLanguage()
-    } else {
-      // 等待 Google Translate 初始化
-      let attempts = 0
-      const maxAttempts = 50 // 最多尝试5秒
-      const checkInterval = setInterval(() => {
-        attempts++
-        if (window.google?.translate || attempts >= maxAttempts) {
-          clearInterval(checkInterval)
-          if (window.google?.translate) {
-            tryChangeLanguage()
-          }
-        }
-      }, 100)
-    }
+  if (typeof window === 'undefined') return
+
+  const tryChange = () => {
+    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement
+    if (!select) { setTimeout(tryChange, 100); return }
+
+    select.value = langCode === 'en' ? '' : langCode
+    select.dispatchEvent(new Event('change', { bubbles: true }))
+    handleRTL(langCode)
   }
+
+  if (window.google?.translate) tryChange()
+  else {
+    let i = 0
+    const t = setInterval(() => {
+      if (window.google?.translate || ++i > 50) {
+        clearInterval(t)
+        tryChange()
+      }
+    }, 100)
+  }
+}
+
+/* -------------- RTL 处理 -------------- */
+export function handleRTL(langCode: string) {
+  document.body.style.direction = langCode === 'ar' ? 'rtl' : 'ltr'
 }

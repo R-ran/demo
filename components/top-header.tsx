@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import { Facebook, Youtube, Linkedin, Search, Download, X, Menu, Globe, ChevronDown } from "lucide-react";
@@ -6,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { changeLanguage } from "@/components/GoogleTranslate";
+import { handleRTL, restoreToEnglish, changeLanguage } from "@/components/GoogleTranslate";
 
 export function TopHeader() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -18,14 +20,11 @@ export function TopHeader() {
   // 支持的语言列表
   const languages = [
     { code: 'en', name: 'English', nativeName: 'English' },
-    
     { code: 'fr', name: 'French', nativeName: 'Français' },
     { code: 'es', name: 'Spanish', nativeName: 'Español' },
-    
     { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
     { code: 'ru', name: 'Russian', nativeName: 'Русский' },
     { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
-    
   ];
 
   // 模拟搜索数据（实际应该从 API 或 CMS 获取）
@@ -93,12 +92,6 @@ export function TopHeader() {
     };
   }, [isSearchOpen, isLanguageOpen]);
 
-  // 处理语言切换
-  const handleLanguageChange = (langCode: string) => {
-    changeLanguage(langCode);
-    setIsLanguageOpen(false);
-  };
-
   const handleSearchClick = () => setIsSearchOpen(true);
   const handleCloseSearch = () => {
     setIsSearchOpen(false);
@@ -145,7 +138,15 @@ export function TopHeader() {
                     {languages.map((lang) => (
                       <button
                         key={lang.code}
-                        onClick={() => handleLanguageChange(lang.code)}
+                        onClick={() => {
+                          if (lang.code === 'en') {
+                            restoreToEnglish()          // 特殊处理英文
+                          } else {
+                            changeLanguage(lang.code)   // 其他语言走原逻辑
+                            handleRTL(lang.code)
+                          }
+                          setIsLanguageOpen(false)
+                        }}
                         className="w-full text-left px-4 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between"
                       >
                         <div className="flex flex-col">
