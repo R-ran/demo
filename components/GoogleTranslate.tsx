@@ -29,7 +29,13 @@ export default function GoogleTranslate() {
         {
           pageLanguage: 'en',
           includedLanguages: 'en,fr,es,ar,ru,pt,zh-CN,zh-TW,de,it,ja,ko',
-          layout: 0
+          layout: 0,
+
+          // 关键：把两个域名都放进来
+  allowedDomains: [
+    'xionghong-web.vercel.app',
+    'www.cnxhanchor.com'
+  ]
         },
         'google_translate_element'
       )
