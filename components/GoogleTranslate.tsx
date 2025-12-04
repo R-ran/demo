@@ -55,17 +55,18 @@ export default function GoogleTranslate() {
 export function restoreToEnglish() {
   if (typeof window === "undefined") return;
 
-    // 清除所有与翻译相关的存储
-    const cookieName = "googtrans";
-    const cookiePath = "; path=/";
-    const cookieDomain = "; domain=" + location.hostname
-    const cookieDomain2 = "; domain=" + location.hostname.substring(location.hostname.indexOf("."));
-    document.cookie =
-      cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + cookiePath + cookieDomain;
-    document.cookie =
-      cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + cookiePath + cookieDomain2;
-    // document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + cookiePath;
-    // document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+     // 清除所有与翻译相关的存储【新添加】
+  const cookieName = 'googtrans';
+  const cookiePath = '; path=/';
+  const cookieDomain = location.hostname.startsWith('www.')
+    ? '; domain=' + location.hostname
+    : '; domain=' + location.hostname.substring(location.hostname.indexOf('.'));
+
+  // 清除所有的 googtrans cookie【新添加】
+  document.cookie =
+    cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath + cookieDomain;
+  document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath;
+  document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
   
     sessionStorage.removeItem("googtrans");
     localStorage.removeItem("googtrans");
