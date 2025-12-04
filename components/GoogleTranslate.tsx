@@ -54,39 +54,32 @@ export default function GoogleTranslate() {
   return <div id="google_translate_element" style={{ display: 'none' }} />;
 }
 
-// Method to restore to English (clear cookie and storage)
 export function restoreToEnglish() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
-  // Clear all translation-related storage
-  const cookieName = 'googtrans';
-  const cookiePath = '; path=/';
-  const cookieDomain = location.hostname.startsWith('www.')
-    ? '; domain=' + location.hostname
-    : '; domain=' + location.hostname.substring(location.hostname.indexOf('.'));
-
-  // Clear all googtrans cookies
+  // 清除所有与翻译相关的存储
+  const cookieName = "googtrans";
+  const cookiePath = "; path=/";
+  const cookieDomain = "; domain=" + location.hostname.substring(location.hostname.indexOf("."));
   document.cookie =
-    cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath + cookieDomain;
-  document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath;
-  document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + cookiePath + cookieDomain;
+  document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
 
-  // Clear storage
-  sessionStorage.removeItem('googtrans');
-  localStorage.removeItem('googtrans');
+  sessionStorage.removeItem("googtrans");
+  localStorage.removeItem("googtrans");
 
-  // Clear the dropdown
+  // 清空下拉框
   setTimeout(() => {
-    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+    const select = document.querySelector(".goog-te-combo") as HTMLSelectElement;
     if (select) {
-      select.value = '';
-      select.dispatchEvent(new Event('change', { bubbles: true }));
+      select.value = "";
+      select.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
-    // Remove goog-te-gadget class
-    document.documentElement.removeAttribute('class');
+    // 清除 goog-te-gadget 添加的 class
+    document.documentElement.removeAttribute("class");
 
-    // Finally, reload
+    // 最后 reload 一次
     location.reload();
   }, 100);
 }
