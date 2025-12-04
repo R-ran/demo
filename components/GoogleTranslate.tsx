@@ -15,64 +15,67 @@ declare global {
 
 export default function GoogleTranslate() {
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src =
-      'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    script.async = true;
-    document.body.appendChild(script);
+    // Only load the Google Translate script if it's not English
+    if (localStorage.getItem('lang') !== 'en') {
+      const script = document.createElement('script');
+      script.src =
+        'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      document.body.appendChild(script);
 
-    window.googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: 'en',
-          includedLanguages: 'en,fr,es,ar,ru,pt',
-          layout: 0,
-        },
-        'google_translate_element'
-      );
+      window.googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,fr,es,ar,ru,pt',
+            layout: 0,
+          },
+          'google_translate_element'
+        );
 
-      handleRTL('en');
+        handleRTL('en');
 
-      // 隐藏原生 UI
-      setTimeout(() => {
-        const container = document.getElementById('google_translate_element');
-        if (container) container.style.display = 'none';
-        const banner = document.querySelector('.goog-te-banner-frame') as HTMLElement;
-        if (banner) banner.style.display = 'none';
-      }, 100);
-    };
+        // Hide default Google Translate UI
+        setTimeout(() => {
+          const container = document.getElementById('google_translate_element');
+          if (container) container.style.display = 'none';
+          const banner = document.querySelector('.goog-te-banner-frame') as HTMLElement;
+          if (banner) banner.style.display = 'none';
+        }, 100);
+      };
 
-    return () => {
-      if (document.body.contains(script)) document.body.removeChild(script);
-      window.googleTranslateElementInit = undefined as any;
-    };
+      return () => {
+        if (document.body.contains(script)) document.body.removeChild(script);
+        window.googleTranslateElementInit = undefined as any;
+      };
+    }
   }, []);
 
   return <div id="google_translate_element" style={{ display: 'none' }} />;
 }
 
-// 彻底回到英文的方法（清除 cookie 和存储）
+// Method to restore to English (clear cookie and storage)
 export function restoreToEnglish() {
   if (typeof window === 'undefined') return;
 
-  // 清除所有与翻译相关的存储
+  // Clear all translation-related storage
   const cookieName = 'googtrans';
   const cookiePath = '; path=/';
   const cookieDomain = location.hostname.startsWith('www.')
     ? '; domain=' + location.hostname
     : '; domain=' + location.hostname.substring(location.hostname.indexOf('.'));
 
-  // 清除所有的 googtrans cookie
+  // Clear all googtrans cookies
   document.cookie =
     cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath + cookieDomain;
   document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' + cookiePath;
   document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
 
-  // 清除 storage
+  // Clear storage
   sessionStorage.removeItem('googtrans');
   localStorage.removeItem('googtrans');
 
-  // 清空下拉框
+  // Clear the dropdown
   setTimeout(() => {
     const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
     if (select) {
@@ -80,15 +83,15 @@ export function restoreToEnglish() {
       select.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
-    // 清除 goog-te-gadget 添加的 class
+    // Remove goog-te-gadget class
     document.documentElement.removeAttribute('class');
 
-    // 最后 reload 一次
+    // Finally, reload
     location.reload();
   }, 100);
 }
 
-// 切换语言
+// Change Language Method
 export function changeLanguage(langCode: string) {
   if (typeof window === 'undefined') return;
 
@@ -99,13 +102,13 @@ export function changeLanguage(langCode: string) {
       return;
     }
 
-    // 如果选择的是英语，清除 `googtrans` cookie，并刷新页面
+    // Clear `googtrans` cookie when selecting English and refresh the page
     if (langCode === 'en') {
-      // 清除 `googtrans` cookie
+      // Clear `googtrans` cookie
       document.cookie =
-        'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'; // 清除 google translate 的缓存
+        'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'; // Clear google translate cache
 
-      // 强制刷新页面，显示英文内容
+      // Force reload to show English content
       localStorage.setItem('lang', 'en');
       window.location.reload();
     }
@@ -127,7 +130,7 @@ export function changeLanguage(langCode: string) {
   }
 }
 
-// RTL 处理
+// RTL handling
 export function handleRTL(langCode: string) {
   document.body.style.direction = langCode === 'ar' ? 'rtl' : 'ltr';
 }
