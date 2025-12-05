@@ -18,9 +18,9 @@ import Script from 'next/script'
 // const TAWK_PROPERTY_ID = '你的PropertyID'
 // const TAWK_WIDGET_ID = '你的WidgetID'
 
-// 从环境变量获取 tawk.to 配置
-const TAWK_PROPERTY_ID = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || ''
-const TAWK_WIDGET_ID = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || ''
+// 从环境变量获取 tawk.to 配置，如果没有则使用默认值
+const TAWK_PROPERTY_ID = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || '69328685c5b7fb19815b36f1'
+const TAWK_WIDGET_ID = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || 'default'
 
 export function TawkToChat() {
   // 如果没有配置，不渲染任何内容
