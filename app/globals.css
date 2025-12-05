@@ -144,6 +144,10 @@
 }
 
 /* 自定义 news 和 blogs 文章内容中的小标题样式 */
+.prose {
+  margin-top: 0 !important; /* 移除默认的上边距 */
+}
+
 .prose h2 {
   font-weight: 700;
   font-size: 1.125rem; /* 18px */
@@ -207,6 +211,22 @@
   font-weight: 400; /* 正常字重，不加粗 */
   font-size: 1.125rem; /* 18px - 与 prose-2xl 的段落字体大小一致 */
   line-height: 1.75; /* 行高 */
+}
+
+/* 文章内容中的超链接样式 - 蓝色 */
+.prose a {
+  color: #2563eb !important; /* 蓝色 */
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.prose a:hover {
+  color: #1d4ed8 !important; /* 悬停时更深的蓝色 */
+  text-decoration: underline;
+}
+
+.prose a:visited {
+  color: #7c3aed !important; /* 访问过的链接使用紫色 */
 }
 
 /* 隔离 timeline 组件的样式，不受全局样式影响 */

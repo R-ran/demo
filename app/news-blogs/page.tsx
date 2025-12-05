@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 
 // WordPress API 导入
 import type { NewsBlogArticle } from "@/lib/wordpress"
+import { extractFirstImageFromContent, processArticleContent } from "@/lib/wordpress"
 
 export default function NewsBlogPage() {
   const [articles, setArticles] = useState<NewsBlogArticle[]>([])
@@ -116,7 +117,7 @@ export default function NewsBlogPage() {
             </div>
           ) : selectedArticle ? (
             <div className="rounded-2xl border bg-card shadow-sm">
-              <div className="flex flex-col gap-10 p-6 lg:p-10">
+              <div className="flex flex-col gap-6 p-6 lg:p-10">
                 {/* 标题部分 - 最上面 */}
                 <div className="space-y-4">
                   <span className="inline-block bg-primary text-primary-foreground px-4 py-1 text-sm font-medium rounded">
@@ -141,22 +142,11 @@ export default function NewsBlogPage() {
                   </div>
                 </div>
 
-                {/* 图片部分 - 中间 */}
-                <div className="w-full">
-                  <div className="relative w-full overflow-hidden rounded-xl bg-muted aspect-[16/9]">
-                    <img
-                      src={selectedArticle.featured_image || "/placeholder.svg"}
-                      alt={selectedArticle.title}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </div>
-
-                {/* 内容部分 - 最下面 */}
+                {/* 内容部分 */}
                 <div className="space-y-6">
                   <div
                     className="prose prose-2xl max-w-none"
-                    dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
+                    dangerouslySetInnerHTML={{ __html: processArticleContent(selectedArticle.content, selectedArticle.title) }}
                     style={{
                       lineHeight: "1.8",
                     }}
@@ -173,11 +163,22 @@ export default function NewsBlogPage() {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.map((item) => (
+              {articles.map((item) => {
+                // 优先使用 featured_image，如果没有则从内容中提取第一张图片
+                let cardImage = item.featured_image
+                if (!cardImage || cardImage === '/placeholder.svg') {
+                  const extractedImage = extractFirstImageFromContent(item.content || '')
+                  if (extractedImage) {
+                    cardImage = extractedImage
+                  } else {
+                    cardImage = "/placeholder.svg"
+                  }
+                }
+                return (
                 <Card key={item.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={item.featured_image || "/placeholder.svg"}
+                      src={cardImage}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
@@ -207,7 +208,8 @@ export default function NewsBlogPage() {
                     </Button>
                   </CardContent>
                 </Card>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>

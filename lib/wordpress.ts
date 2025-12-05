@@ -768,6 +768,149 @@ export function truncateExcerpt(text: string, maxLength: number = 120): string {
 }
 
 /**
+ * 从 HTML 内容中提取第一张图片的 URL
+ * @param htmlContent HTML 内容字符串
+ * @returns 第一张图片的 URL，如果没有找到则返回 null
+ */
+export function extractFirstImageFromContent(htmlContent: string): string | null {
+  if (!htmlContent || typeof htmlContent !== 'string') return null
+
+  // 方法1: 使用更健壮的正则表达式匹配 img 标签
+  // 支持多种格式：src="...", src='...', src=..., src = "..."
+  // 使用非贪婪匹配，找到第一个 img 标签
+  const imgRegex = /<img[^>]*?\ssrc\s*=\s*["']([^"']+)["'][^>]*?>/i
+  let match = htmlContent.match(imgRegex)
+  
+  // 如果第一种格式没匹配到，尝试无引号的格式
+  if (!match) {
+    const imgRegexNoQuote = /<img[^>]*?\ssrc\s*=\s*([^\s>]+)[^>]*?>/i
+    match = htmlContent.match(imgRegexNoQuote)
+  }
+  
+  if (match && match[1]) {
+    let imageUrl = match[1].trim()
+    
+    // 清理 URL：移除 HTML 实体编码
+    imageUrl = imageUrl
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&#x27;/g, "'")
+      .replace(/&#x2F;/g, '/')
+    
+    // 验证是否是有效的图片 URL（排除 data: URL 和占位符）
+    if (imageUrl && 
+        imageUrl.length > 0 &&
+        !imageUrl.startsWith('data:') && 
+        imageUrl !== '/placeholder.svg' &&
+        !imageUrl.toLowerCase().includes('placeholder') &&
+        (imageUrl.startsWith('http') || imageUrl.startsWith('/') || imageUrl.startsWith('./'))) {
+      // 如果是相对路径且以 ./ 开头，移除 ./
+      if (imageUrl.startsWith('./')) {
+        imageUrl = imageUrl.substring(2)
+      }
+      return imageUrl
+    }
+  }
+
+  // 方法2: 尝试匹配 WordPress 的图片格式（可能在 figure 或其他标签中）
+  const figureImgRegex = /<figure[^>]*>[\s\S]*?<img[^>]*?\ssrc\s*=\s*["']([^"']+)["'][^>]*?>/i
+  const figureMatch = htmlContent.match(figureImgRegex)
+  
+  if (figureMatch && figureMatch[1]) {
+    let imageUrl = figureMatch[1].trim()
+    imageUrl = imageUrl
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+    
+    if (imageUrl && 
+        imageUrl.length > 0 &&
+        !imageUrl.startsWith('data:') && 
+        imageUrl !== '/placeholder.svg' &&
+        !imageUrl.toLowerCase().includes('placeholder') &&
+        (imageUrl.startsWith('http') || imageUrl.startsWith('/') || imageUrl.startsWith('./'))) {
+      if (imageUrl.startsWith('./')) {
+        imageUrl = imageUrl.substring(2)
+      }
+      return imageUrl
+    }
+  }
+
+  // 方法3: 尝试匹配 background-image: url(...)
+  const bgImageRegex = /background-image:\s*url\(["']?([^"')]+)["']?\)/i
+  const bgMatch = htmlContent.match(bgImageRegex)
+  
+  if (bgMatch && bgMatch[1]) {
+    let imageUrl = bgMatch[1].trim()
+    imageUrl = imageUrl
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+    
+    if (imageUrl && 
+        imageUrl.length > 0 &&
+        !imageUrl.startsWith('data:') && 
+        imageUrl !== '/placeholder.svg' &&
+        !imageUrl.toLowerCase().includes('placeholder') &&
+        (imageUrl.startsWith('http') || imageUrl.startsWith('/') || imageUrl.startsWith('./'))) {
+      if (imageUrl.startsWith('./')) {
+        imageUrl = imageUrl.substring(2)
+      }
+      return imageUrl
+    }
+  }
+
+  return null
+}
+
+/**
+ * 处理文章内容，如果 h1 标签内容与文章标题一致则隐藏它
+ * @param htmlContent HTML 内容字符串
+ * @param articleTitle 文章标题
+ * @returns 处理后的 HTML 内容
+ */
+export function processArticleContent(htmlContent: string, articleTitle: string): string {
+  if (!htmlContent || !articleTitle) return htmlContent
+
+  // 清理标题：移除 HTML 标签、空白字符、转换为小写进行比较
+  const cleanTitle = articleTitle
+    .replace(/<[^>]*>/g, '') // 移除 HTML 标签
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ') // 规范化空白字符
+
+  // 使用正则表达式匹配所有 h1 标签
+  return htmlContent.replace(/<h1([^>]*)>([\s\S]*?)<\/h1>/gi, (match, attributes, content) => {
+    // 清理 h1 内容：移除 HTML 标签、空白字符、转换为小写
+    const cleanH1Content = content
+      .replace(/<[^>]*>/g, '') // 移除 HTML 标签
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, ' ') // 规范化空白字符
+
+    // 如果 h1 内容与标题一致，添加隐藏样式
+    if (cleanH1Content === cleanTitle) {
+      // 检查是否已有 style 属性
+      if (attributes.includes('style=')) {
+        // 在现有 style 中添加 display: none
+        return `<h1${attributes.replace(/style=["']([^"']*)["']/, (styleMatch, styleValue) => {
+          return `style="${styleValue}; display: none !important;"`
+        })}>${content}</h1>`
+      } else {
+        // 添加新的 style 属性
+        return `<h1${attributes} style="display: none !important;">${content}</h1>`
+      }
+    }
+
+    // 如果不一致，保持原样
+    return match
+  })
+}
+
+/**
  * 解码 HTML 实体编码
  * 将 HTML 实体（如 &#8230;、&hellip; 等）转换为普通字符
  */

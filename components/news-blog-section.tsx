@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 // 从 WordPress API 导入
-import { getNewsBlogs, truncateExcerpt } from "@/lib/wordpress"
+import { getNewsBlogs, truncateExcerpt, extractFirstImageFromContent } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
 export function NewsBlogSection() {
@@ -58,14 +58,25 @@ export function NewsBlogSection() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {displayNews.map((item) => (
+          {displayNews.map((item) => {
+            // 优先使用 featured_image，如果没有则从内容中提取第一张图片
+            let cardImage = item.featured_image
+            if (!cardImage || cardImage === '/placeholder.svg') {
+              const extractedImage = extractFirstImageFromContent(item.content || '')
+              if (extractedImage) {
+                cardImage = extractedImage
+              } else {
+                cardImage = "/placeholder.svg"
+              }
+            }
+            return (
             <article
               key={item.id}
               className="bg-background rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow flex flex-col"
             >
               <Link href={`/news-blogs/news?article=${item.id}`} className="relative block h-48 w-full">
                 <Image
-                  src={item.featured_image || "/placeholder.svg"}
+                  src={cardImage}
                   alt={item.title}
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"
@@ -94,7 +105,8 @@ export function NewsBlogSection() {
                 </Link>
               </div>
             </article>
-          ))}
+            )
+          })}
         </div>
 
         <div className="text-center mt-10">

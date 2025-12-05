@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Calendar, PenLine, ArrowLeft } from "lucide-react"
 import { useEffect, useState, Suspense } from "react"
@@ -11,7 +10,7 @@ import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { truncateExcerpt } from "@/lib/wordpress"
+import { truncateExcerpt, extractFirstImageFromContent, processArticleContent } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
 // 获取数据的辅助函数
@@ -128,7 +127,7 @@ function BlogContent() {
           </div>
         ) : selectedPost ? (
           <div className="rounded-2xl border bg-card shadow-sm">
-            <div className="flex flex-col gap-10 p-6 lg:p-10">
+            <div className="flex flex-col gap-6 p-6 lg:p-10">
               {/* 标题部分 - 最上面 */}
               <div className="space-y-4">
                 {selectedPost.category && (
@@ -157,23 +156,11 @@ function BlogContent() {
                 </div>
               </div>
 
-              {/* 图片部分 - 中间 */}
-              <div className="w-full">
-                <div className="relative w-full overflow-hidden rounded-xl bg-muted aspect-[16/9]">
-                  <Image
-                    src={selectedPost.image || "/placeholder.svg"}
-                    alt={selectedPost.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* 内容部分 - 最下面 */}
+              {/* 内容部分 */}
               <div className="space-y-6">
                 <div
                   className="prose prose-2xl max-w-none"
-                  dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+                  dangerouslySetInnerHTML={{ __html: processArticleContent(selectedPost.content, selectedPost.title) }}
                   style={{ lineHeight: "1.8" }}
                 />
 
@@ -188,11 +175,22 @@ function BlogContent() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post) => (
+            {posts.map((post) => {
+              // 优先使用 image，如果没有则从内容中提取第一张图片
+              let cardImage = post.image
+              if (!cardImage || cardImage === '/placeholder.svg') {
+                const extractedImage = extractFirstImageFromContent(post.content || '')
+                if (extractedImage) {
+                  cardImage = extractedImage
+                } else {
+                  cardImage = "/placeholder.svg"
+                }
+              }
+              return (
               <Card key={post.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                 <div className="relative h-52 overflow-hidden">
                   <img
-                    src={post.image || "/placeholder.svg"}
+                    src={cardImage}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -226,7 +224,8 @@ function BlogContent() {
                   </Button>
                 </CardContent>
               </Card>
-            ))}
+              )
+            })}
           </div>
         )}
       </div>

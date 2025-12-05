@@ -10,7 +10,7 @@ import { notFound } from "next/navigation"
 import { Metadata } from "next"
 
 // WordPress API 导入
-import { getNewsBlogDetail, getAllNewsBlogPaths } from "@/lib/wordpress"
+import { getNewsBlogDetail, getAllNewsBlogPaths, processArticleContent } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
 export const metadata: Metadata = {
@@ -62,7 +62,7 @@ export default async function NewsArticlePage({ params }: { params: { id: string
             </Button>
           </Link>
 
-          <div className="space-y-8">
+          <div className="space-y-6">
             {/* 文章标题和元信息 */}
             <div className="space-y-4 text-center">
               <span className="inline-block bg-primary text-primary-foreground px-4 py-1 text-sm font-medium rounded">
@@ -89,22 +89,11 @@ export default async function NewsArticlePage({ params }: { params: { id: string
               </div>
             </div>
 
-            {/* 文章图片 */}
-            <div className="relative w-full max-w-4xl mx-auto">
-              <div className="relative w-full overflow-hidden rounded-xl bg-muted aspect-[16/9] md:aspect-[21/9]">
-                <img
-                  src={article.featured_image || "/placeholder.svg"}
-                  alt={article.title}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-
             {/* 文章内容 */}
             <div className="max-w-4xl mx-auto">
               <div
                 className="prose prose-2xl max-w-none"
-                dangerouslySetInnerHTML={{ __html: article.content }}
+                dangerouslySetInnerHTML={{ __html: processArticleContent(article.content, article.title) }}
                 style={{
                   lineHeight: "1.8",
                 }}
