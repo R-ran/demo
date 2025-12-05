@@ -1,5 +1,3 @@
-"use client"
-
 import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
@@ -10,24 +8,22 @@ import { ArrowLeft } from "lucide-react"
 import { getProjectBySlug, getProjectCategories, type Project, type ProjectCategory } from "@/lib/wordpress"
 import { notFound, useParams, useRouter } from "next/navigation"
 
-// ============= 删除所有静态数据 =============
-
 export default function ProjectDetailPage() {
   const router = useRouter()
   const params = useParams()
   let slug = params?.slug as string
-  const category = params?.category as string // 虽然不使用，但保留用于路由匹配
+  const category = params?.category as string
 
-  // 解码URL参数中的slug
+  // 解码 URL 参数中的 slug
   if (slug) {
     try {
       slug = decodeURIComponent(slug)
     } catch (error) {
-      console.warn('无法解码URL中的slug:', slug)
+      console.warn('无法解码 URL 中的 slug:', slug)
     }
   }
   
-  // ============= 添加状态管理 =============
+  // 添加状态管理
   const [project, setProject] = useState<Project | null>(null)
   const [categories, setCategories] = useState<ProjectCategory[]>([])
   const [loading, setLoading] = useState(true)
@@ -36,7 +32,7 @@ export default function ProjectDetailPage() {
     window.scrollTo(0, 0)
   }, [])
 
-  // ============= 加载WordPress数据 =============
+  // 加载 WordPress 数据
   useEffect(() => {
     async function loadData() {
       if (!slug) {
@@ -67,7 +63,7 @@ export default function ProjectDetailPage() {
     loadData()
   }, [slug])
 
-  // ============= 加载状态 =============
+  // 加载状态
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -84,65 +80,12 @@ export default function ProjectDetailPage() {
     )
   }
 
-  // ============= 未找到处理 - 重定向到上一级页面 =============
-  useEffect(() => {
-    if (!loading && !project) {
-      // 重定向到项目分类页面，如果没有分类则重定向到项目列表页
-      if (category) {
-        router.replace(`/successful-projects/${category}`)
-      } else {
-        router.replace("/successful-projects")
-      }
-    }
-  }, [loading, project, category, router])
-
-  // 在重定向过程中显示加载状态
-  if (!project && !loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Redirecting...</p>
-        </div>
-      </div>
-    )
+  // 项目未找到，返回 404 页面
+  if (!project) {
+    notFound()
   }
 
   // 以下代码不应该被执行，但如果项目存在则正常渲染
-  if (!project) {
-    return (
-      <div className="min-h-screen bg-background">
-        <TopHeader />
-        <StickyNav />
-        <main className="pt-12">
-          <div className="container mx-auto px-4 py-20">
-            <div className="max-w-2xl mx-auto text-center">
-              <h1 className="text-4xl font-bold mb-4">项目未找到</h1>
-              <p className="text-muted-foreground mb-8">
-                抱歉，找不到您要查看的项目。可能该项目已被删除或链接不正确。
-              </p>
-              <div className="flex gap-4 justify-center">
-                <Link href="/successful-projects">
-                  <Button>
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    返回项目列表
-                  </Button>
-                </Link>
-                <Link href="/">
-                  <Button variant="outline">
-                    返回首页
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    )
-  }
-
-  // ============= 你的原有JSX，100%不变 =============
   return (
     <div className="min-h-screen bg-background">
       <TopHeader />
@@ -175,7 +118,7 @@ export default function ProjectDetailPage() {
               </Link>
             </div>
 
-            {/* Project Title Section - 标题在上面 */}
+            {/* Project Title Section */}
             <div className="mb-8">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">{project.title}</h1>
               <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
@@ -194,7 +137,7 @@ export default function ProjectDetailPage() {
               </div>
             </div>
 
-            {/* Project Image - 图片在中间 */}
+            {/* Project Image */}
             <div className="mb-8 rounded-lg overflow-hidden">
               <img
                 src={project.image || "/placeholder.svg"}
@@ -206,7 +149,7 @@ export default function ProjectDetailPage() {
               />
             </div>
 
-            {/* Project Content - 文案内容在下面 */}
+            {/* Project Content */}
             <div className="space-y-8">
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Project Overview</h2>

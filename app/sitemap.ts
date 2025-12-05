@@ -2,7 +2,6 @@ import { MetadataRoute } from 'next'
 import { getAboutSections } from '@/lib/wordpress'
 import { getProjects } from '@/lib/wordpress'
 
-// 标记为动态路由，允许在运行时获取数据
 export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -67,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const projects = await getProjects()
     projectPages = projects
-      .filter((project) => project.slug) // 过滤掉没有slug的项目
+      .filter((project) => project.slug && !project.slug.includes('default')) // 排除测试路径
       .map((project) => ({
         url: `${baseUrl}/successful-projects/${project.category?.slug || 'default'}/${project.slug}`,
         lastModified: project.modified ? new Date(project.modified) : new Date(),
@@ -80,4 +79,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [...staticPages, ...aboutPages, ...projectPages]
 }
-
