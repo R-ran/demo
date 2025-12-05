@@ -21,7 +21,7 @@ export default function ProjectDetailPage() {
     try {
       slug = decodeURIComponent(slug)
     } catch (error) {
-      console.warn('无法解码 URL 中的 slug:', slug)
+      console.warn('Unable to decode slug in URL:', slug)
     }
   }
   
@@ -38,12 +38,12 @@ export default function ProjectDetailPage() {
   useEffect(() => {
     async function loadData() {
       if (!slug) {
-        console.error('Slug 参数为空')
+        console.error('Slug parameter is empty')
         setLoading(false)
         return
       }
 
-      console.log('开始加载项目详情，slug:', slug)
+      console.log('Starting to load project details, slug:', slug)
       
       try {
         const [projectData, categoriesData] = await Promise.all([
@@ -51,13 +51,13 @@ export default function ProjectDetailPage() {
           getProjectCategories()
         ])
         
-        console.log('项目数据加载结果:', projectData ? '找到项目' : '未找到项目')
-        console.log('项目详情:', projectData)
+        console.log('Project data loading result:', projectData ? 'Project found' : 'Project not found')
+        console.log('Project details:', projectData)
         
         setProject(projectData)
         setCategories(categoriesData)
       } catch (error) {
-        console.error('加载项目详情失败:', error)
+        console.error('Failed to load project details:', error)
       } finally {
         setLoading(false)
       }

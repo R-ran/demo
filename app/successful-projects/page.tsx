@@ -14,7 +14,7 @@ async function getServerData() {
     ])
     return { projects: projectsData, categories: categoriesData, error: null }
   } catch (error) {
-    console.error('服务器端数据获取失败:', error)
+    console.error('Server data fetch failed:', error)
     return { projects: [], categories: [], error: error.message }
   }
 }

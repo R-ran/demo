@@ -16,13 +16,13 @@ export default function NotFound() {
             <h1 className="text-6xl font-bold mb-4">404</h1>
             <h2 className="text-3xl font-semibold mb-4">Page Not Found</h2>
             <p className="text-muted-foreground mb-8">
-              抱歉，找不到您要访问的页面。该页面可能已被删除或链接不正确。
+              Sorry, the page you are looking for does not exist. It may have been deleted or the link is incorrect.
             </p>
             <div className="flex gap-4 justify-center">
               <Link href="/">
                 <Button>
                   <Home className="mr-2 h-4 w-4" />
-                  返回首页
+                  Back to Home
                 </Button>
               </Link>
             </div>

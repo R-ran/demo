@@ -58,7 +58,7 @@ export default function CategoryProjectsPage({ params }: { params: { category: s
           setCategoryInfo(defaultInfo[category as keyof typeof defaultInfo] || null)
         }
       } catch (error) {
-        console.error('加载分类项目失败:', error)
+        console.error('Failed to load category projects:', error)
       } finally {
         setLoading(false)
       }

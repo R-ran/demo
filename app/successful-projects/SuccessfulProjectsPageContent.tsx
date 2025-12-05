@@ -47,10 +47,10 @@ export default function SuccessfulProjectsPageContent({
         <main className="pt-12">
           <div className="container mx-auto px-4 py-20 text-center">
             <div className="p-8 border border-red-500 rounded-lg">
-              <h2 className="text-2xl font-bold text-red-500 mb-4">服务器端错误</h2>
+              <h2 className="text-2xl font-bold text-red-500 mb-4">Server Error</h2>
               <p className="text-muted-foreground">{serverError}</p>
               <Link href="/" className="inline-block mt-4">
-                <Button>返回首页</Button>
+                <Button>Back to Home</Button>
               </Link>
             </div>
           </div>
