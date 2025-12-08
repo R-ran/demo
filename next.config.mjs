@@ -4,7 +4,21 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // 启用图片优化
+    unoptimized: false,
+    // 配置允许的外部图片域名
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
+    // 图片格式
+    formats: ['image/avif', 'image/webp'],
   },
   turboPack: {
     root: 'C:/Users/R_ran/Desktop/web'

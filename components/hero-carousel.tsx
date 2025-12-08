@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -55,10 +56,14 @@ export function HeroCarousel() {
             index === currentSlide ? "opacity-100" : "opacity-0"
           }`}
         >
-          <img
+          <Image
             src={slide.image || "/placeholder.svg"}
-            alt={slide.imageAlt || slide.title}
-            className="w-full h-full object-cover"
+            alt={slide.imageAlt || slide.title || "XINHONG anchor bolts"}
+            fill
+            priority={index === 0}
+            fetchPriority={index === 0 ? "high" : "auto"}
+            className="object-cover"
+            sizes="100vw"
           />
         </div>
       ))}

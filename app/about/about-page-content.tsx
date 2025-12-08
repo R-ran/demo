@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Suspense, useEffect, useState } from "react"
 import type { FormEvent, MouseEvent, SyntheticEvent } from "react"
 import Link from "next/link"
@@ -1118,15 +1119,16 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div className="relative w-full flex items-center justify-center">
-                      <img
-                        src={selectedItem.image || selectedItem.fallbackImage || "/placeholder.svg"}
-                        alt={selectedItem.imageAlt || selectedItem.title}
-                        className="w-full h-auto max-h-[600px] object-contain rounded-lg"
-                        data-fallback={selectedItem.fallbackImage || "/placeholder.svg"}
-                        onError={(event) =>
-                          handleImageError(event, selectedItem.fallbackImage || "/placeholder.svg")
-                        }
-                      />
+                      <div className="relative w-full h-auto max-h-[600px]">
+                        <Image
+                          src={selectedItem.image || selectedItem.fallbackImage || "/placeholder.svg"}
+                          alt={selectedItem.imageAlt || selectedItem.title || "About section image"}
+                          width={800}
+                          height={600}
+                          className="w-full h-auto object-contain rounded-lg"
+                          sizes="(max-width: 768px) 100vw, 800px"
+                        />
+                      </div>
                     </div>
 
                     <div className="space-y-6">

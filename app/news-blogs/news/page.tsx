@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Calendar, ArrowLeft, PenLine } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState, useEffect, Suspense } from "react"
@@ -203,10 +204,12 @@ function NewsContent() {
               return (
               <Card key={item.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                 <div className="relative h-52 overflow-hidden">
-                  <img
+                  <Image
                     src={cardImage}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    alt={item.title || "News article"}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-sm font-medium rounded">
                     {item.category}

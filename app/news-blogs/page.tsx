@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, PenLine, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -192,10 +193,12 @@ export default function NewsBlogPage() {
                 return (
                 <Card key={item.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                   <div className="relative h-48 overflow-hidden">
-                    <img
+                    <Image
                       src={cardImage}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      alt={item.title || "Article"}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-sm font-medium rounded">
                       {item.categories?.[0] || item.type}

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Calendar, PenLine, ArrowLeft } from "lucide-react"
 import { useEffect, useState, Suspense } from "react"
@@ -205,10 +206,12 @@ function BlogContent() {
               return (
               <Card key={post.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                 <div className="relative h-52 overflow-hidden">
-                  <img
+                  <Image
                     src={cardImage}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    alt={post.title || "Blog article"}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-sm font-medium rounded">
                     {post.category}

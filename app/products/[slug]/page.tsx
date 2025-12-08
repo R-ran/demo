@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -588,17 +589,13 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                         <CarouselContent className="h-full">
                           {productImages.map((img, index) => (
                             <CarouselItem key={index} className="h-full">
-                              <div className="h-full flex items-center justify-center bg-gray-50">
-                                <img
+                              <div className="h-full flex items-center justify-center bg-gray-50 relative">
+                                <Image
                                   src={img}
-                                  alt={`${productImageAlt} - ${index + 1}`}
-                                  className="w-full h-full object-contain"
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement
-                                    if (!target.src.includes("placeholder")) {
-                                      target.src = "/placeholder.svg?height=500&width=500"
-                                    }
-                                  }}
+                                  alt={`${productImageAlt || "Product"} - ${index + 1}`}
+                                  fill
+                                  className="object-contain"
+                                  sizes="(max-width: 768px) 100vw, 500px"
                                 />
                               </div>
                             </CarouselItem>
