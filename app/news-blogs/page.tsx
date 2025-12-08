@@ -8,6 +8,7 @@ import { TopHeader } from "@/components/top-header"
 import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { PageBanner } from "@/components/page-banner"
+import { PaginationWrapper } from "@/components/pagination-wrapper"
 import { useEffect, useState } from "react"
 
 // WordPress API 导入
@@ -18,13 +19,17 @@ export default function NewsBlogPage() {
   const [articles, setArticles] = useState<NewsBlogArticle[]>([])
   const [selectedArticle, setSelectedArticle] = useState<NewsBlogArticle | null>(null)
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
+  const perPage = 9 // 每页显示9篇文章
 
   // 获取数据的辅助函数
   useEffect(() => {
     async function getNewsBlogsData() {
+      setLoading(true)
       try {
-        // 使用相对路径避免跨域问题
-        const response = await fetch('/api/news-blogs?perPage=12', {
+        // 使用相对路径避免跨域问题，包含分页参数
+        const response = await fetch(`/api/news-blogs?perPage=${perPage}&page=${currentPage}`, {
           cache: 'no-store'
         })
         if (!response.ok) {
@@ -32,16 +37,26 @@ export default function NewsBlogPage() {
         }
         const result = await response.json()
         setArticles(result.data || [])
+        setTotalPages(result.total_pages || 0)
       } catch (error) {
         console.error("Failed to fetch articles:", error)
         setArticles([])
+        setTotalPages(0)
       } finally {
         setLoading(false)
       }
     }
 
     getNewsBlogsData()
-  }, [])
+  }, [currentPage, perPage])
+
+  // 处理分页切换
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -210,6 +225,17 @@ export default function NewsBlogPage() {
                 </Card>
                 )
               })}
+            </div>
+          )}
+
+          {/* 分页组件 */}
+          {!loading && !selectedArticle && totalPages > 1 && (
+            <div className="mt-12">
+              <PaginationWrapper
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           )}
         </div>

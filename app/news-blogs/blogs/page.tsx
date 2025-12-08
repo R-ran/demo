@@ -10,6 +10,7 @@ import { StickyNav } from "@/components/sticky-nav"
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { PaginationWrapper } from "@/components/pagination-wrapper"
 import { truncateExcerpt, extractFirstImageFromContent, processArticleContent } from "@/lib/wordpress"
 import type { NewsBlogArticle } from "@/lib/wordpress"
 
@@ -50,6 +51,9 @@ function BlogContent() {
   const [posts, setPosts] = useState<BlogItem[]>([])
   const [selectedPost, setSelectedPost] = useState<BlogItem | null>(null)
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
+  const perPage = 9 // 每页显示9篇文章
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -62,15 +66,16 @@ function BlogContent() {
     let mounted = true
 
     const fetchBlogs = async () => {
+      setLoading(true)
       try {
-        const response = await fetch('/api/news-blogs?perPage=12&type=blogs')
+        const response = await fetch(`/api/news-blogs?perPage=${perPage}&page=${currentPage}&type=blogs`)
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
         const result = await response.json()
         const remotePosts = result.data || []
 
-        if (!mounted || !remotePosts?.length) {
+        if (!mounted) {
           return
         }
 
@@ -89,8 +94,11 @@ function BlogContent() {
         }))
 
         setPosts(transformed)
+        setTotalPages(result.total_pages || 0)
       } catch (error) {
         console.error("Failed to fetch blog posts:", error)
+        setPosts([])
+        setTotalPages(0)
       } finally {
         setLoading(false)
       }
@@ -101,7 +109,15 @@ function BlogContent() {
     return () => {
       mounted = false
     }
-  }, [])
+  }, [currentPage, perPage])
+
+  // 处理分页切换
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   // 处理 URL 参数选中文章
   useEffect(() => {
@@ -226,6 +242,17 @@ function BlogContent() {
               </Card>
               )
             })}
+          </div>
+        )}
+
+        {/* 分页组件 */}
+        {!loading && !selectedPost && totalPages > 1 && (
+          <div className="mt-12">
+            <PaginationWrapper
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </div>
         )}
       </div>

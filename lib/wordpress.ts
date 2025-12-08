@@ -1016,8 +1016,8 @@ export async function getNewsBlogs(params: {
     // 如果指定了类型，使用 content_type 分类过滤
     if (params.type) {
       const contentTypeMap = {
-        'news': '18',   // 根据 WordPress 数据，news 的 content_type ID 是 18
-        'blogs': '19'   // 根据 WordPress 数据，blogs 的 content_type ID 是 19
+        'news': '72',   // 根据 WordPress API，news 的 content_type ID 是 72
+        'blogs': '74'   // 根据 WordPress API，blogs 的 content_type ID 是 74
       }
       queryParams.set('content_type', contentTypeMap[params.type])
     }
