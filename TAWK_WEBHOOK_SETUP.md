@@ -25,18 +25,33 @@ Tawk.to 聊天消息默认只会在 Tawk.to 后台显示。如果要让应用后
      - 将 `yourdomain.com` 替换为你的实际域名
      - 如果是本地测试，可以使用 ngrok: `https://your-ngrok-url.ngrok.io/api/tawk/webhook`
    - **Events**: 选择以下事件（根据可用选项）：
-     - `Chat Message` - 当收到新消息时
-     - `Chat Started` - 当聊天开始时
-     - `Chat Ended` - 当聊天结束时
+     - `Chat Start` - 当聊天开始时（**推荐添加**）
+     - `Chat Message` - 当收到新消息时（**推荐添加**）
+     - `Chat End` - 当聊天结束时（可选）
+   
+   ⚠️ **注意：** 如果只选择了 "Chat Start"，那么只有在访客**开始**聊天时才会收到通知，后续的消息可能不会触发 Webhook。建议同时添加 "Chat Message" 事件。
 6. 点击 **Save** 保存
 
-### 4. 配置环境变量（可选）
+### 4. 配置 Secret Key（重要！）
 
-如果需要额外的安全验证，可以在 `.env.local` 中添加：
+**Secret Key 的作用：**
+- 用于验证 Webhook 请求的真实性，防止伪造请求
+- Tawk.to 会使用 HMAC-SHA1 算法对请求进行签名
+- 服务器端会验证签名，确保请求来自 Tawk.to
+
+**配置步骤：**
+1. 在 Tawk.to Webhook 配置页面，复制 **Secret Key**（图片中显示的长字符串）
+2. 在项目根目录的 `.env.local` 文件中添加：
 
 ```env
-TAWK_WEBHOOK_SECRET=your-secret-key-here
+TAWK_WEBHOOK_SECRET=13c15a8725e731448cecc972403dae1b22e6cbee24c9b33f998bbf571a96f
 ```
+
+⚠️ **重要：** 将上面的值替换为你从 Tawk.to 后台复制的实际 Secret Key！
+
+**如果没有配置 Secret Key：**
+- Webhook 仍然可以工作，但会跳过签名验证
+- 建议配置 Secret Key 以提高安全性
 
 ### 5. 测试 Webhook
 
