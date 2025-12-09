@@ -1,6 +1,7 @@
 'use client'
 
 import Script from 'next/script'
+import { useEffect } from 'react'
 
 /**
  * Tawk.to 在线客服聊天组件
@@ -12,6 +13,11 @@ import Script from 'next/script'
  * 4. 在项目根目录创建 .env.local 文件，添加以下内容：
  *    NEXT_PUBLIC_TAWK_PROPERTY_ID=你的PropertyID
  *    NEXT_PUBLIC_TAWK_WIDGET_ID=你的WidgetID
+ * 
+ * 接收消息到后台：
+ * 5. 在 Tawk.to Dashboard > Settings > Webhooks 中配置 Webhook URL
+ * 6. Webhook URL: https://yourdomain.com/api/tawk/webhook
+ * 7. 选择触发事件：Chat Message (当有新消息时)
  * 
  * 或者，如果你想直接在这里设置，可以取消下面的注释并填入你的 ID：
  */
@@ -34,10 +40,45 @@ export function TawkToChat() {
     return null
   }
 
+  useEffect(() => {
+    // 监听 Tawk.to API 事件，用于调试
+    if (typeof window !== 'undefined' && (window as any).Tawk_API) {
+      const Tawk_API = (window as any).Tawk_API;
+
+      // 当聊天窗口加载完成
+      Tawk_API.onLoad = function() {
+        console.log('✅ Tawk.to 聊天窗口已加载');
+      };
+
+      // 当有新消息时（这个事件在 Tawk.to 中可能不总是可用）
+      Tawk_API.onChatMessageReceived = function(data: any) {
+        console.log('📩 收到新消息:', data);
+        // 注意：这个事件可能不会触发，主要依赖 Webhook
+      };
+
+      // 当聊天开始时
+      Tawk_API.onChatStarted = function(data: any) {
+        console.log('💬 聊天开始:', data);
+      };
+
+      // 当聊天结束时
+      Tawk_API.onChatEnded = function(data: any) {
+        console.log('👋 聊天结束:', data);
+      };
+    }
+  }, []);
+
   return (
     <Script
       id="tawk-to-script"
       strategy="afterInteractive"
+      onLoad={() => {
+        // 确保 Tawk_API 对象可用
+        if (typeof window !== 'undefined') {
+          (window as any).Tawk_API = (window as any).Tawk_API || {};
+          (window as any).Tawk_LoadStart = new Date();
+        }
+      }}
       dangerouslySetInnerHTML={{
         __html: `
           var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
