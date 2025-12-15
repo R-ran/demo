@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import type { SyntheticEvent } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Building2, Factory, Award, History } from "lucide-react"
 
@@ -46,7 +47,13 @@ function processSectionImage(section: AboutSectionType): string {
   const baseImage = sanitizeImageUrl(section.image)
   const fallbackImage = FALLBACK_IMAGES[section.id] ?? "/placeholder.svg"
 
-  return baseImage || fallbackImage
+  // 优先使用 WordPress 图片，只有当 WordPress 图片为空时才使用 fallback
+  // 特别是 why-choose-us，要确保使用 WordPress 传来的图片
+  if (baseImage) {
+    return baseImage
+  }
+  
+  return fallbackImage
 }
 
 interface AboutSectionProps {
@@ -241,14 +248,12 @@ export function AboutSection({ initialSections = [] }: AboutSectionProps) {
                 <Card className="group cursor-pointer overflow-hidden hover:shadow-xl transition-all h-full">
                   <CardContent className="p-0">
                     <div className="relative h-64 overflow-hidden">
-                      <img
+                      <Image
                         src={item.image || "/placeholder.svg"}
                         alt={item.imageAlt || item.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(event) => {
-                          const fallback = FALLBACK_IMAGES[item.id] || "/placeholder.svg"
-                          handleImageError(event, fallback)
-                        }}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent" />
                       <div className="absolute bottom-4 left-4 right-4">

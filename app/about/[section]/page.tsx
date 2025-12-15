@@ -653,7 +653,12 @@ export default async function AboutPage({ params }: { params: Promise<{ section:
                   {/* Image Section */}
                   <div className="relative w-full h-96 md:h-[500px] overflow-hidden rounded-lg">
                     <img
-                      src={item.image || "/placeholder.svg"}
+                      src={
+                        // 如果是 why-choose-us，强制使用 public 中的图片，否则使用 WordPress 图片或 fallback
+                        section.toLowerCase() === "why-choose-us" 
+                          ? "/why11.avif"
+                          : (item.image || "/placeholder.svg")
+                      }
                       alt={item.imageAlt || item.title}
                       className="w-full h-full object-cover"
                     />

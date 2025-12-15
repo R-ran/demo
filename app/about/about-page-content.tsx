@@ -1121,7 +1121,12 @@ function AboutPageContent({ initialSections }: { initialSections: AboutSection[]
                     <div className="relative w-full flex items-center justify-center">
                       <div className="relative w-full h-auto max-h-[600px]">
                         <Image
-                          src={selectedItem.image || selectedItem.fallbackImage || "/placeholder.svg"}
+                          src={
+                            // 如果是 why-choose-us，强制使用 public 中的图片，否则使用 WordPress 图片
+                            selectedItem.id.toLowerCase() === "why-choose-us" 
+                              ? "/why11.avif"
+                              : (selectedItem.image || selectedItem.fallbackImage || "/placeholder.svg")
+                          }
                           alt={selectedItem.imageAlt || selectedItem.title || "About section image"}
                           width={800}
                           height={600}
