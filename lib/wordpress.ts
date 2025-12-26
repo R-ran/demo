@@ -14,6 +14,8 @@ export interface AboutSection {
 }
 
 export interface Project {
+  category: any
+  modified: string | number | Date
   id: string
   title: string
   excerpt: string
