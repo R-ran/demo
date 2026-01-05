@@ -590,12 +590,16 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                           {productImages.map((img, index) => (
                             <CarouselItem key={index} className="h-full">
                               <div className="h-full flex items-center justify-center bg-gray-50 relative">
-                                <Image
-                                  src={img}
+                                <img
+                                  src={img || "/placeholder.svg?height=500&width=500"}
                                   alt={`${productImageAlt || "Product"} - ${index + 1}`}
-                                  fill
-                                  className="object-contain"
-                                  sizes="(max-width: 768px) 100vw, 500px"
+                                  className="w-full h-full object-contain"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement
+                                    if (!target.src.includes("placeholder")) {
+                                      target.src = "/placeholder.svg?height=500&width=500"
+                                    }
+                                  }}
                                 />
                               </div>
                             </CarouselItem>
@@ -607,7 +611,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                     ) : (
                       <div className="h-full flex items-center justify-center bg-gray-50">
                         <img
-                          src={productImage}
+                          src={productImage || "/placeholder.svg?height=500&width=500"}
                           alt={productImageAlt}
                           className="w-full h-full object-contain"
                           onError={(e) => {
